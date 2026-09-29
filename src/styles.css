@@ -67,6 +67,10 @@ main {
   z-index: 2;
 }
 
+/* =========================================================
+   THREE.JS BACKGROUND / AVATAR STAGE
+   ========================================================= */
+
 .stage {
   position: fixed;
   inset: 0;
@@ -88,50 +92,18 @@ main {
   width: min(70vw, 760px);
   aspect-ratio: 1;
   transform: translateX(-50%);
-  background: radial-gradient(circle, rgba(125, 255, 0, 0.55), rgba(125, 255, 0, 0) 65%);
+  background:
+    radial-gradient(
+      circle,
+      rgba(125, 255, 0, 0.55),
+      rgba(125, 255, 0, 0) 65%
+    );
   filter: blur(24px);
 }
 
-
-.avatar-shell {
-  position: absolute;
-  left: 50%;
-  bottom: -3%;
-  width: min(42vw, 560px);
-  height: min(70vh, 680px);
-  transform: translateX(-50%);
-  display: grid;
-  place-items: end center;
-  perspective: 1000px;
-}
-
-.web-avatar {
-  position: relative;
-  z-index: 3;
-  width: 86%;
-  height: auto;
-  max-height: 100%;
-  object-fit: contain;
-  transform-origin: 50% 80%;
-  filter: drop-shadow(0 28px 44px rgba(0, 0, 0, 0.42)) drop-shadow(0 0 28px rgba(125, 255, 0, 0.14));
-  transition: filter 0.35s ease;
-  will-change: transform, opacity;
-}
-
-.avatar-shell:hover .web-avatar {
-  filter: drop-shadow(0 30px 48px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 42px rgba(125, 255, 0, 0.28));
-}
-
-.avatar-ring {
-  position: absolute;
-  z-index: 2;
-  bottom: 8%;
-  width: 76%;
-  aspect-ratio: 1;
-  border: 1px solid rgba(125, 255, 0, 0.22);
-  border-radius: 50%;
-  box-shadow: 0 0 90px rgba(125, 255, 0, 0.12), inset 0 0 50px rgba(125, 255, 0, 0.04);
-}
+/* =========================================================
+   CURSOR ORB
+   ========================================================= */
 
 .orb {
   position: fixed;
@@ -153,6 +125,10 @@ main {
     display: none;
   }
 }
+
+/* =========================================================
+   HEADER
+   ========================================================= */
 
 .header {
   position: fixed;
@@ -186,7 +162,13 @@ main {
   right: var(--gut);
   bottom: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(125, 255, 0, 0.28), transparent);
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(125, 255, 0, 0.28),
+      transparent
+    );
   opacity: 0.65;
 }
 
@@ -258,6 +240,10 @@ main {
   padding: 0.35rem;
 }
 
+/* =========================================================
+   SOCIAL RAIL
+   ========================================================= */
+
 .rail {
   position: fixed;
   left: clamp(10px, 2vw, 28px);
@@ -284,23 +270,43 @@ main {
 .rail a:hover {
   background: var(--pu);
   border-color: var(--pu);
+  color: #071000;
 }
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
 
 section {
   position: relative;
   min-height: 100vh;
-  padding: clamp(100px, 14vh, 150px) var(--gut) clamp(60px, 10vh, 120px);
+  padding:
+    clamp(100px, 14vh, 150px)
+    var(--gut)
+    clamp(60px, 10vh, 120px);
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
+/* =========================================================
+   HERO
+   ========================================================= */
+
 .hero {
   padding: 0;
   overflow: hidden;
   background:
-    radial-gradient(circle at 50% 58%, rgba(125, 255, 0, 0.07), transparent 24%),
-    linear-gradient(180deg, rgba(5, 3, 8, 0.08), rgba(5, 3, 8, 0.28));
+    radial-gradient(
+      circle at 50% 58%,
+      rgba(125, 255, 0, 0.07),
+      transparent 24%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(5, 3, 8, 0.08),
+      rgba(5, 3, 8, 0.28)
+    );
 }
 
 .hero-copy {
@@ -327,7 +333,9 @@ section {
 .role small {
   display: block;
   color: var(--pu);
-  font: 300 clamp(1rem, 1.8vw, 1.6rem)/1.2 var(--display);
+  font:
+    300 clamp(1rem, 1.8vw, 1.6rem) / 1.2
+    var(--display);
   margin-bottom: 0.5rem;
 }
 
@@ -340,14 +348,20 @@ section {
 .swap {
   height: 1.15em;
   overflow: hidden;
-  font: 700 var(--h1)/1.15 var(--display);
+  font:
+    700 var(--h1) / 1.15
+    var(--display);
   color: var(--soft);
   letter-spacing: -0.02em;
 }
 
 .swap span {
   display: block;
-  animation: swapWords 5s infinite cubic-bezier(0.7, 0, 0.2, 1);
+  animation:
+    swapWords
+    5s
+    infinite
+    cubic-bezier(0.7, 0, 0.2, 1);
 }
 
 @keyframes swapWords {
@@ -366,6 +380,10 @@ section {
   }
 }
 
+/* =========================================================
+   ABOUT
+   ========================================================= */
+
 .eyebrow {
   color: var(--pu);
   letter-spacing: 0.35em;
@@ -382,7 +400,11 @@ section {
 }
 
 .about p {
-  font: 500 clamp(1.2rem, 2.5vw, 2.3rem)/1.3 'Space Grotesk', system-ui, sans-serif;
+  font:
+    500 clamp(1.2rem, 2.5vw, 2.3rem) / 1.3
+    'Space Grotesk',
+    system-ui,
+    sans-serif;
   color: #dcd7e6;
   letter-spacing: -0.01em;
 }
@@ -399,6 +421,10 @@ section {
   font-style: normal;
   color: var(--pu);
 }
+
+/* =========================================================
+   WHAT I DO
+   ========================================================= */
 
 .do {
   flex-direction: row;
@@ -457,11 +483,21 @@ section {
   border-top: 0;
 }
 
+/* =========================================================
+   TIMELINE
+   ========================================================= */
+
 .tl h2 {
-  font: 300 var(--h2)/1.05 var(--display);
+  font:
+    300 var(--h2) / 1.05
+    var(--display);
   text-align: center;
   margin-bottom: 4rem;
-  background: linear-gradient(var(--fg), var(--pu));
+  background:
+    linear-gradient(
+      var(--fg),
+      var(--pu)
+    );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -488,7 +524,11 @@ section {
 }
 
 .rows::after {
-  background: linear-gradient(var(--pu2), var(--pu));
+  background:
+    linear-gradient(
+      var(--pu2),
+      var(--pu)
+    );
   height: var(--fill);
   bottom: auto;
   box-shadow: 0 0 14px var(--pu);
@@ -515,15 +555,27 @@ section {
   color: var(--mute);
 }
 
+/* =========================================================
+   PROJECTS
+   ========================================================= */
+
 .work {
-  padding: clamp(100px, 14vh, 140px) 0 0;
+  padding:
+    clamp(100px, 14vh, 140px)
+    0
+    0;
   justify-content: flex-start;
   overflow: hidden;
 }
 
 .work h2 {
-  font: 300 var(--h2) var(--display);
-  padding: 0 var(--gut) 2.5rem;
+  font:
+    300 var(--h2)
+    var(--display);
+  padding:
+    0
+    var(--gut)
+    2.5rem;
 }
 
 .work h2 em {
@@ -557,7 +609,9 @@ section {
 }
 
 .pj .n {
-  font: 700 clamp(2.4rem, 4vw, 4rem) var(--display);
+  font:
+    700 clamp(2.4rem, 4vw, 4rem)
+    var(--display);
 }
 
 .pj h3 {
@@ -589,7 +643,9 @@ section {
   color: var(--mute);
   opacity: 0;
   transform: translateY(6px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 .pj:hover::after {
@@ -601,11 +657,19 @@ section {
   position: relative;
   height: 14rem;
   border-radius: 0.6rem;
-  background: linear-gradient(135deg, #1a1030, #3b1f7a 60%, #7dff00);
+  background:
+    linear-gradient(
+      135deg,
+      #1a1030,
+      #3b1f7a 60%,
+      #7dff00
+    );
   opacity: 0.8;
   margin-top: auto;
   overflow: hidden;
-  transition: transform 0.55s cubic-bezier(0.2, 0.75, 0.2, 1), opacity 0.35s ease;
+  transition:
+    transform 0.55s cubic-bezier(0.2, 0.75, 0.2, 1),
+    opacity 0.35s ease;
 }
 
 .pj .shot::before {
@@ -620,6 +684,10 @@ section {
   transform: scale(1.025);
   opacity: 1;
 }
+
+/* =========================================================
+   TECH STACK
+   ========================================================= */
 
 .tech {
   align-items: center;
@@ -644,7 +712,9 @@ section {
   top: 32%;
   left: 0;
   right: 0;
-  font: 300 var(--h2) var(--display);
+  font:
+    300 var(--h2)
+    var(--display);
   z-index: 2;
   pointer-events: none;
 }
@@ -654,7 +724,20 @@ section {
   inset: 0;
   width: 100%;
   height: 100%;
+  cursor: crosshair;
 }
+
+.tech:hover .bubbles {
+  cursor: grab;
+}
+
+.tech:active .bubbles {
+  cursor: grabbing;
+}
+
+/* =========================================================
+   CONTACT
+   ========================================================= */
 
 .contact {
   justify-content: flex-end;
@@ -663,7 +746,9 @@ section {
 }
 
 .contact h2 {
-  font: 300 var(--h2) var(--display);
+  font:
+    300 var(--h2)
+    var(--display);
   margin-bottom: 2.4rem;
 }
 
@@ -698,6 +783,9 @@ section {
   color: var(--pu);
 }
 
+/* =========================================================
+   SOCIAL CARDS
+   ========================================================= */
 
 .social-list {
   display: grid;
@@ -720,14 +808,20 @@ section {
   color: var(--fg) !important;
   text-decoration: none !important;
   transform: translate3d(0, 0, 0);
-  transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .social-link:hover {
   transform: translate3d(10px, -3px, 0);
   border-color: var(--pu) !important;
   background: rgba(125, 255, 0, 0.045);
-  box-shadow: 0 12px 34px rgba(125, 255, 0, 0.09), inset 0 0 22px rgba(125, 255, 0, 0.025);
+  box-shadow:
+    0 12px 34px rgba(125, 255, 0, 0.09),
+    inset 0 0 22px rgba(125, 255, 0, 0.025);
 }
 
 .social-mark {
@@ -738,8 +832,13 @@ section {
   border: 1px solid #394631;
   border-radius: 0.55rem;
   color: var(--pu);
-  font: 700 0.72rem var(--display);
-  transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+  font:
+    700 0.72rem
+    var(--display);
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    color 0.3s ease;
 }
 
 .social-link:hover .social-mark {
@@ -778,6 +877,10 @@ section {
   transform: translate(3px, -3px);
 }
 
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
 .credit {
   color: var(--mute);
 }
@@ -786,6 +889,10 @@ section {
   color: var(--pu);
   font-weight: 400;
 }
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
 @media (max-width: 800px) {
   .mid,
@@ -816,16 +923,6 @@ section {
   .hi,
   .role {
     position: static;
-  }
-
-  .avatar-shell {
-    width: min(76vw, 420px);
-    height: 58vh;
-    bottom: 4%;
-  }
-
-  .web-avatar {
-    width: 92%;
   }
 
   .hero-copy {
@@ -886,7 +983,15 @@ section {
   .pj::after {
     display: none;
   }
+
+  .social-link {
+    width: 100% !important;
+  }
 }
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
   .swap span {
@@ -901,109 +1006,4 @@ section {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
-}
-
-
-/* Tech stack: centered cluster -> hover dispersion -> centered again */
-
-.bubbles {
-  cursor: crosshair;
-}
-
-.tech:hover .bubbles {
-  cursor: grab;
-}
-
-.tech:active .bubbles {
-  cursor: grabbing;
-}
-
-/* Social cards */
-
-.social-list {
-  display: grid;
-  gap: 0.7rem;
-  margin-top: 0.8rem;
-}
-
-.social-link {
-  position: relative;
-  display: grid !important;
-  grid-template-columns: 42px 1fr auto;
-  align-items: center;
-  gap: 0.9rem;
-  width: min(25rem, 100%) !important;
-  margin: 0 !important;
-  padding: 0.8rem 0.9rem;
-  border: 1px solid var(--line) !important;
-  border-radius: 0.75rem;
-  background: rgba(255, 255, 255, 0.015);
-  color: var(--fg) !important;
-  text-decoration: none !important;
-  transform: translate3d(0, 0, 0);
-  transition:
-    transform 0.3s ease,
-    border-color 0.3s ease,
-    background 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.social-link:hover {
-  transform: translate3d(10px, -3px, 0);
-  border-color: var(--pu) !important;
-  background: rgba(125, 255, 0, 0.045);
-  box-shadow:
-    0 12px 34px rgba(125, 255, 0, 0.09),
-    inset 0 0 22px rgba(125, 255, 0, 0.025);
-}
-
-.social-mark {
-  width: 42px;
-  height: 42px;
-  display: grid;
-  place-items: center;
-  border: 1px solid #394631;
-  border-radius: 0.55rem;
-  color: var(--pu);
-  font: 700 0.72rem var(--display);
-  transition:
-    transform 0.3s ease,
-    background 0.3s ease,
-    color 0.3s ease;
-}
-
-.social-link:hover .social-mark {
-  transform: rotate(-4deg) scale(1.05);
-  background: var(--pu);
-  color: #071000;
-}
-
-.social-link > span:nth-child(2) {
-  min-width: 0;
-  border: 0 !important;
-  margin: 0 !important;
-  width: auto !important;
-}
-
-.social-link b {
-  display: block;
-  color: var(--fg);
-  font-size: 0.95rem;
-  font-weight: 500;
-}
-
-.social-link small {
-  display: block;
-  margin: 0.1rem 0 0 !important;
-  color: var(--mute);
-  font-size: 0.72rem;
-}
-
-.social-link svg {
-  color: var(--pu);
-  transition: transform 0.3s ease;
-}
-
-.social-link:hover svg {
-  transform: translate(3px, -3px);
 }
