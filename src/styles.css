@@ -873,69 +873,119 @@ section {
   letter-spacing: -0.03em;
 }
 
-.rows {
-  --fill: 0%;
+.career-info {
   position: relative;
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
   max-width: 68rem;
   margin: 0 auto;
   width: 100%;
 }
 
-.rows::before,
-.rows::after {
+.career-timeline {
+  position: relative;
+  min-height: 100%;
+}
+
+.career-line,
+.career-timeline::before {
   content: '';
   position: absolute;
   left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 2px;
+  top: 1.4rem;
+  bottom: 1.4rem;
+  width: 1px;
+  transform: translateX(-50%);
   background: var(--line);
 }
 
-.rows::after {
-  background:
-    linear-gradient(
-      var(--pu2),
-      var(--pu)
-    );
-  height: var(--fill);
+.career-line {
+  z-index: 1;
+  top: 1.4rem;
+  height: var(--fill, 0%);
   bottom: auto;
+  background: linear-gradient(var(--pu2), var(--pu));
   box-shadow: 0 0 14px var(--pu);
 }
 
-.row {
+.career-dot {
+  position: absolute;
+  left: 50%;
+  top: 1.35rem;
+  z-index: 2;
+  width: 0.65rem;
+  height: 0.65rem;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--pu);
+  box-shadow:
+    0 0 0 5px rgba(125, 255, 0, 0.08),
+    0 0 18px rgba(125, 255, 0, 0.8);
+}
+
+.career-cards {
+  min-width: 0;
+}
+
+.career-info-box {
+  position: relative;
+  padding: 1.4rem 0 2.6rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.career-info-box:last-child {
+  border-bottom: 0;
+}
+
+.career-info-in {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(8rem, 0.35fr) minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(1.5rem, 4vw, 4rem);
-  padding: 2.5rem 0;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 2rem;
 }
 
-.row h3 {
-  font-size: clamp(1.1rem, 2vw, 1.6rem);
-  margin-bottom: 0.4rem;
+.career-role h4 {
+  margin: 0;
+  color: var(--fg);
+  font-size: clamp(1.15rem, 2vw, 1.6rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
 }
 
-.period {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  justify-self: center;
-  margin-top: 0;
-  padding: 0.28rem 0.7rem;
+.career-role h5 {
+  margin: 0.45rem 0 0;
+  color: var(--pu);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.career-info-in > h3 {
+  margin: 0;
+  padding: 0.3rem 0.75rem;
   border: 1px solid rgba(125, 255, 0, 0.35);
   border-radius: 999px;
   color: var(--pu);
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   line-height: 1.2;
   text-transform: uppercase;
   background: rgba(125, 255, 0, 0.035);
   box-shadow: 0 0 18px rgba(125, 255, 0, 0.05);
 }
 
-.row p {
+.career-info-box > p {
+  max-width: 42rem;
+  margin: 0.9rem 0 0;
   color: var(--mute);
+  line-height: 1.65;
+}
+
+.rows {
+  --fill: 0%;
 }
 
 /* =========================================================
@@ -1377,20 +1427,33 @@ section {
     margin-left: 0;
   }
 
-  .row {
+  .career-info {
+    grid-template-columns: 2rem minmax(0, 1fr);
+  }
+
+  .career-info-in {
     grid-template-columns: 1fr;
     gap: 0.7rem;
-    padding: 1.8rem 0 2.2rem;
   }
 
-  .period {
+  .career-info-in > h3 {
     justify-self: start;
-    text-align: left;
   }
 
-  .rows::before,
-  .rows::after {
-    left: 0;
+  .career-info-box {
+    padding: 1.2rem 0 2.2rem;
+  }
+
+  .career-role h4 {
+    font-size: 1.1rem;
+  }
+
+  .career-role h5 {
+    font-size: 0.62rem;
+  }
+
+  .career-info-box > p {
+    font-size: 0.86rem;
   }
 
   .grid {
