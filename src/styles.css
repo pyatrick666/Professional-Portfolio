@@ -902,3 +902,10 @@ section {
     animation-iteration-count: 1 !important;
   }
 }
+
+
+/* Tech stack: start as one centered cluster, disperse only while hovered, then spring back. */
+.bubbles { cursor: crosshair; }
+
+.tech:hover .bubbles { cursor: grab; }
+.tech:active .bubbles { cursor: grabbing; }
