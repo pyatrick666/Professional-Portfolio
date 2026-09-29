@@ -1,94 +1,65 @@
-import './styles/Career.css';
+import "./styles/Career.css";
 
 const milestones = [
   {
-    number: '01',
-    period: '2025 — PRESENT',
-    title: 'BSc (Hons) Information Technology',
-    subtitle: 'Computer Systems Engineering',
-    place: 'ISMT College · University of Sunderland',
-    text: 'Building a strong foundation across software development, computer systems, networking and modern IT practice as part of my undergraduate degree.',
-    tags: ['OOP', 'Web Development', 'Databases', 'Computer Systems'],
+    role: "BSc (Hons) Information Technology",
+    company: "ISMT College · University of Sunderland",
+    year: "2025 — PRESENT",
+    description:
+      "Building a strong foundation in software development, computer systems, networking and modern IT practice as part of my undergraduate degree.",
   },
   {
-    number: '02',
-    period: '2026',
-    title: 'Enterprise Project',
-    subtitle: 'Team Leadership & Delivery',
-    place: 'CET 257 · ISMT College',
-    text: 'Developing practical project experience through an enterprise team environment, contributing as Deputy Project Manager alongside planning, communication and technical delivery.',
-    tags: ['Project Management', 'Teamwork', 'Client Communication'],
+    role: "Enterprise Project",
+    company: "CET 257 · ISMT College",
+    year: "2026",
+    description:
+      "Developing practical project experience in an enterprise team environment as Deputy Project Manager, contributing to planning, communication, teamwork and technical delivery.",
   },
   {
-    number: '03',
-    period: '2026 — PRESENT',
-    title: 'Building Real Projects',
-    subtitle: 'Software · Web · Mobile',
-    place: 'Independent & Coursework Projects',
-    text: 'Turning coursework into working software through projects including full-stack websites, C# applications, embedded experiments and ChessMate, a Flutter mobile application.',
-    tags: ['C#', 'Flutter', 'JavaScript', 'Firebase'],
+    role: "Building Real Projects",
+    company: "Independent & Coursework Projects",
+    year: "NOW",
+    description:
+      "Turning coursework into working software through full-stack websites, C# applications, embedded experiments and ChessMate, a Flutter mobile application.",
   },
   {
-    number: '04',
-    period: 'CURRENT FOCUS',
-    title: 'Preparing for Industry',
-    subtitle: 'Software & Networking',
-    place: 'Professional Development',
-    text: 'Expanding practical experience in full-stack development, mobile development, Linux, networking, UI/UX and portfolio-quality product work while preparing for internship opportunities.',
-    tags: ['Full Stack', 'Networking', 'UI/UX', 'Linux'],
+    role: "Preparing for Industry",
+    company: "Professional Development",
+    year: "CURRENT FOCUS",
+    description:
+      "Expanding practical experience in full-stack development, mobile development, Linux, networking and UI/UX while preparing for internship opportunities.",
   },
 ];
 
 const Career = () => {
   return (
-    <section className="career-section section-container" id="career">
+    <div className="career-section section-container" id="career">
       <div className="career-container">
-        <div className="career-intro">
-          <div>
-            <span className="career-kicker">MY JOURNEY</span>
-            <h2>
-              Learning <span>&amp;</span>
-              <br />
-              experience
-            </h2>
+        <h2>
+          My career <span>&amp;</span>
+          <br /> experience
+        </h2>
+
+        <div className="career-info">
+          <div className="career-timeline">
+            <div className="career-dot"></div>
           </div>
-          <p className="career-summary">
-            From university coursework to real software projects, I&apos;m building
-            practical experience one project at a time.
-          </p>
-        </div>
 
-        <div className="career-list">
           {milestones.map((item) => (
-            <article className="career-item" key={item.number}>
-              <div className="career-marker">
-                <span>{item.number}</span>
-              </div>
-
-              <div className="career-period">{item.period}</div>
-
-              <div className="career-content">
-                <div className="career-title-row">
-                  <div>
-                    <h3>{item.title}</h3>
-                    <h4>{item.subtitle}</h4>
-                  </div>
-                  <span className="career-place">{item.place}</span>
+            <div className="career-info-box" key={item.role}>
+              <div className="career-info-in">
+                <div className="career-role">
+                  <h4>{item.role}</h4>
+                  <h5>{item.company}</h5>
                 </div>
-
-                <p>{item.text}</p>
-
-                <div className="career-tags">
-                  {item.tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                </div>
+                <h3>{item.year}</h3>
               </div>
-            </article>
+              <p>{item.description}</p>
+            </div>
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
