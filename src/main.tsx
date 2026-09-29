@@ -1419,27 +1419,31 @@ function App() {
           const workFlex = document.querySelector<HTMLElement>('.work-flex');
 
           if (workSection && workFlex) {
-            const setupWorkScroll = () => {
-              const distance = Math.max(0, workFlex.scrollWidth - window.innerWidth);
-              if (distance === 0) return;
+            const workMedia = gsap.matchMedia();
 
-              gsap.to(workFlex, {
-                x: -distance,
-                ease: 'none',
-                scrollTrigger: {
-                  trigger: workSection,
-                  start: 'top top',
-                  end: () => `+=${Math.max(distance, window.innerHeight)}`,
-                  scrub: true,
-                  pin: true,
-                  anticipatePin: 1,
-                  invalidateOnRefresh: true,
-                  id: 'work-horizontal',
-                },
-              });
-            };
+            workMedia.add('(min-width: 801px)', () => {
+              const setupWorkScroll = () => {
+                const distance = Math.max(0, workFlex.scrollWidth - window.innerWidth);
+                if (distance === 0) return;
 
-            setupWorkScroll();
+                gsap.to(workFlex, {
+                  x: -distance,
+                  ease: 'none',
+                  scrollTrigger: {
+                    trigger: workSection,
+                    start: 'top top',
+                    end: () => `+=${Math.max(distance, window.innerHeight)}`,
+                    scrub: true,
+                    pin: true,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true,
+                    id: 'work-horizontal',
+                  },
+                });
+              };
+
+              setupWorkScroll();
+            });
           }
 
           gsap.to(
