@@ -1667,7 +1667,7 @@ function App() {
 
             <div>
               <small>
-                Find me online
+                Social
               </small>
 
               <div className="social-list">
