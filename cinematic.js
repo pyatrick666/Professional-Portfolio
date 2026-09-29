@@ -44,6 +44,9 @@ const exhaust=new THREE.Mesh(new THREE.CylinderGeometry(.07,.11,.85,12),metalMat
 const forkL=new THREE.Mesh(new THREE.CylinderGeometry(.045,.055,.98,10),metalMat),forkR=forkL.clone();forkL.position.set(-.13,1.15,-.72);forkR.position.set(.13,1.15,-.72);forkL.rotation.x=forkR.rotation.x=-.18;bike.add(forkL,forkR);
 const bar=new THREE.Mesh(new THREE.CylinderGeometry(.035,.035,.76,12),darkMat);bar.rotation.z=Math.PI/2;bar.position.set(0,1.77,-.82);bike.add(bar);
 const fender=new THREE.Mesh(new THREE.BoxGeometry(.58,.08,.72),frameMat);fender.position.set(0,1.42,-.72);fender.rotation.x=-.18;bike.add(fender);
+const radiatorL=new THREE.Mesh(new THREE.BoxGeometry(.42,.3,.08),darkMat);radiatorL.position.set(-.27,1.12,-.02);const radiatorR=radiatorL.clone();radiatorR.position.x=.27;bike.add(radiatorL,radiatorR);
+const swing=new THREE.Mesh(new THREE.BoxGeometry(.12,.12,1.05),metalMat);swing.position.set(0,.72,.55);swing.rotation.x=.08;bike.add(swing);
+const rearFender=new THREE.Mesh(new THREE.BoxGeometry(.46,.07,.65),frameMat);rearFender.position.set(0,1.45,.7);rearFender.rotation.x=.18;bike.add(rearFender);
 const lamp=new THREE.Mesh(new THREE.CylinderGeometry(.19,.21,.08,16),new THREE.MeshStandardMaterial({color:0xeaffff,emissive:0xcfffff,emissiveIntensity:5}));lamp.rotation.x=Math.PI/2;lamp.position.set(0,1.62,-.87);bike.add(lamp);
 bike.scale.set(1.05,1.05,1.05);bike.position.set(0,terrainHeight(0,.5)+.03,.5);
 const rainCount=2200,rainGeo=new THREE.BufferGeometry(),rainPos=new Float32Array(rainCount*3);for(let i=0;i<rainCount;i++){rainPos[i*3]=(Math.random()-.5)*80;rainPos[i*3+1]=Math.random()*28;rainPos[i*3+2]=(Math.random()-.5)*80}rainGeo.setAttribute('position',new THREE.BufferAttribute(rainPos,3));const rain=new THREE.Points(rainGeo,new THREE.PointsMaterial({color:0x9db7d4,size:.035,transparent:true,opacity:.6}));scene.add(rain);
