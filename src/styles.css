@@ -531,6 +531,29 @@ section {
 
 .pj svg {
   color: var(--pu);
+  transition: transform 0.35s ease;
+}
+
+.pj:hover svg {
+  transform: translate(4px, -4px);
+}
+
+.pj::after {
+  content: 'VIEW PROJECT';
+  position: absolute;
+  top: 3.2rem;
+  right: 2.8rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  color: var(--mute);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.pj:hover::after {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .pj .shot {
@@ -563,6 +586,16 @@ section {
   padding: 0;
   overflow: hidden;
   background: var(--bg);
+}
+
+.tech::before {
+  content: '';
+  position: absolute;
+  width: min(44vw, 620px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(166, 124, 255, 0.08);
+  border-radius: 50%;
+  box-shadow: 0 0 100px rgba(166, 124, 255, 0.05);
 }
 
 .tech h2 {
@@ -709,6 +742,18 @@ section {
 
   .pj .shot {
     height: 11rem;
+  }
+
+  .tech h2 {
+    top: 24%;
+  }
+
+  .tech::before {
+    width: 80vw;
+  }
+
+  .pj::after {
+    display: none;
   }
 }
 
