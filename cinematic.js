@@ -58,11 +58,18 @@ try {
 if (!renderer) {
   $('#loader')?.classList.add('loaded');
 } else {
-  initWorld();
-  initInterface();
-  initInput();
-  requestAnimationFrame(animate);
-  setTimeout(() => document.body.classList.add('loaded'), 700);
+  try {
+    initWorld();
+    initInterface();
+    initInput();
+    requestAnimationFrame(animate);
+    clearTimeout(window.__portfolioBootTimer);
+    setTimeout(() => document.body.classList.add('loaded'), 350);
+  } catch (error) {
+    console.error(error);
+    showFatal('The interactive scene could not finish starting. The portfolio content is still available.');
+    $('#loader')?.classList.add('loaded');
+  }
 }
 
 function initWorld() {
