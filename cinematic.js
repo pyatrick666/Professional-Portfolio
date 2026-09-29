@@ -411,7 +411,7 @@ function createBike() {
 }
 
 function createAtmosphere() {
-  const rainCount = 1500;
+  const rainCount = 900;
   const positions = new Float32Array(rainCount * 3);
   for (let i = 0; i < rainCount; i++) {
     positions[i * 3] = (Math.random() - 0.5) * 70;
@@ -426,6 +426,9 @@ function createAtmosphere() {
   );
   rain.name = 'rain';
   scene.add(rain);
+
+  const wet = new THREE.Mesh(new THREE.PlaneGeometry(180,180), new THREE.MeshStandardMaterial({color:0x0a0f11,roughness:0.18,metalness:0.25,transparent:true,opacity:0.32}));
+  wet.rotation.x=-Math.PI/2; wet.position.y=0.015; scene.add(wet);
 }
 
 function initInterface() {
@@ -681,6 +684,8 @@ function animate(time = 0) {
   updateBike(dt);
   updateCamera(dt, time);
   updateLocations(time);
+  const rain = scene.getObjectByName('rain');
+  if (rain) rain.rotation.y = Math.sin(time * 0.00008) * 0.02;
 
   if (renderer) renderer.render(scene, camera);
 }
