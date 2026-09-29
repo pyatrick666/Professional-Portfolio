@@ -672,9 +672,21 @@ section {
   margin-bottom: 0.4rem;
 }
 
-.row span {
+.period {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-top: 0.15rem;
+  padding: 0.28rem 0.7rem;
+  border: 1px solid rgba(125, 255, 0, 0.35);
+  border-radius: 999px;
   color: var(--pu);
-  font-size: 0.9rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  background: rgba(125, 255, 0, 0.035);
+  box-shadow: 0 0 18px rgba(125, 255, 0, 0.05);
 }
 
 .row p {
