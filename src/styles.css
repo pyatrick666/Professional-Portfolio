@@ -634,7 +634,7 @@ section {
   height: 2em;
 }
 
-.role-changing > span:first-child {
+.role-changing {
   animation: roleSwap 5s infinite cubic-bezier(.7, 0, .2, 1);
 }
 
