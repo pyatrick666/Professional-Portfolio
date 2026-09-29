@@ -80,6 +80,7 @@ function App(){
   const ctx=gsap.context(()=>{
    gsap.from(".hero-line",{yPercent:115,opacity:0,duration:1.15,stagger:.12,ease:"power4.out"});
    gsap.from(".hero-info",{y:25,opacity:0,duration:.8,delay:.65,ease:"power3.out"});
+   gsap.from(".hero-photo-wrap",{scale:.82,opacity:0,duration:1.2,delay:.35,ease:"power3.out"});
    gsap.utils.toArray<HTMLElement>(".reveal").forEach(el=>gsap.from(el,{y:70,opacity:0,duration:1,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 82%"}}));
    gsap.utils.toArray<HTMLElement>(".project").forEach((el,i)=>gsap.from(el,{x:60,opacity:0,duration:.9,delay:i*.08,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 88%"}}));
    gsap.to(".orbit",{rotation:360,duration:30,repeat:-1,ease:"none"});
@@ -102,6 +103,10 @@ function App(){
    <section id="home" className="hero">
     <div className="hero-orbit" aria-hidden="true"><div className="orbit"/><div className="orbit-dot"/></div>
     <HeroScene/>
+    <div className="hero-photo-wrap" aria-label="Portrait of Pratik Poudel">
+     <div className="photo-glow"/>
+     <div className="photo-frame"><img src="https://pyatrick666.github.io/ePortfolio/profile.jpg" alt="Pratik Poudel" fetchPriority="high"/></div>
+    </div>
     <div className="hero-content">
      <div className="hero-info"><span>IT STUDENT / DEVELOPER</span><span>NEPAL · 2026</span></div>
      <h1><span className="hero-line">PRATIK</span><span className="hero-line hero-last">POUDEL</span></h1>
