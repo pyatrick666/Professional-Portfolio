@@ -56,3 +56,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 .content-panel::-webkit-scrollbar{width:5px}.content-panel::-webkit-scrollbar-thumb{background:rgba(215,255,63,.45)}
 @media(min-width:701px){.content-panel{scrollbar-width:thin;scrollbar-color:rgba(215,255,63,.45) transparent}}
 @media(max-width:700px){body{overscroll-behavior:none}.content-panel{overscroll-behavior:contain}.hero-actions{flex-wrap:wrap}.hero-actions button{min-height:40px}.mobile-drive{bottom:18px}.mobile-steering button,.mobile-pedals button{box-shadow:0 8px 24px rgba(0,0,0,.45)}}
+
+/* Drive-state feedback */
+#ride-hud{min-width:110px}
+.ride-started #ride-hud b{ text-shadow:0 0 16px rgba(215,255,63,.28) }
