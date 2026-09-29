@@ -1995,17 +1995,7 @@ function App() {
         </section>
 
         <section className="tech">
-          <div className="tech-heading">
-            <div>
-              <span className="tech-kicker">THE TOOLKIT</span>
-              <h2>MY <em>TECHSTACK</em></h2>
-            </div>
-            <p>
-              A practical stack built across interfaces, backend systems,
-              mobile, databases, networking and creative technology.
-            </p>
-          </div>
-
+          <h2>MY TECHSTACK</h2>
           <Bubbles />
         </section>
 
