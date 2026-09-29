@@ -3,82 +3,75 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Pratik Poudel — IT professional portfolio, software, web development, networking and digital projects.">
-<title>Pratik Poudel | Professional Portfolio</title>
-<link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#05070b">
+<meta name="description" content="Pratik Poudel — software, full-stack, mobile and systems portfolio.">
+<title>Pratik Poudel — Digital Trail</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-<script defer src="script.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="site-header">
-  <nav class="nav container">
-    <a class="brand" href="#home">PP<span>.</span></a>
-    <button class="menu" aria-label="Open navigation">☰</button>
-    <div class="nav-links">
-      <a href="#about">About</a><a href="#expertise">Expertise</a><a href="#work">Work</a><a href="#experience">Experience</a><a href="#contact">Contact</a>
-      <a class="nav-cta" href="resume.pdf" download>Resume</a>
-    </div>
-  </nav>
+<div id="loader"><div class="loader-mark">PP<span>.</span></div><div class="loader-line"><i></i></div><p>ENTERING THE DIGITAL TRAIL</p></div>
+
+<div id="scene"></div>
+<div class="rain-overlay"></div>
+<div class="vignette"></div>
+
+<header class="hud">
+  <a class="logo" href="#top">PRATIK<span>.</span></a>
+  <div class="hud-right"><span class="status"><i></i> AVAILABLE TO CONNECT</span><button id="sound" aria-label="Toggle ambience">SOUND OFF</button></div>
 </header>
 
-<main>
-<section id="home" class="hero">
-  <div class="container hero-grid">
-    <div>
-      <p class="eyebrow">IT • SOFTWARE • DIGITAL DEVELOPMENT</p>
-      <h1>Building practical digital solutions with a <span>professional mindset.</span></h1>
-      <p class="hero-copy">I'm Pratik Poudel — an Information Technology student and aspiring software professional focused on full-stack development, mobile applications, networking and computer systems.</p>
-      <div class="actions"><a class="button primary" href="#work">View my work</a><a class="button secondary" href="resume.pdf" download>Download resume</a></div>
-      <div class="socials"><a href="https://www.linkedin.com/in/pratik-poudel-b3264a263/" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/pyatrick666" target="_blank" rel="noopener">GitHub</a><a href="mailto:pyatrick666@gmail.com">Email</a></div>
-    </div>
-    <div class="hero-card">
-      <img src="profile.jpg" alt="Pratik Poudel professional portrait">
-      <div><strong>Pratik Poudel</strong><span>BSc (Hons) Information Technology — Computer Systems Engineering</span><span>ISMT College • University of Sunderland affiliation</span></div>
-    </div>
+<main id="top">
+  <section class="hero-panel panel">
+    <p class="kicker">SOFTWARE • SYSTEMS • DIGITAL DEVELOPMENT</p>
+    <h1>Ride into<br><em>my work.</em></h1>
+    <p class="intro">I'm Pratik Poudel — a bachelor's student building toward software engineering through full-stack development, mobile apps, networking and computer systems.</p>
+    <div class="hero-actions"><button class="primary-btn" data-target="work">EXPLORE WORK <span>↗</span></button><button class="ghost-btn" data-target="about">ABOUT ME</button></div>
+    <p class="hint">WASD / ARROWS TO RIDE <b>•</b> DRAG TO LOOK <b>•</b> TAP THE MARKERS</p>
+  </section>
+
+  <aside class="location-card panel"><span class="location-no">01</span><strong id="location-title">THE TRAILHEAD</strong><span id="location-sub">PRATIK POUDel / PORTFOLIO</span></aside>
+
+  <section id="about" class="content-panel panel hidden-panel">
+    <button class="close-panel" aria-label="Close">×</button>
+    <p class="kicker">01 / ABOUT</p><h2>Built through<br><em>curiosity.</em></h2>
+    <p>I like taking a technical idea from concept to something people can actually use. My interests sit across software development, full-stack web, Flutter/Dart, networking and computer systems.</p>
+    <p>This is my professional portfolio — separate from my academic assignment work. The goal is simple: show what I build, what I am learning, and where I am heading.</p>
+    <div class="mini-grid"><div><b>NOW</b><span>BSc (Hons) IT<br>Computer Systems Engineering</span></div><div><b>FOCUS</b><span>Software • Full Stack<br>Mobile • Systems</span></div></div>
+  </section>
+
+  <section id="work" class="content-panel panel hidden-panel">
+    <button class="close-panel" aria-label="Close">×</button>
+    <p class="kicker">02 / SELECTED WORK</p><h2>Things I've<br><em>built.</em></h2>
+    <article class="project-card featured-project"><span>DEPLOYED / FLUTTER</span><h3>ChessMate</h3><p>A mobile chess experience built with Flutter and Dart, with gameplay, polished UI and production-oriented deployment.</p><div class="chips"><i>Flutter</i><i>Dart</i><i>Mobile</i><i>AdMob</i></div><a href="https://pyatrick666.itch.io/chessmate" target="_blank" rel="noopener">OPEN PROJECT ↗</a></article>
+    <article class="project-card"><span>WEB / FRONTEND</span><h3>ePortfolio</h3><p>A frontend portfolio project exploring responsive UI, JavaScript interactions and practical web presentation.</p><div class="chips"><i>HTML</i><i>CSS</i><i>JavaScript</i></div><a href="https://pyatrick666.github.io/ePortfolio/" target="_blank" rel="noopener">OPEN SITE ↗</a></article>
+    <article class="project-card"><span>MORE ON GITHUB</span><h3>Personal builds</h3><p>Explore my repositories for software experiments, development work and projects beyond this site.</p><a href="https://github.com/pyatrick666" target="_blank" rel="noopener">VIEW GITHUB ↗</a></article>
+  </section>
+
+  <section id="skills" class="content-panel panel hidden-panel">
+    <button class="close-panel" aria-label="Close">×</button>
+    <p class="kicker">03 / CAPABILITIES</p><h2>What I<br><em>work with.</em></h2>
+    <div class="skill-list"><span>Software Development</span><span>Full-Stack Web</span><span>Flutter / Dart</span><span>JavaScript</span><span>Python</span><span>C# / Java / C</span><span>Databases</span><span>Networking & Systems</span><span>Linux</span><span>Git / GitHub</span><span>Figma</span><span>Canva</span></div>
+  </section>
+
+  <section id="contact" class="content-panel panel hidden-panel">
+    <button class="close-panel" aria-label="Close">×</button>
+    <p class="kicker">04 / CONTACT</p><h2>Let's build<br><em>something.</em></h2>
+    <p>For internships, collaboration, project discussions or professional opportunities, connect through any of these channels.</p>
+    <div class="contact-list"><a href="mailto:pyatrick666@gmail.com"><b>EMAIL</b><span>pyatrick666@gmail.com</span>↗</a><a href="https://www.linkedin.com/in/pratik-poudel-b3264a263/" target="_blank" rel="noopener"><b>LINKEDIN</b><span>Pratik Poudel</span>↗</a><a href="https://github.com/pyatrick666" target="_blank" rel="noopener"><b>GITHUB</b><span>@pyatrick666</span>↗</a></div>
+  </section>
+
+  <div class="trail-markers" aria-label="Portfolio sections">
+    <button class="marker m-about" data-target="about"><span>01</span>ABOUT</button>
+    <button class="marker m-work" data-target="work"><span>02</span>WORK</button>
+    <button class="marker m-skills" data-target="skills"><span>03</span>SKILLS</button>
+    <button class="marker m-contact" data-target="contact"><span>04</span>CONTACT</button>
   </div>
-</section>
-
-<section id="about" class="section">
-<div class="container two-col">
-  <div><p class="eyebrow">ABOUT</p><h2>Technology, learning and building.</h2></div>
-  <div><p>I approach development by learning a concept, building with it, testing it and improving the result. My interests span software engineering, full-stack web development, mobile development, networking and computer systems.</p><p>This portfolio is intentionally separate from my student coursework portfolio. It focuses on my professional profile, capabilities, selected independent work and the direction I am building toward.</p></div>
-</div>
-</section>
-
-<section id="expertise" class="section muted">
-<div class="container"><p class="eyebrow">EXPERTISE</p><h2>Areas I work and learn in</h2>
-<div class="cards">
-<article><span>01</span><h3>Software Development</h3><p>Object-oriented programming, application development, debugging and iterative improvement.</p></article>
-<article><span>02</span><h3>Full-Stack Web</h3><p>Responsive interfaces, JavaScript, APIs, databases and the connection between client and server.</p></article>
-<article><span>03</span><h3>Mobile Development</h3><p>Flutter and Dart development with a focus on usable, polished mobile experiences.</p></article>
-<article><span>04</span><h3>Networking & Systems</h3><p>Computer systems, Linux environments, networking concepts and practical technical problem-solving.</p></article>
-<article><span>05</span><h3>UI/UX & Design</h3><p>Interface thinking and visual design using Figma and Canva.</p></article>
-<article><span>06</span><h3>Tools & Workflow</h3><p>Git, GitHub, testing, debugging and structured project workflows.</p></article>
-</div></div>
-</section>
-
-<section id="work" class="section">
-<div class="container"><p class="eyebrow">SELECTED WORK</p><h2>Projects that represent how I build</h2>
-<div class="work-grid">
-<article class="work-card featured"><div><p class="tag">DEPLOYED PROJECT</p><h3>ChessMate</h3><p>A Flutter-based chess game focused on mobile interaction, gameplay flow and a polished player-facing experience.</p><div class="tags"><span>Flutter</span><span>Dart</span><span>Mobile</span><span>AdMob</span></div></div><a href="https://pyatrick666.itch.io/chessmate" target="_blank" rel="noopener">View project ↗</a></article>
-<article class="work-card"><p class="tag">PORTFOLIO</p><h3>Student ePortfolio</h3><p>An interactive web portfolio built around practical frontend demonstrations and learning documentation.</p><div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Bootstrap</span></div><a href="https://pyatrick666.github.io/ePortfolio/" target="_blank" rel="noopener">Visit portfolio ↗</a></article>
-<article class="work-card"><p class="tag">GITHUB</p><h3>Open-source & Personal Builds</h3><p>Explore my GitHub repositories for current software experiments, coursework-independent builds and development work.</p><div class="tags"><span>GitHub</span><span>Software</span><span>Development</span></div><a href="https://github.com/pyatrick666" target="_blank" rel="noopener">View GitHub ↗</a></article>
-</div></div>
-</section>
-
-<section id="experience" class="section muted">
-<div class="container two-col"><div><p class="eyebrow">BACKGROUND</p><h2>Education & professional direction</h2></div><div class="timeline">
-<div><strong>BSc (Hons) Information Technology — Computer Systems Engineering</strong><span>ISMT College • 2025–Present</span><p>Developing foundations across software engineering, web development, databases, computer systems and enterprise project work.</p></div>
-<div><strong>Professional focus</strong><span>Software • Full Stack • Mobile • Networking</span><p>Building a portfolio around practical development, technical problem-solving and continuous improvement.</p></div>
-</div></div>
-</section>
-
-<section id="contact" class="section contact">
-<div class="container contact-box"><div><p class="eyebrow">CONTACT</p><h2>Let's connect.</h2><p>For professional opportunities, collaboration or project discussions, reach me through the channels below.</p></div><div class="contact-links"><a href="mailto:pyatrick666@gmail.com"><strong>Email</strong><span>pyatrick666@gmail.com</span></a><a href="https://www.linkedin.com/in/pratik-poudel-b3264a263/" target="_blank" rel="noopener"><strong>LinkedIn</strong><span>Professional profile</span></a><a href="https://github.com/pyatrick666" target="_blank" rel="noopener"><strong>GitHub</strong><span>@pyatrick666</span></a></div></div>
-</section>
 </main>
-<footer><div class="container footer"><span>© 2026 Pratik Poudel</span><span>Professional Portfolio</span></div></footer>
+
+<footer class="footer"><span>© 2026 PRATIK POUDEL</span><span>PROFESSIONAL PORTFOLIO</span><span>SCROLL / RIDE</span></footer>
+<script type="module" src="script.js"></script>
 </body>
 </html>
