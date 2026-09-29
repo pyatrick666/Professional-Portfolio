@@ -1020,18 +1020,44 @@ function App() {
             }
           );
 
-          gsap.to('.about .rv', {
-            y: -36,
-            opacity: 0,
-            scale: 0.97,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: '#about',
-              start: '55% top',
-              end: 'bottom top',
-              scrub: reducedMotion ? false : 1,
-            },
-          });
+          gsap.utils
+            .toArray<HTMLElement>('#about, .do, .tl')
+            .forEach((section) => {
+              gsap.fromTo(
+                section,
+                {
+                  opacity: 0,
+                  y: 70,
+                  scale: 0.985,
+                },
+                {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  duration: 1.1,
+                  ease: 'power3.out',
+                  scrollTrigger: {
+                    trigger: section,
+                    start: 'top 88%',
+                    end: 'top 45%',
+                    scrub: reducedMotion ? false : 1,
+                  },
+                }
+              );
+
+              gsap.to(section, {
+                opacity: 0,
+                y: -55,
+                scale: 0.985,
+                ease: 'none',
+                scrollTrigger: {
+                  trigger: section,
+                  start: '55% top',
+                  end: 'bottom top',
+                  scrub: reducedMotion ? false : 1,
+                },
+              });
+            });
 
           gsap.utils
             .toArray<HTMLElement>(
