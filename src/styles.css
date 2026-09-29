@@ -1555,14 +1555,21 @@ section {
   display: block;
   color: var(--fg);
   text-decoration: none;
-  border-bottom: 1px solid var(--mute);
+  border-bottom: 0;
   width: max-content;
   margin-bottom: 0.5rem;
   font-size: 1.2rem;
+  transition: color .3s ease;
 }
 
-.grid a:hover {
-  color: var(--pu);
+.grid a:hover,
+.grid a:focus-visible {
+  color: #39ff14;
+}
+
+.grid a[href^="mailto:"] {
+  text-decoration: none;
+  border-bottom: 0;
 }
 
 /* =========================================================
@@ -2033,11 +2040,13 @@ section {
    HEADER EMAIL HOVER
    ========================================================= */
 
-.mid:hover,
-.mid:focus-visible {
-  color: #39ff14 !important;
+.mid {
+  text-decoration: none !important;
+  transition: color .3s ease;
 }
 
+.mid:hover,
+.mid:focus-visible,
 .header .mid:hover,
 .header .mid:focus-visible {
   color: #39ff14 !important;
