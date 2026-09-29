@@ -1608,3 +1608,10 @@ section {
 .mid:focus-visible {
   color: #39ff14 !important;
 }
+
+
+/* Header email hover */
+.header .mid:hover,
+.header .mid:focus-visible {
+  color: #39ff14 !important;
+}
