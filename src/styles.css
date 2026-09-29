@@ -603,8 +603,6 @@ section {
   position: relative;
   height: 2em;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
   font:
     700 clamp(1.45rem, 2.7vw, 2.8rem) / 0.98
     var(--display);
@@ -626,34 +624,27 @@ section {
   animation: roleAccent 3.5s ease-in-out infinite;
 }
 
-.role-static,
 .role-changing {
   display: block;
-}
-
-.role-static {
-  height: 1em;
-}
-
-.role-changing {
-  position: relative;
-  height: 1em;
-  overflow: hidden;
+  height: 2em;
 }
 
 .role-changing > span {
   display: block;
-  height: 1em;
-  animation: developerSwap 5s infinite cubic-bezier(.7, 0, .2, 1);
+  height: 2em;
 }
 
-@keyframes developerSwap {
+.role-changing > span:first-child {
+  animation: roleSwap 5s infinite cubic-bezier(.7, 0, .2, 1);
+}
+
+@keyframes roleSwap {
   0%, 38% {
     transform: translateY(0);
   }
 
   50%, 88% {
-    transform: translateY(-100%);
+    transform: translateY(-2em);
   }
 
   100% {
