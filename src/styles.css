@@ -2241,190 +2241,135 @@ section {
 }
 
 /* =========================================================
-   WORK / PROJECTS
+   PROJECTS
    ========================================================= */
 
+
+
 .work {
-  transition: 0s;
-  height: 100vh;
-  box-sizing: border-box;
-  will-change: transform;
+  padding:
+    clamp(100px, 14vh, 140px)
+    0
+    0;
+  justify-content: flex-start;
   overflow: hidden;
 }
 
 .work h2 {
-  margin-top: 100px;
-  margin-bottom: 0;
-  font-family: "Geist", var(--display), sans-serif;
-  font-size: 70px;
-  line-height: 1;
-  font-weight: 500;
-  letter-spacing: -.04em;
+  font:
+    300 var(--h2)
+    var(--display);
+  padding:
+    0
+    var(--gut)
+    2.5rem;
 }
 
-.work h2 span {
-  color: var(--accentColor, var(--pu));
+.work h2 em {
+  font-style: normal;
+  color: var(--pu);
+  font-weight: 700;
 }
 
-.work .track {
-  margin: auto;
+.track {
   display: flex;
-  flex-direction: row;
-  height: 100%;
-  align-content: stretch;
+  border-top: 1px solid var(--line);
+  flex: 1;
   width: max-content;
 }
 
-.work .track > .card {
-  padding: 80px;
+.pj {
+  position: relative;
+  flex: 0 0 min(38rem, 88vw);
+  border-right: 1px solid var(--line);
+  padding: 3rem 2.8rem;
   display: flex;
   flex-direction: column;
-  width: 600px;
-  box-sizing: border-box;
-  border-right: 1px solid #363636;
-  flex-shrink: 0;
-  gap: 50px;
-  justify-content: flex-start;
-  background: transparent;
-}
-
-.work .track > .card:nth-child(even) {
-  flex-direction: column-reverse;
-}
-
-.work .track::before,
-.work .track::after {
-  content: "";
-  width: 50000vw;
-  height: 1px;
-  background-color: #363636;
-  position: absolute;
-  left: 50%;
-  top: 0;
-  transform: translateX(-50%);
-}
-
-.work .track::after {
-  top: 100%;
-}
-
-.work .card .card-top {
-  justify-content: space-between;
-  display: flex;
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.work .card .card-top > div {
-  text-align: right;
-}
-
-.work .card h3 {
-  font-family: "Geist", var(--display), sans-serif;
-  font-size: 50px;
-  line-height: 50px;
-  margin: 0;
-  font-weight: 600;
-}
-
-.work .card p {
-  font-weight: 200;
-  color: #adacac;
-  margin: 0;
-  margin-top: 3px;
-}
-
-.work .card .meta {
-  font-size: 18px;
-  font-weight: 400;
+  gap: 1.1rem;
   color: var(--fg);
-  margin: 0;
+  text-decoration: none;
 }
 
-.work .card .desc {
-  width: 90%;
+.pj:first-child {
+  margin-left: var(--gut);
+  border-left: 1px solid var(--line);
 }
 
-.work .card .media {
-  display: flex;
-  width: 100%;
-  justify-content: center;
+.pj .n {
+  font:
+    700 clamp(2.4rem, 4vw, 4rem)
+    var(--display);
 }
 
-.work .card .media-inner {
+.pj h3 {
+  font-size: 1.6rem;
+}
+
+.pj span {
+  color: var(--mute);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.pj svg {
+  color: var(--pu);
+  transition: transform 0.35s ease;
+}
+
+.pj:hover svg {
+  transform: translate(4px, -4px);
+}
+
+.pj::after {
+  content: 'VIEW PROJECT';
+  position: absolute;
+  top: 3.2rem;
+  right: 2.8rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  color: var(--mute);
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.pj:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pj .shot {
   position: relative;
+  height: 14rem;
+  border-radius: 0.6rem;
+  background:
+    linear-gradient(
+      135deg,
+      #1a1030,
+      #3b1f7a 60%,
+      #7dff00
+    );
+  opacity: 0.8;
+  margin-top: auto;
+  overflow: hidden;
+  transition:
+    transform 0.55s cubic-bezier(0.2, 0.75, 0.2, 1),
+    opacity 0.35s ease;
 }
 
-.work .card .media-inner img {
-  max-width: 100%;
-  max-height: 350px;
-  object-fit: contain;
+.pj .shot::before {
+  content: '';
+  position: absolute;
+  inset: 12%;
+  border: 1px solid rgba(198, 255, 138, 0.24);
+  transform: skewX(-12deg);
 }
 
-@media only screen and (max-height: 900px) {
-  .work .card .media-inner img {
-    max-height: 250px;
-  }
-
-  .work .track > .card {
-    padding-top: 40px;
-    padding-bottom: 40px;
-  }
-
-  .work h2 {
-    font-size: 60px;
-    margin-bottom: 30px;
-    margin-top: 70px;
-  }
-}
-
-@media only screen and (max-width: 1400px) {
-  .work .card h3 {
-    font-size: 35px;
-    line-height: 35px;
-  }
-
-  .work .card p {
-    font-size: 13px;
-  }
-
-  .work .card .meta {
-    font-size: 15px;
-  }
-
-  .work .track > .card {
-    width: 450px;
-    padding: 50px;
-  }
-
-  .work h2 {
-    font-size: 50px;
-  }
-}
-
-@media only screen and (max-width: 1025px) {
-  .work .track {
-    height: auto;
-  }
-
-  .work {
-    height: auto;
-  }
-}
-
-@media only screen and (max-height: 650px) {
-  .work .card .media-inner img {
-    max-height: 200px;
-  }
-
-  .work h2 {
-    font-size: 40px;
-    margin-bottom: 20px;
-  }
-
-  .work .track > .card {
-    gap: 20px;
-  }
+.pj:hover .shot {
+  transform: scale(1.025);
+  opacity: 1;
 }
 
 /* =========================================================
