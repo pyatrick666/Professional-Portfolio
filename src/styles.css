@@ -904,8 +904,106 @@ section {
 }
 
 
-/* Tech stack: start as one centered cluster, disperse only while hovered, then spring back. */
-.bubbles { cursor: crosshair; }
+/* Tech stack: centered cluster -> hover dispersion -> centered again */
 
-.tech:hover .bubbles { cursor: grab; }
-.tech:active .bubbles { cursor: grabbing; }
+.bubbles {
+  cursor: crosshair;
+}
+
+.tech:hover .bubbles {
+  cursor: grab;
+}
+
+.tech:active .bubbles {
+  cursor: grabbing;
+}
+
+/* Social cards */
+
+.social-list {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 0.8rem;
+}
+
+.social-link {
+  position: relative;
+  display: grid !important;
+  grid-template-columns: 42px 1fr auto;
+  align-items: center;
+  gap: 0.9rem;
+  width: min(25rem, 100%) !important;
+  margin: 0 !important;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--line) !important;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.015);
+  color: var(--fg) !important;
+  text-decoration: none !important;
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.social-link:hover {
+  transform: translate3d(10px, -3px, 0);
+  border-color: var(--pu) !important;
+  background: rgba(125, 255, 0, 0.045);
+  box-shadow:
+    0 12px 34px rgba(125, 255, 0, 0.09),
+    inset 0 0 22px rgba(125, 255, 0, 0.025);
+}
+
+.social-mark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #394631;
+  border-radius: 0.55rem;
+  color: var(--pu);
+  font: 700 0.72rem var(--display);
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+.social-link:hover .social-mark {
+  transform: rotate(-4deg) scale(1.05);
+  background: var(--pu);
+  color: #071000;
+}
+
+.social-link > span:nth-child(2) {
+  min-width: 0;
+  border: 0 !important;
+  margin: 0 !important;
+  width: auto !important;
+}
+
+.social-link b {
+  display: block;
+  color: var(--fg);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.social-link small {
+  display: block;
+  margin: 0.1rem 0 0 !important;
+  color: var(--mute);
+  font-size: 0.72rem;
+}
+
+.social-link svg {
+  color: var(--pu);
+  transition: transform 0.3s ease;
+}
+
+.social-link:hover svg {
+  transform: translate(3px, -3px);
+}
