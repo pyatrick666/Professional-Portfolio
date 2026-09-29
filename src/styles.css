@@ -736,60 +736,172 @@ section {
    ========================================================= */
 
 .do {
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 3rem;
-  flex-wrap: wrap;
+  min-height: 100vh;
+  padding-top: clamp(120px, 16vh, 180px);
+  padding-bottom: clamp(100px, 14vh, 160px);
+  display: grid;
+  grid-template-columns: minmax(18rem, .72fr) minmax(0, 1.28fr);
+  align-items: center;
+  gap: clamp(3rem, 8vw, 9rem);
+}
+
+.do-heading {
+  align-self: center;
+  max-width: 34rem;
+}
+
+.do-index {
+  display: inline-flex;
+  margin-bottom: 2.2rem;
+  color: var(--pu);
+  font-size: .62rem;
+  font-weight: 500;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.do-heading .big {
+  margin-bottom: 2rem;
+  font-size: clamp(4.5rem, 9vw, 9rem);
+}
+
+.do-heading .big em {
+  color: var(--pu);
+  font-style: normal;
+}
+
+.do-intro {
+  max-width: 28rem;
+  color: var(--mute);
+  font-size: clamp(.95rem, 1.35vw, 1.12rem);
+  line-height: 1.7;
 }
 
 .cards {
-  width: min(30rem, 100%);
+  width: 100%;
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
 }
 
 .card {
   position: relative;
-  border: 1px dashed #66745b;
-  padding: 2.2rem 2.4rem;
+  min-height: 22rem;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.5rem, 2.6vw, 2.5rem);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.025), transparent 55%),
+    rgba(5,3,8,.42);
+  overflow: hidden;
+  transition: transform .55s cubic-bezier(.22,1,.36,1), background .45s ease, border-color .45s ease;
 }
 
-.card + .card {
-  border-top: 0;
-}
-
-.card h3 {
-  font-size: 1.9rem;
-  margin-bottom: 0.9rem;
-}
-
-.card p {
-  font-size: 0.9rem;
-  color: var(--soft);
-  line-height: 1.6;
-}
-
-.card::before,
-.card::after {
-  content: '';
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  border: 2px solid #fff;
+.card:last-child {
+  grid-column: 1 / -1;
+  min-height: 18rem;
 }
 
 .card::before {
-  top: -2px;
-  left: -2px;
-  border-right: 0;
-  border-bottom: 0;
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 85% 10%, rgba(125,255,0,.1), transparent 28%);
+  opacity: 0;
+  transition: opacity .45s ease;
+  pointer-events: none;
 }
 
 .card::after {
-  bottom: -2px;
-  right: -2px;
-  border-left: 0;
-  border-top: 0;
+  content: '';
+  position: absolute;
+  width: 7rem;
+  height: 7rem;
+  right: -4rem;
+  bottom: -4rem;
+  border: 1px solid rgba(125,255,0,.22);
+  border-radius: 50%;
+  transition: transform .6s cubic-bezier(.22,1,.36,1);
+}
+
+.card:hover {
+  z-index: 2;
+  transform: translateY(-7px);
+  border-color: rgba(125,255,0,.35);
+  background:
+    linear-gradient(145deg, rgba(125,255,0,.045), transparent 55%),
+    rgba(8,6,12,.82);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card:hover::after {
+  transform: scale(1.55);
+}
+
+.card-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: auto;
+  color: var(--pu);
+  font-size: .68rem;
+  letter-spacing: .16em;
+}
+
+.card-arrow {
+  font-size: 1.15rem;
+  line-height: 1;
+  transition: transform .35s ease;
+}
+
+.card:hover .card-arrow {
+  transform: translate(4px, -4px);
+}
+
+.card h3 {
+  position: relative;
+  z-index: 1;
+  max-width: 20rem;
+  margin: 2.5rem 0 1rem;
+  font-size: clamp(1.25rem, 2vw, 2rem);
+  line-height: 1.05;
+  letter-spacing: -.035em;
+}
+
+.card p {
+  position: relative;
+  z-index: 1;
+  max-width: 31rem;
+  margin-bottom: 1.5rem;
+  color: var(--mute);
+  font-size: .86rem;
+  line-height: 1.7;
+}
+
+.card-tags {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin-top: auto;
+}
+
+.card-tags span {
+  padding: .28rem .6rem;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 999px;
+  color: var(--soft);
+  background: rgba(255,255,255,.025);
+  font-size: .62rem;
+  letter-spacing: .02em;
 }
 
 .work {
@@ -1193,6 +1305,26 @@ section {
   .about .eyebrow,
   .about p {
     margin-left: 0;
+  }
+
+  .do {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+    align-items: start;
+  }
+
+  .do-heading .big {
+    font-size: clamp(4rem, 18vw, 7rem);
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .card,
+  .card:last-child {
+    grid-column: auto;
+    min-height: 19rem;
   }
 
   .row {
