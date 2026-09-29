@@ -461,20 +461,9 @@ main {
   padding: 0.35rem 0;
 }
 
-.nav a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 100%;
-  bottom: 0;
-  height: 1px;
-  background: var(--pu);
-  transition: right 0.3s ease;
-}
-
-.nav a:hover::after,
-.nav a:focus-visible::after {
-  right: 0;
+.nav a:hover,
+.nav a:focus-visible {
+  color: var(--pu);
 }
 
 :focus-visible {
