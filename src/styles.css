@@ -1006,6 +1006,22 @@ section {
   display: grid;
   gap: 0.7rem;
   margin-top: 0.8rem;
+  padding: 0.8rem;
+  border: 1px solid transparent;
+  border-radius: 1rem;
+  background: transparent;
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.social-list:has(.social-link:hover) {
+  background: rgba(125, 255, 0, 0.10);
+  border-color: rgba(125, 255, 0, 0.32);
+  box-shadow:
+    0 0 45px rgba(125, 255, 0, 0.10),
+    inset 0 0 35px rgba(125, 255, 0, 0.045);
 }
 
 .social-link {
@@ -1014,7 +1030,7 @@ section {
   grid-template-columns: 42px 1fr auto;
   align-items: center;
   gap: 0.9rem;
-  width: min(25rem, 100%) !important;
+  width: 100% !important;
   margin: 0 !important;
   padding: 0.8rem 0.9rem;
   border: 1px solid var(--line) !important;
@@ -1022,21 +1038,17 @@ section {
   background: rgba(255, 255, 255, 0.015);
   color: var(--fg) !important;
   text-decoration: none !important;
-  transform: translate3d(0, 0, 0);
+  transform: none;
   transition:
-    transform 0.3s ease,
     border-color 0.3s ease,
     background 0.3s ease,
     box-shadow 0.3s ease;
 }
 
 .social-link:hover {
-  transform: translate3d(10px, -3px, 0);
-  border-color: var(--pu) !important;
-  background: rgba(125, 255, 0, 0.045);
-  box-shadow:
-    0 12px 34px rgba(125, 255, 0, 0.09),
-    inset 0 0 22px rgba(125, 255, 0, 0.025);
+  border-color: rgba(125, 255, 0, 0.45) !important;
+  background: rgba(125, 255, 0, 0.055);
+  box-shadow: none;
 }
 
 .social-mark {
@@ -1051,13 +1063,11 @@ section {
     700 0.72rem
     var(--display);
   transition:
-    transform 0.3s ease,
     background 0.3s ease,
     color 0.3s ease;
 }
 
 .social-link:hover .social-mark {
-  transform: rotate(-4deg) scale(1.05);
   background: var(--pu);
   color: #071000;
 }
