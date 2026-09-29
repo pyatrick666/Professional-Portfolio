@@ -65,3 +65,9 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 .location-card:hover,.location-card:focus-visible{transform:translateY(-3px);border-color:rgba(215,255,63,.55);outline:none}
 .location-transition #scene{filter:brightness(1.35) saturate(.75);transition:filter .26s ease}
 .location-transition .vignette{opacity:.95}
+
+/* Startup fallback: never leave visitors behind a loader */
+.no-webgl #loader{opacity:0!important;visibility:hidden!important;pointer-events:none}
+.no-webgl #scene,.no-webgl .rain-overlay,.no-webgl .vignette,.no-webgl #ride-intro,.no-webgl #ride-hud{display:none}
+#webgl-fallback{display:none;position:fixed;inset:0;z-index:200;place-items:center;padding:28px;background:#030406;color:var(--text)}
+.no-webgl #webgl-fallback{display:grid}
