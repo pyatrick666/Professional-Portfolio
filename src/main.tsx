@@ -37,6 +37,10 @@ import { gsap } from 'gsap';
 import Lenis from 'lenis';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import * as THREE from 'three';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Environment } from '@react-three/drei';
+import { EffectComposer, N8AO } from '@react-three/postprocessing';
+import { BallCollider, Physics, RigidBody, RapierRigidBody } from '@react-three/rapier';
 import './styles.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -868,38 +872,75 @@ function Stage() {
    TECH STACK BUBBLES
    ========================================================= */
 
-function Bubbles() {
-  return (
-    <div className="skills-layout" aria-label="Skills and technologies">
-      <div className="skills-intro">
-        <span className="skills-kicker">THE TOOLKIT</span>
-        <p>A growing technical stack shaped by projects, coursework and constant experimentation.</p>
-        <div className="skills-signal" aria-hidden="true"><span /><span /><span /></div>
-      </div>
-      <div className="skills-groups">
-        {skillGroups.map((group) => (
-          <article className="skill-group" key={group.title}>
-            <div className="skill-group__top">
-              <span>{group.label}</span>
-              <span className="skill-group__line" />
-              <span>{String(group.skills.length).padStart(2, '0')} skills</span>
-            </div>
-            <h3>{group.title}</h3>
-            <p>{group.description}</p>
-            <div className="skill-pills">
-              {group.skills.map((skill, index) => (
-                <span className="skill-pill" key={skill}>
-                  <i>{String(index + 1).padStart(2, '0')}</i>{skill}
-                </span>
-              ))}
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  );
+function TechSphere({ position, scale, material, isActive }: { position: [number, number, number]; scale: number; material: THREE.MeshPhysicalMaterial; isActive: boolean }) {
+  const body = useRef<RapierRigidBody | null>(null);
+  const vec = useMemo(() => new THREE.Vector3(), []);
+  useFrame((_state, delta) => {
+    if (!isActive || !body.current) return;
+    const impulse = vec.copy(body.current.translation()).normalize().multiplyScalar(-42 * Math.min(delta, 0.1) * scale);
+    body.current.applyImpulse(impulse, true);
+  });
+  return <RigidBody ref={body} position={position} linearDamping={0.72} angularDamping={0.18} friction={0.2} colliders={false}>
+    <BallCollider args={[scale]} />
+    <mesh castShadow receiveShadow geometry={techSphereGeometry} material={material} scale={scale} rotation={[0.3, 1, 1]} />
+  </RigidBody>;
 }
 
+function TechPointer({ isActive }: { isActive: boolean }) {
+  const ref = useRef<RapierRigidBody | null>(null);
+  const target = useMemo(() => new THREE.Vector3(), []);
+  useFrame(({ pointer, viewport }) => {
+    if (!isActive || !ref.current) return;
+    target.lerp(new THREE.Vector3((pointer.x * viewport.width) / 2, (pointer.y * viewport.height) / 2, 0), 0.18);
+    ref.current.setNextKinematicTranslation(target);
+  });
+  return <RigidBody ref={ref} type="kinematicPosition" position={[100, 100, 100]} colliders={false}><BallCollider args={[2]} /></RigidBody>;
+}
+
+const techSphereGeometry = new THREE.SphereGeometry(1, 28, 28);
+const techTexturePaths = ['react2.svg', 'next2.svg', 'node2.svg', 'express.svg', 'mongo.svg', 'mysql.svg', 'typescript.svg', 'javascript.svg'];
+
+function Bubbles() {
+  const [isActive, setIsActive] = useState(false);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const spheres = useMemo(() => Array.from({ length: 30 }, (_, index) => ({
+    scale: [0.7, 1, 0.8, 1, 1][index % 5],
+    position: [THREE.MathUtils.randFloatSpread(9), THREE.MathUtils.randFloatSpread(7) - 0.5, THREE.MathUtils.randFloatSpread(5) - 1] as [number, number, number],
+    textureIndex: index % techTexturePaths.length,
+  })), []);
+  const textures = useMemo(() => {
+    const loader = new THREE.TextureLoader();
+    return techTexturePaths.map((path) => {
+      const texture = loader.load('./images/' + path);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      return texture;
+    });
+  }, []);
+  const materials = useMemo(() => textures.map((texture) => new THREE.MeshPhysicalMaterial({
+    map: texture, emissive: new THREE.Color('#ffffff'), emissiveMap: texture, emissiveIntensity: 0.3, metalness: 0.5, roughness: 0.72, clearcoat: 0.18,
+  })), [textures]);
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(([entry]) => setIsActive(entry.isIntersecting), { threshold: 0.08 });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+  return <div ref={sectionRef} className="skills-physics" aria-label="Interactive technology stack">
+    <div className="skills-physics__copy"><span>INTERACTIVE STACK</span><p>Move through the toolkit. Hover the field and watch the technologies react.</p></div>
+    <Canvas shadows dpr={[1, 1.5]} gl={{ alpha: true, stencil: false, depth: true, antialias: false }} camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }} onCreated={({ gl }) => { gl.toneMappingExposure = 1.5; }} className="tech-canvas">
+      <ambientLight intensity={1} />
+      <spotLight position={[20, 20, 25]} penumbra={1} angle={0.2} color="white" intensity={2} castShadow shadow-mapSize={[512, 512]} />
+      <directionalLight position={[0, 5, -4]} intensity={2} />
+      <Physics gravity={[0, 0, 0]}>
+        <TechPointer isActive={isActive} />
+        {spheres.map((sphere, index) => <TechSphere key={index} {...sphere} material={materials[sphere.textureIndex]} isActive={isActive} />)}
+      </Physics>
+      <Environment preset="city" environmentIntensity={0.5} />
+      <EffectComposer enableNormalPass={false}><N8AO color="#0f002c" aoRadius={2} intensity={1.15} /></EffectComposer>
+    </Canvas>
+  </div>;
+}
 /* =========================================================
    APP
    ========================================================= */
