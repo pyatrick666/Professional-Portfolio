@@ -75,6 +75,7 @@
 }
 
 .career-info h3 {
+  white-space: pre-line;
   font-size: 48px;
   margin: 0;
   color: var(--mute);
