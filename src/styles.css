@@ -302,17 +302,6 @@ main {
   position: relative;
 }
 
-.header .logo::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -0.35rem;
-  width: 1.6rem;
-  height: 1px;
-  background: var(--pu);
-  box-shadow: 0 0 10px rgba(125, 255, 0, 0.8);
-}
-
 .logo {
   font-weight: 500;
   text-transform: none;
@@ -328,6 +317,15 @@ main {
   text-transform: none;
   letter-spacing: 0.04em;
   white-space: nowrap;
+  border-bottom: 0 !important;
+  text-decoration: none !important;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.mid:hover,
+.mid:focus-visible {
+  color: var(--pu) !important;
+  text-shadow: 0 0 14px rgba(125, 255, 0, 0.35);
 }
 
 .nav {
