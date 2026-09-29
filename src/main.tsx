@@ -1430,32 +1430,23 @@ function App() {
 
                 if (distance === 0) return;
 
-                // Use the exact horizontal travel for the cards, then keep a short
-                // vertical release zone so the page can naturally continue to the
-                // Tech Stack section after the final repository.
-                // Give the gallery a full viewport-height release zone after
-                // the final repository. This prevents the pin from holding the
-                // page at the end of the Work section.
-                const releaseZone = Math.max(
-                  window.innerHeight * 0.85,
-                  520
-                );
-
+                // Pin only for the amount of scroll needed to reveal the
+                // final repository. Once the last card reaches the viewport,
+                // ScrollTrigger releases the section so normal page scrolling
+                // can continue directly into Tech Stack.
                 gsap.to(workFlex, {
                   x: -distance,
                   ease: 'none',
                   scrollTrigger: {
                     trigger: workSection,
                     start: 'top top',
-                    end: () =>
-                      `+=${distance + releaseZone}`,
+                    end: () => `+=${distance}`,
                     scrub: 0.8,
                     pin: true,
                     pinSpacing: true,
                     anticipatePin: 1,
                     invalidateOnRefresh: true,
                     fastScrollEnd: true,
-                    preventOverlaps: true,
                     id: 'work-horizontal',
                   },
                 });
