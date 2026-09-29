@@ -50,3 +50,9 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
   .footer{display:none}
   .mobile-drive{position:fixed;display:flex;align-items:end;justify-content:space-between;left:0;right:0;bottom:20px;z-index:40;padding:0 16px;pointer-events:none}.mobile-steering,.mobile-pedals{display:flex;gap:10px;pointer-events:auto}.mobile-drive button{touch-action:none;user-select:none;-webkit-user-select:none;border:1px solid rgba(255,255,255,.2);background:rgba(5,8,13,.72);backdrop-filter:blur(12px);color:#fff;box-shadow:0 12px 30px rgba(0,0,0,.3)}.mobile-steering button{width:58px;height:58px;border-radius:50%;font:400 36px/1 Arial}.mobile-pedals{align-items:end}.mobile-pedals button{width:62px;height:46px;border-radius:9px;font-size:8px;font-weight:800;letter-spacing:.12em}.mobile-pedals button[data-drive=throttle]{border-color:rgba(215,255,63,.55);color:var(--accent)}.mobile-drive button.pressed{transform:scale(.94);background:rgba(215,255,63,.18)}.mobile-drive-hint{position:absolute;left:50%;bottom:-17px;transform:translateX(-50%);white-space:nowrap;color:rgba(255,255,255,.48);font-size:7px;letter-spacing:.16em}
 }
+
+/* World-first interaction polish */
+#start-ride:active,.primary-btn:active,.ghost-btn:active,.marker:active,#sound:active{transform:translateY(1px)}
+.content-panel::-webkit-scrollbar{width:5px}.content-panel::-webkit-scrollbar-thumb{background:rgba(215,255,63,.45)}
+@media(min-width:701px){.content-panel{scrollbar-width:thin;scrollbar-color:rgba(215,255,63,.45) transparent}}
+@media(max-width:700px){body{overscroll-behavior:none}.content-panel{overscroll-behavior:contain}.hero-actions{flex-wrap:wrap}.hero-actions button{min-height:40px}.mobile-drive{bottom:18px}.mobile-steering button,.mobile-pedals button{box-shadow:0 8px 24px rgba(0,0,0,.45)}}
