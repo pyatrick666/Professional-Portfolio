@@ -571,6 +571,42 @@ section {
   position: relative;
   border: 1px dashed #66745b;
   padding: 2.2rem 2.4rem;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.45s ease,
+    background 0.45s ease,
+    box-shadow 0.45s ease;
+}
+
+.card::marker {
+  display: none;
+}
+
+.card::selection,
+.card h3::selection,
+.card p::selection {
+  background: var(--pu);
+  color: #071000;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(
+      circle at 0% 50%,
+      rgba(125, 255, 0, 0.13),
+      transparent 58%
+    );
+  opacity: 0;
+  transform: translateX(-12%);
+  transition:
+    opacity 0.5s ease,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .card + .card {
@@ -578,15 +614,57 @@ section {
 }
 
 .card h3 {
+  position: relative;
   font-size: 1.9rem;
   margin-bottom: 0.9rem;
+  color: var(--fg);
+  transform: translateX(0);
+  transition:
+    color 0.4s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    text-shadow 0.4s ease;
 }
 
 .card p {
+  position: relative;
   font-size: 0.9rem;
   color: var(--soft);
   line-height: 1.6;
+  transform: translateY(0);
+  transition:
+    color 0.4s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
+
+.card:hover {
+  transform: translateX(8px);
+  border-color: rgba(125, 255, 0, 0.7);
+  background: rgba(125, 255, 0, 0.025);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.24),
+    0 0 28px rgba(125, 255, 0, 0.08);
+}
+
+.card:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.card:hover h3 {
+  color: var(--pu);
+  transform: translateX(7px);
+  text-shadow: 0 0 18px rgba(125, 255, 0, 0.2);
+}
+
+.card:hover p {
+  color: var(--fg);
+  transform: translateX(7px);
+}
+
+.card:focus-within {
+  border-color: rgba(125, 255, 0, 0.7);
+}
+
 
 .card::before,
 .card::after {
