@@ -905,191 +905,121 @@ section {
 
 .tech {
   position: relative;
+  min-height: 100vh;
   align-items: stretch;
   justify-content: center;
-  padding: clamp(6rem, 11vh, 10rem) var(--gut);
+  padding: clamp(6rem, 10vh, 9rem) var(--gut);
   overflow: hidden;
-  background:
-    radial-gradient(circle at 18% 50%, rgba(125,255,0,.055), transparent 28%),
-    radial-gradient(circle at 86% 22%, rgba(166,124,255,.08), transparent 30%),
-    var(--bg);
+  background: var(--bg);
 }
+
 .tech::before {
   content: '';
   position: absolute;
-  width: min(48vw, 680px);
-  aspect-ratio: 1;
-  right: -14%;
-  top: 8%;
-  border: 1px solid rgba(125,255,0,.07);
-  border-radius: 50%;
-  box-shadow: 0 0 100px rgba(125,255,0,.045), inset 0 0 80px rgba(166,124,255,.025);
+  inset: 12% 0 auto;
+  height: 65%;
+  background: radial-gradient(circle at 50% 50%, rgba(125,255,0,.055), transparent 42%);
   pointer-events: none;
 }
-.tech::after {
+
+.tech h2 {
+  position: relative;
+  z-index: 3;
+  margin: 0 0 1rem;
+  font: 300 var(--h2)/1 var(--display);
+  text-align: center;
+  letter-spacing: -.04em;
+}
+
+.skills-physics {
+  position: relative;
+  width: min(78rem, 100%);
+  height: min(68vh, 46rem);
+  min-height: 30rem;
+  margin: 0 auto;
+  border: 1px solid rgba(125,255,0,.13);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(125,255,0,.045), transparent 42%),
+    linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,.004));
+  box-shadow:
+    inset 0 0 80px rgba(125,255,0,.025),
+    0 30px 90px rgba(0,0,0,.22);
+}
+
+.skills-physics::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent 49.9%, rgba(125,255,0,.035) 50%, transparent 50.1%);
-  background-size: 8rem 100%;
+  z-index: 0;
+  background:
+    linear-gradient(rgba(125,255,0,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(125,255,0,.035) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  mask-image: radial-gradient(circle at center, black 15%, transparent 78%);
   pointer-events: none;
 }
-.tech h2 {
-  position: relative;
-  z-index: 2;
-  margin: 0 0 clamp(2.5rem,5vh,4rem);
-  font: 300 var(--h2)/1 var(--display);
-  text-align: left;
-  letter-spacing: -.04em;
-}
-.skills-layout {
-  position: relative;
-  z-index: 2;
-  width: min(78rem,100%);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: minmax(14rem,.72fr) minmax(0,2fr);
-  gap: clamp(2rem,6vw,6rem);
-  align-items: start;
-}
-.skills-intro {
-  position: sticky;
-  top: 18vh;
-  padding: 1.2rem 0;
-}
-.skills-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: .55rem;
-  color: var(--pu);
-  font-size: .68rem;
-  letter-spacing: .2em;
-  font-weight: 700;
-}
-.skills-kicker::before {
-  content: '';
-  width: 1.8rem;
-  height: 1px;
-  background: var(--pu);
-  box-shadow: 0 0 10px var(--pu);
-}
-.skills-intro p {
-  max-width: 20rem;
-  margin: 1.4rem 0 2rem;
-  color: var(--soft);
-  font-size: clamp(1.1rem,1.7vw,1.45rem);
-  line-height: 1.35;
-  letter-spacing: -.02em;
-}
-.skills-signal {
-  display: flex;
-  gap: .35rem;
-  align-items: end;
-  height: 2rem;
-}
-.skills-signal span {
-  width: 3px;
-  background: var(--pu);
-  box-shadow: 0 0 12px rgba(125,255,0,.55);
-  animation: skillSignal 1.2s ease-in-out infinite;
-}
-.skills-signal span:nth-child(1){height:35%;animation-delay:-.2s}
-.skills-signal span:nth-child(2){height:75%;animation-delay:-.5s}
-.skills-signal span:nth-child(3){height:52%;animation-delay:-.8s}
-@keyframes skillSignal {
-  0%,100%{transform:scaleY(.55);opacity:.5}
-  50%{transform:scaleY(1);opacity:1}
-}
-.skills-groups {
-  display: grid;
-  grid-template-columns: repeat(2,minmax(0,1fr));
-  gap: 1rem;
-}
-.skill-group {
-  position: relative;
-  min-height: 17rem;
-  padding: clamp(1.35rem,2.2vw,2rem);
-  border: 1px solid var(--line);
-  border-radius: 1.1rem;
-  background: linear-gradient(145deg,rgba(255,255,255,.025),rgba(255,255,255,.006));
-  overflow: hidden;
-  isolation: isolate;
-  transition: transform .5s cubic-bezier(.22,1,.36,1),border-color .4s ease,box-shadow .4s ease;
-}
-.skill-group::before {
-  content:'';
-  position:absolute;
-  width:12rem;height:12rem;
-  right:-5rem;top:-6rem;
-  border-radius:50%;
-  background:rgba(125,255,0,.11);
-  filter:blur(35px);
-  opacity:.55;
-  transition:transform .7s ease,opacity .5s ease;
-  z-index:-1;
-}
-.skill-group::after {
-  content:'';
-  position:absolute;
-  inset:auto 1.2rem 0;
-  height:1px;
-  background:linear-gradient(90deg,transparent,rgba(125,255,0,.4),transparent);
-}
-.skill-group:hover {
-  transform:translateY(-8px);
-  border-color:rgba(125,255,0,.38);
-  box-shadow:0 20px 55px rgba(0,0,0,.25),0 0 35px rgba(125,255,0,.055);
-}
-.skill-group:hover::before { transform:scale(1.35);opacity:.9; }
-.skill-group__top {
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  gap:.65rem;
-  align-items:center;
-  color:var(--mute);
-  font-size:.6rem;
-  letter-spacing:.13em;
-  text-transform:uppercase;
-}
-.skill-group__top > span:first-child { color:var(--pu);font-weight:700; }
-.skill-group__line { height:1px;background:var(--line); }
-.skill-group h3 {
-  margin:2.3rem 0 .45rem;
-  font:600 clamp(1.5rem,2.2vw,2.1rem)/1 var(--display);
-  letter-spacing:-.04em;
-}
-.skill-group > p { max-width:24rem;color:var(--mute);font-size:.78rem;line-height:1.5; }
-.skill-pills { display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.45rem; }
-.skill-pill {
-  display:inline-flex;
-  align-items:center;
-  gap:.45rem;
-  padding:.5rem .65rem;
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:999px;
-  background:rgba(255,255,255,.025);
-  color:var(--soft);
-  font-size:.72rem;
-  transition:color .25s ease,border-color .25s ease,background .25s ease,transform .25s ease;
-}
-.skill-pill i { color:var(--pu);font-size:.5rem;font-style:normal;letter-spacing:.08em; }
-.skill-pill:hover {
-  transform:translateY(-2px);
-  color:var(--fg);
-  border-color:rgba(125,255,0,.4);
-  background:rgba(125,255,0,.06);
+
+.skills-physics__copy {
+  position: absolute;
+  left: 2rem;
+  top: 2rem;
+  z-index: 3;
+  max-width: 17rem;
+  pointer-events: none;
 }
 
-@media (max-width:800px) {
-  .tech { padding:5rem var(--gut); }
-  .tech h2 { margin-bottom:2rem; }
-  .skills-layout { grid-template-columns:1fr;gap:2rem; }
-  .skills-intro { position:relative;top:auto;padding:0; }
-  .skills-intro p { max-width:32rem; }
-  .skills-groups { grid-template-columns:1fr; }
-  .skill-group { min-height:auto; }
-  .tech::before { width:90vw;right:-45%; }
+.skills-physics__copy span {
+  color: var(--pu);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .2em;
 }
+
+.skills-physics__copy p {
+  margin-top: .7rem;
+  color: var(--mute);
+  font-size: .75rem;
+  line-height: 1.5;
+}
+
+.tech-canvas {
+  position: absolute !important;
+  inset: 0;
+  z-index: 1;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media (max-width: 800px) {
+  .tech {
+    padding: 5rem var(--gut);
+  }
+
+  .tech h2 {
+    text-align: left;
+    margin-bottom: 1rem;
+  }
+
+  .skills-physics {
+    height: 65vh;
+    min-height: 28rem;
+    border-radius: 1rem;
+  }
+
+  .skills-physics__copy {
+    left: 1.2rem;
+    top: 1.2rem;
+    max-width: 13rem;
+  }
+
+  .skills-physics__copy p {
+    font-size: .68rem;
+  }
+}
+
 /* =========================================================
    CONTACT
    ========================================================= */
