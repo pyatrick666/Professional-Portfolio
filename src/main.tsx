@@ -1410,53 +1410,45 @@ function App() {
             }
           );
 
-          media.add(
-            '(min-width: 801px)',
-            () => {
-              const track =
-                document.querySelector<HTMLElement>(
-                  '.track'
-                );
+          media.add('(min-width: 801px)', () => {
+            const workSection = document.querySelector<HTMLElement>('.work-section');
+            const workFlex = document.querySelector<HTMLElement>('.work-flex');
+            const firstBox = document.querySelector<HTMLElement>('.work-box');
 
-              if (!track) return;
+            if (!workSection || !workFlex || !firstBox) return;
 
-              gsap.to(track, {
-                x: () =>
-                  -(
-                    track.scrollWidth -
-                    window.innerWidth
-                  ),
-                ease: 'none',
-                scrollTrigger: {
-                  trigger:
-                    '.work',
-                  start:
-                    'top top',
-                  end: () =>
-                    '+=' +
-                    Math.max(
-                      0,
-                      track.scrollWidth -
-                        window.innerWidth
-                    ),
-                  pin: true,
-                  scrub: 1,
-                  snap: {
-                    snapTo: 1 / Math.max(projects.length - 1, 1),
-                    duration: {
-                      min: 0.25,
-                      max: 0.7,
-                    },
-                    ease: 'power2.out',
-                  },
-                  anticipatePin: 1,
-                  fastScrollEnd: true,
-                  invalidateOnRefresh:
-                    true,
-                },
-              });
-            }
-          );
+            const setTranslateX = () => {
+              const boxWidth = firstBox.getBoundingClientRect().width;
+              const gap = parseFloat(window.getComputedStyle(workFlex).gap) || 0;
+              const totalWidth = workFlex.scrollWidth;
+              const maxTranslate = Math.max(0, totalWidth - window.innerWidth);
+              return Math.min(maxTranslate, Math.max(0, boxWidth * projects.length - window.innerWidth + gap * (projects.length - 1)));
+            };
+
+            const timeline = gsap.timeline({
+              scrollTrigger: {
+                trigger: workSection,
+                start: 'top top',
+                end: () => '+=' + setTranslateX(),
+                scrub: 1,
+                pin: true,
+                id: 'work-horizontal',
+                invalidateOnRefresh: true,
+                anticipatePin: 1,
+                fastScrollEnd: true,
+              },
+            });
+
+            timeline.to(workFlex, {
+              x: () => -setTranslateX(),
+              ease: 'none',
+            });
+
+            return () => {
+              timeline.kill();
+              ScrollTrigger.getById('work-horizontal')?.kill();
+            };
+          });
         },
         root
       );
@@ -1861,60 +1853,41 @@ function App() {
 
         
 
-        <section
-          id="work"
-          className="work"
-        >
-          <h2>
-            My <em>Work</em>
-          </h2>
+        <section id="work" className="work-section">
+          <div className="work-container">
+            <h2>
+              My <span>Work</span>
+            </h2>
 
-          <div className="track">
-            {projects.map(
-              (project) => (
+            <div className="work-flex">
+              {projects.map((project) => (
                 <a
-                  className="pj"
-                  key={
-                    project.name
-                  }
-                  href={
-                    project.href
-                  }
+                  className="work-box"
+                  key={project.name}
+                  href={project.href}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <div className="n">
-                    {project.num}
+                  <div className="work-info">
+                    <div className="work-title">
+                      <h3>{project.num}</h3>
+                      <div>
+                        <h4>{project.name}</h4>
+                        <p>{project.type}</p>
+                      </div>
+                    </div>
+
+                    <h4>Tools and features</h4>
+                    <p>{project.tools}</p>
                   </div>
 
-                  <div>
-                    <h3>
-                      {project.name}
-                    </h3>
-
-                    <span>
-                      {project.type}
-                    </span>
+                  <div className="work-image" aria-hidden="true">
+                    <div className="work-image-grid" />
+                    <span>VIEW PROJECT ↗</span>
                   </div>
-
-                  <span>
-                    Tools and
-                    features
-                    <br />
-                    {project.tools}
-                  </span>
-
-                  <div
-                    className="shot"
-                    aria-hidden="true"
-                  />
-
-                  <ArrowUpRight
-                    aria-hidden="true"
-                  />
                 </a>
-              )
-            )}
+              ))}
+            </div>
           </div>
         </section>
 
