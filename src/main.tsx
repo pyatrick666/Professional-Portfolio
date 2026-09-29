@@ -1783,9 +1783,6 @@ function App() {
               <div className="swap">
                 <span>
                   SOFTWARE
-                  ENGINEER
-                  <br />
-                  DEVELOPER
                 </span>
               </div>
             </div>
