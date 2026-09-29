@@ -392,13 +392,20 @@ main {
   color: var(--fg);
   font-size: 0.65rem;
   text-decoration: none;
-  transition: 0.3s ease;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.35s ease,
+    border-color 0.35s ease,
+    color 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
 .rail a:hover {
+  transform: scale(1.16) translateX(2px);
   background: var(--pu);
   border-color: var(--pu);
   color: #071000;
+  box-shadow: 0 0 22px rgba(125, 255, 0, 0.45);
 }
 
 /* =========================================================
@@ -1079,17 +1086,6 @@ section {
   background: rgba(255, 255, 255, 0.015);
   color: var(--fg) !important;
   text-decoration: none !important;
-  transform: none;
-  transition:
-    border-color 0.3s ease,
-    background 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.social-link:hover {
-  border-color: rgba(125, 255, 0, 0.45) !important;
-  background: rgba(125, 255, 0, 0.055);
-  box-shadow: none;
 }
 
 .social-mark {
@@ -1103,14 +1099,6 @@ section {
   font:
     700 0.72rem
     var(--display);
-  transition:
-    background 0.3s ease,
-    color 0.3s ease;
-}
-
-.social-link:hover .social-mark {
-  background: var(--pu);
-  color: #071000;
 }
 
 .social-link > span:nth-child(2) {
@@ -1136,11 +1124,6 @@ section {
 
 .social-link svg {
   color: var(--pu);
-  transition: transform 0.3s ease;
-}
-
-.social-link:hover svg {
-  transform: translate(3px, -3px);
 }
 
 /* =========================================================
