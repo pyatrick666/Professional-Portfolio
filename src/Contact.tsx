@@ -1,4 +1,4 @@
-import { MdArrowOutward, MdCopyright } from "react-icons/md";
+import { ArrowUpRight, Copyright } from "lucide-react";
 import "./styles/Contact.css";
 
 const Contact = () => {
@@ -32,7 +32,7 @@ const Contact = () => {
               data-cursor="disable"
               className="contact-social"
             >
-              GitHub <MdArrowOutward />
+              GitHub <ArrowUpRight aria-hidden="true" />
             </a>
 
             <a
@@ -42,7 +42,7 @@ const Contact = () => {
               data-cursor="disable"
               className="contact-social"
             >
-              LinkedIn <MdArrowOutward />
+              LinkedIn <ArrowUpRight aria-hidden="true" />
             </a>
 
             <a
@@ -52,7 +52,7 @@ const Contact = () => {
               data-cursor="disable"
               className="contact-social"
             >
-              Instagram <MdArrowOutward />
+              Instagram <ArrowUpRight aria-hidden="true" />
             </a>
           </div>
 
@@ -61,7 +61,7 @@ const Contact = () => {
               Designed and Developed <br /> by <span>Pratik Poudel</span>
             </h2>
             <h5>
-              <MdCopyright /> 2026
+              <Copyright aria-hidden="true" /> 2026
             </h5>
           </div>
         </div>
