@@ -46,5 +46,57 @@ document.querySelectorAll('[data-fallback-target]').forEach(function(link){
   });
 });
 </script>
-<script type="module" src="cinematic.js"></script>
+<script type="module">
+(async function () {
+  const fallback = document.getElementById('webgl-fallback');
+  const loader = document.getElementById('loader');
+  const scene = document.getElementById('scene');
+
+  try {
+    const THREE = await import('./three.module.js');
+    const renderer = new THREE.WebGLRenderer({ antialias: false });
+    renderer.setPixelRatio(1);
+    renderer.setSize(innerWidth, innerHeight, false);
+    scene.appendChild(renderer.domElement);
+
+    const camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.1, 100);
+    camera.position.z = 4;
+
+    const testScene = new THREE.Scene();
+    testScene.background = new THREE.Color(0x070a0d);
+    const light = new THREE.AmbientLight(0xffffff, 1);
+    testScene.add(light);
+
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const material = new THREE.MeshBasicMaterial({ color: 0x7df9ff, wireframe: true });
+    const cube = new THREE.Mesh(geometry, material);
+    testScene.add(cube);
+
+    document.body.classList.remove('no-webgl');
+    loader?.classList.add('loaded');
+
+    function frame() {
+      cube.rotation.x += 0.008;
+      cube.rotation.y += 0.012;
+      renderer.render(testScene, camera);
+      requestAnimationFrame(frame);
+    }
+    frame();
+
+    addEventListener('resize', () => {
+      camera.aspect = innerWidth / innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(innerWidth, innerHeight, false);
+    });
+  } catch (error) {
+    console.error('Portfolio 3D bootstrap failed:', error);
+    if (fallback) {
+      fallback.style.display = 'grid';
+      const p = fallback.querySelector('p');
+      if (p) p.textContent = '3D bootstrap failed. The portfolio content remains available below.';
+    }
+    loader?.classList.add('loaded');
+  }
+})();
+</script>
 </body></html>
