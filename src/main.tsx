@@ -1959,19 +1959,19 @@ function App() {
                   className="row"
                   key={item.t}
                 >
-                  <div className="row-content">
+                  <div>
                     <h3>
                       {item.t}
                     </h3>
 
-                    <p>
-                      {item.d}
-                    </p>
+                    <div className="period">
+                      {item.s}
+                    </div>
                   </div>
 
-                  <div className="period">
-                    {item.s}
-                  </div>
+                  <p>
+                    {item.d}
+                  </p>
                 </div>
               )
             )}
