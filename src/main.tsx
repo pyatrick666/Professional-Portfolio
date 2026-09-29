@@ -994,24 +994,6 @@ function Bubbles() {
       <Environment preset="city" environmentIntensity={0.5} />
       <EffectComposer enableNormalPass={false}><N8AO color="#0f002c" aoRadius={2} intensity={1.15} /></EffectComposer>
     </Canvas>
-    <div className="skills-index">
-      {skillGroups.map((group) => (
-        <article className="skills-group" key={group.label}>
-          <div className="skills-group__top">
-            <span className="skills-group__number">{group.label}</span>
-            <span className="skills-group__line" />
-            <span className="skills-group__count">{String(group.skills.length).padStart(2, '0')} skills</span>
-          </div>
-          <h3>{group.title}</h3>
-          <p>{group.description}</p>
-          <div className="skills-tags">
-            {group.skills.map((skill) => (
-              <span key={skill}>{skill}</span>
-            ))}
-          </div>
-        </article>
-      ))}
-    </div>
   </div>;
 }
 /* =========================================================
