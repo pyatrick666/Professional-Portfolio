@@ -592,7 +592,8 @@ function updateBike(dt) {
       bike.position.y = ground;
       state.airborne = false;
       state.verticalVelocity = 0;
-      state.cameraShake = 0.18;
+      state.cameraShake = Math.min(0.24, 0.07 + Math.abs(state.speed) * 0.02);
+      spawnLandingDust(bike.position.x, bike.position.z);
     }
   } else {
     bike.position.y = THREE.MathUtils.lerp(bike.position.y, ground, Math.min(1, dt * 12));
@@ -610,6 +611,32 @@ function updateBike(dt) {
   const wheelSpin = state.speed * dt * 1.6;
   frontWheel.rotation.x -= wheelSpin;
   rearWheel.rotation.x -= wheelSpin;
+}
+
+
+function spawnLandingDust(x, z) {
+  const group = new THREE.Group();
+  const mat = new THREE.MeshBasicMaterial({color:0x9a8064,transparent:true,opacity:0.5,depthWrite:false});
+  for (let i=0; i<12; i++) {
+    const p = new THREE.Mesh(new THREE.SphereGeometry(0.035 + Math.random()*0.045, 6, 6), mat);
+    p.position.set(x + (Math.random()-0.5)*1.1, 0.08 + Math.random()*0.12, z + (Math.random()-0.5)*1.0);
+    p.userData.v = new THREE.Vector3((Math.random()-0.5)*1.8, 0.5+Math.random()*1.4, (Math.random()-0.5)*1.8);
+    group.add(p);
+  }
+  group.userData.life = 0.55;
+  scene.add(group);
+  const tick = () => {
+    if (!group.parent) return;
+    group.userData.life -= 0.016;
+    group.children.forEach(p => {
+      p.position.addScaledVector(p.userData.v, 0.016);
+      p.userData.v.y -= 2 * 0.016;
+      p.scale.multiplyScalar(0.985);
+    });
+    if (group.userData.life <= 0) scene.remove(group);
+    else requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
 }
 
 function updateCamera(dt, time) {
