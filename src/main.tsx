@@ -1156,6 +1156,15 @@ function App() {
     const context =
       gsap.context(
         () => {
+          // Keep the avatar visible and centered in the hero until the next section takes over.
+          gsap.set(pose, {
+            x: 0,
+            y: -1.1,
+            s: 1.14,
+            ry: 0,
+            o: 1,
+          });
+
           const animatePose = (
             trigger: string,
             values: gsap.TweenVars,
