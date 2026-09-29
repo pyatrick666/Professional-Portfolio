@@ -449,21 +449,6 @@ main {
   text-transform: none;
   letter-spacing: 0.04em;
   white-space: nowrap;
-  padding: .35rem .7rem;
-  border-radius: 999px;
-  transition:
-    color .3s ease,
-    background .3s ease,
-    box-shadow .3s ease,
-    transform .35s cubic-bezier(.22,1,.36,1);
-}
-
-.mid:hover,
-.mid:focus-visible {
-  color: var(--pu) !important;
-  background: rgba(125,255,0,.06);
-  box-shadow: 0 0 22px rgba(125,255,0,.12);
-  transform: translateX(-50%) translateY(-2px);
 }
 
 .nav {
