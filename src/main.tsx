@@ -1096,36 +1096,24 @@ function App() {
                 section,
                 {
                   opacity: 0,
-                  y: 70,
-                  scale: 0.985,
+                  y: 45,
+                  scale: 0.99,
                 },
                 {
                   opacity: 1,
                   y: 0,
                   scale: 1,
-                  duration: 1.1,
+                  duration: 1,
                   ease: 'power3.out',
                   scrollTrigger: {
                     trigger: section,
                     start: 'top 88%',
-                    end: 'top 45%',
-                    scrub: reducedMotion ? false : 1,
+                    end: 'top 55%',
+                    scrub: reducedMotion ? false : 0.8,
+                    toggleActions: 'play none none reverse',
                   },
                 }
               );
-
-              gsap.to(section, {
-                opacity: 0,
-                y: -55,
-                scale: 0.985,
-                ease: 'none',
-                scrollTrigger: {
-                  trigger: section,
-                  start: '55% top',
-                  end: 'bottom top',
-                  scrub: reducedMotion ? false : 1,
-                },
-              });
             });
 
           gsap.utils
