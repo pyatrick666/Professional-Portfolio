@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   ArrowUpRight,
@@ -945,6 +945,119 @@ function Bubbles() {
    APP
    ========================================================= */
 
+function PortfolioLoader({ onComplete }: { onComplete: () => void }) {
+  const [percent, setPercent] = useState(0);
+  const [loaded, setLoaded] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    let value = 0;
+    let slowTimer = 0;
+    let finishTimer = 0;
+
+    const tick = () => {
+      if (value < 50) {
+        value = Math.min(50, value + Math.max(1, Math.round(Math.random() * 5)));
+        setPercent(value);
+        slowTimer = window.setTimeout(tick, 90);
+      } else if (value < 92) {
+        value = Math.min(92, value + 1);
+        setPercent(value);
+        slowTimer = window.setTimeout(tick, 110);
+      }
+    };
+
+    tick();
+
+    const finish = () => {
+      window.clearTimeout(slowTimer);
+      const fast = () => {
+        value = Math.min(100, value + 2);
+        setPercent(value);
+        if (value < 100) {
+          finishTimer = window.setTimeout(fast, 12);
+        } else {
+          setLoaded(true);
+        }
+      };
+      fast();
+    };
+
+    const fonts = document.fonts?.ready ?? Promise.resolve();
+    Promise.all([fonts, new Promise<void>((resolve) => window.setTimeout(resolve, 650))])
+      .then(finish);
+
+    return () => {
+      window.clearTimeout(slowTimer);
+      window.clearTimeout(finishTimer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!loaded) return;
+    const timer = window.setTimeout(() => setClicked(true), 600);
+    return () => window.clearTimeout(timer);
+  }, [loaded]);
+
+  useEffect(() => {
+    if (!clicked) return;
+    const timer = window.setTimeout(onComplete, 900);
+    return () => window.clearTimeout(timer);
+  }, [clicked, onComplete]);
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    setMouse({ x: event.clientX - rect.left, y: event.clientY - rect.top });
+  };
+
+  return (
+    <div className={`portfolio-loader ${clicked ? 'is-exiting' : ''}`} role="status" aria-live="polite">
+      <div className="loader-header">
+        <a href="#home" className="loader-title">patrick</a>
+        <div className={`loader-game ${clicked ? 'loader-out' : ''}`}>
+          <div className="loader-game-container">
+            <div className="loader-game-in">
+              {Array.from({ length: 27 }, (_, index) => <div className="loader-game-line" key={index} />)}
+            </div>
+            <div className="loader-game-ball" />
+          </div>
+        </div>
+      </div>
+
+      <div className="loader-marquee" aria-hidden="true">
+        <div className="loader-marquee-track">
+          <span>SOFTWARE ENGINEER</span>
+          <span>DEVELOPER</span>
+          <span>SOFTWARE ENGINEER</span>
+          <span>DEVELOPER</span>
+          <span>SOFTWARE ENGINEER</span>
+          <span>DEVELOPER</span>
+        </div>
+      </div>
+
+      <div
+        className={`loader-wrap ${clicked ? 'loading-clicked' : ''}`}
+        style={{ '--mouse-x': `${mouse.x}px`, '--mouse-y': `${mouse.y}px` } as React.CSSProperties}
+        onMouseMove={handleMouseMove}
+      >
+        <div className="loader-hover" />
+        <div className={`loader-button ${loaded ? 'loading-complete' : ''}`}>
+          <div className="loader-container">
+            <div className="loader-content">
+              <div className="loader-content-in">
+                Loading <span>{percent}%</span>
+              </div>
+            </div>
+            <div className="loader-box" />
+          </div>
+          <div className="loader-content2"><span>{loaded ? 'Welcome' : 'Please wait'}</span></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [open, setOpen] =
     useState(false);
@@ -957,24 +1070,6 @@ function App() {
 
   const lenis =
     useRef<Lenis | null>(null);
-
-  useEffect(() => {
-    let mounted = true;
-
-    const minimumDisplay = new Promise<void>((resolve) => {
-      window.setTimeout(resolve, 1400);
-    });
-
-    const fontsReady = document.fonts?.ready ?? Promise.resolve();
-
-    Promise.all([minimumDisplay, fontsReady]).then(() => {
-      if (mounted) setLoading(false);
-    });
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
 
   useEffect(() => {
     const reducedMotion =
@@ -1473,18 +1568,7 @@ function App() {
       className="site"
       ref={root}
     >
-      <div
-        className={`loader ${loading ? '' : 'loader--hidden'}`}
-        aria-hidden={!loading}
-      >
-        <div className="loader__content">
-          <div className="loader__mark">P</div>
-          <div className="loader__line">
-            <span />
-          </div>
-          <p>INITIALIZING PORTFOLIO</p>
-        </div>
-      </div>
+      {loading && <PortfolioLoader onComplete={() => setLoading(false)} />}
 
       <div
         className="orb"
