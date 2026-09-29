@@ -1,4 +1,16 @@
-import * as THREE from './three.module.js';
+(async () => {
+  let THREE;
+  try {
+    THREE = await import('./three.module.js');
+  } catch (error) {
+    console.error('Three.js failed to load:', error);
+    document.body.classList.add('no-webgl');
+    const fallback = document.querySelector('#webgl-fallback p');
+    if (fallback) fallback.textContent = 'The 3D engine could not load. The portfolio content is still available.';
+    document.querySelector('#loader')?.classList.add('loaded');
+    clearTimeout(window.__portfolioBootTimer);
+    return;
+  }
 
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
@@ -44,7 +56,7 @@ const camera = new THREE.PerspectiveCamera(58, innerWidth / innerHeight, 0.05, 2
 camera.position.set(0, 3.2, 7);
 
 try {
-  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
+  renderer = new THREE.WebGLRenderer({ antialias: false, alpha: false, powerPreference: 'low-power', failIfMajorPerformanceCaveat: false });
   const pixelRatio = innerWidth <= 700 ? 1.25 : 1.5;
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, pixelRatio));
   renderer.setSize(innerWidth, innerHeight);
@@ -872,3 +884,5 @@ addEventListener('unhandledrejection', (event) => {
   }
   console.error(event.reason);
 });
+
+})();
