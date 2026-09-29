@@ -549,17 +549,7 @@ section {
 .hero {
   padding: 0;
   overflow: hidden;
-  background:
-    radial-gradient(
-      circle at 50% 58%,
-      rgba(125, 255, 0, 0.07),
-      transparent 24%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(5, 3, 8, 0.08),
-      rgba(5, 3, 8, 0.28)
-    );
+  background: transparent;
 }
 
 .hero-copy {
