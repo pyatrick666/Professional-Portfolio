@@ -1,0 +1,1 @@
+{"name":"pratik-professional-portfolio","private":true,"version":"1.0.0","type":"module","scripts":{"dev":"vite","build":"tsc && vite build","preview":"vite preview"},"dependencies":{"@vitejs/plugin-react":"latest","gsap":"latest","lucide-react":"latest","react":"latest","react-dom":"latest","three":"latest","vite":"latest","typescript":"latest"},"devDependencies":{}}
