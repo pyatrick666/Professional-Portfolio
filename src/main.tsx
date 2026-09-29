@@ -1433,9 +1433,12 @@ function App() {
                 // Use the exact horizontal travel for the cards, then keep a short
                 // vertical release zone so the page can naturally continue to the
                 // Tech Stack section after the final repository.
-                const releaseZone = Math.min(
-                  window.innerHeight * 0.55,
-                  420
+                // Give the gallery a full viewport-height release zone after
+                // the final repository. This prevents the pin from holding the
+                // page at the end of the Work section.
+                const releaseZone = Math.max(
+                  window.innerHeight * 0.85,
+                  520
                 );
 
                 gsap.to(workFlex, {
@@ -1446,11 +1449,13 @@ function App() {
                     start: 'top top',
                     end: () =>
                       `+=${distance + releaseZone}`,
-                    scrub: true,
+                    scrub: 0.8,
                     pin: true,
                     pinSpacing: true,
                     anticipatePin: 1,
                     invalidateOnRefresh: true,
+                    fastScrollEnd: true,
+                    preventOverlaps: true,
                     id: 'work-horizontal',
                   },
                 });
