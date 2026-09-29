@@ -102,6 +102,132 @@ main {
 }
 
 /* =========================================================
+   LOADING SCREEN
+   ========================================================= */
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: #050308;
+  color: var(--fg);
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.8s step-end;
+}
+
+.loader--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader::before,
+.loader::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.loader::before {
+  width: min(52vw, 560px);
+  aspect-ratio: 1;
+  background: radial-gradient(
+    circle,
+    rgba(125, 255, 0, 0.09),
+    transparent 68%
+  );
+  filter: blur(12px);
+}
+
+.loader::after {
+  width: min(80vw, 900px);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(125, 255, 0, 0.35),
+    transparent
+  );
+}
+
+.loader__content {
+  position: relative;
+  z-index: 1;
+  width: min(19rem, 72vw);
+  text-align: center;
+}
+
+.loader__mark {
+  width: 4.2rem;
+  height: 4.2rem;
+  margin: 0 auto 1.8rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(125, 255, 0, 0.55);
+  border-radius: 50%;
+  color: var(--pu);
+  font: 500 1.45rem/1 var(--display);
+  box-shadow:
+    0 0 28px rgba(125, 255, 0, 0.12),
+    inset 0 0 22px rgba(125, 255, 0, 0.05);
+  animation: loaderPulse 1.6s ease-in-out infinite;
+}
+
+.loader__line {
+  width: 100%;
+  height: 1px;
+  overflow: hidden;
+  background: rgba(125, 255, 0, 0.14);
+}
+
+.loader__line span {
+  display: block;
+  width: 35%;
+  height: 100%;
+  background: var(--pu);
+  box-shadow: 0 0 14px rgba(125, 255, 0, 0.85);
+  animation: loaderProgress 1.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.loader p {
+  margin-top: 0.85rem;
+  color: var(--mute);
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+@keyframes loaderProgress {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(290%); }
+}
+
+@keyframes loaderPulse {
+  0%, 100% { transform: scale(1); opacity: 0.78; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader,
+  .loader__mark,
+  .loader__line span {
+    animation: none;
+    transition: none;
+  }
+
+  .loader__line span {
+    width: 100%;
+    transform: none;
+  }
+}
+
+/* =========================================================
    CURSOR ORB
    ========================================================= */
 
