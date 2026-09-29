@@ -155,7 +155,7 @@ const CAP_EDGE = 0x20172e;
 const pose = {
   x: 0,
   y: -1.1,
-  s: 1.25,
+  s: 1.14,
   ry: 0,
   o: 1,
 };
@@ -498,7 +498,7 @@ function Stage() {
         50
       );
 
-    camera.position.z = 6;
+    camera.position.z = 6.6;
 
     const {
       group,
@@ -1384,7 +1384,7 @@ function App() {
                   ? 0
                   : -0.52,
               y: -1.3,
-              s: 1.3,
+              s: 1.2,
               ry: 0.55,
               o: () =>
                 isNarrow()
@@ -1471,7 +1471,7 @@ function App() {
                         'top 80%',
                       end:
                         'top 50%',
-                      scrub: true,
+                      scrub: 1.2,
                     },
                   }
                 );
@@ -1647,7 +1647,7 @@ function App() {
 
       pose.x = 0;
       pose.y = -1.1;
-      pose.s = 1.25;
+      pose.s = 1.14;
       pose.ry = 0;
       pose.o = 1;
     };
@@ -1959,17 +1959,19 @@ function App() {
                   className="row"
                   key={item.t}
                 >
-                  <h3>
-                    {item.t}
-                  </h3>
+                  <div className="row-content">
+                    <h3>
+                      {item.t}
+                    </h3>
+
+                    <p>
+                      {item.d}
+                    </p>
+                  </div>
 
                   <div className="period">
                     {item.s}
                   </div>
-
-                  <p>
-                    {item.d}
-                  </p>
                 </div>
               )
             )}
