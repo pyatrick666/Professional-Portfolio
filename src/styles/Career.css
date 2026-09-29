@@ -133,6 +133,7 @@
     0 0 15px 5px rgba(125,255,0,.35),
     0 0 55px 12px rgba(125,255,0,.15);
   animation: careerPulse 1.6s ease-in-out infinite;
+  z-index: 2;
 }
 
 @keyframes careerPulse {
