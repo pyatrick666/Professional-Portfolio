@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   ArrowUpRight,
-  Gamepad2,
   Menu,
   X,
 } from 'lucide-react';
@@ -602,6 +601,21 @@ function Stage() {
       ty: 0,
     };
 
+    let scrollKick = 0;
+    let targetScrollKick = 0;
+    let lastScrollY = window.scrollY;
+
+    const onScroll = () => {
+      const nextY = window.scrollY;
+      const delta = nextY - lastScrollY;
+      lastScrollY = nextY;
+      targetScrollKick = THREE.MathUtils.clamp(
+        delta * 0.012,
+        -0.16,
+        0.16
+      );
+    };
+
     const onMouseMove =
       (event: MouseEvent) => {
         look.tx =
@@ -647,6 +661,14 @@ function Stage() {
     );
 
     window.addEventListener(
+      'scroll',
+      onScroll,
+      {
+        passive: true,
+      }
+    );
+
+    window.addEventListener(
       'resize',
       fit
     );
@@ -685,6 +707,12 @@ function Stage() {
           look.y) *
         0.06;
 
+      scrollKick +=
+        (targetScrollKick - scrollKick) *
+        0.12;
+
+      targetScrollKick *= 0.88;
+
       group.position.set(
         pose.x *
           halfWidth,
@@ -702,13 +730,15 @@ function Stage() {
 
       group.rotation.y =
         pose.ry +
-        look.x * 0.5;
+        look.x * 0.5 +
+        scrollKick * 0.8;
 
       head.rotation.y =
         look.x * 0.5;
 
       head.rotation.x =
-        look.y * 0.3;
+        look.y * 0.3 +
+        scrollKick * 0.45;
 
       particles.rotation.y =
         time * 0.018;
@@ -777,6 +807,11 @@ function Stage() {
       window.removeEventListener(
         'mousemove',
         onMouseMove
+      );
+
+      window.removeEventListener(
+        'scroll',
+        onScroll
       );
 
       window.removeEventListener(
@@ -1020,6 +1055,39 @@ function App() {
             }
           );
 
+          const sectionHeadings =
+            gsap.utils.toArray<HTMLElement>(
+              '#about .big, .do .big, .tl h2, .work h2, .tech h2, .contact h2'
+            );
+
+          let scrollVelocity = 0;
+
+          ScrollTrigger.create({
+            onUpdate: (self) => {
+              scrollVelocity = gsap.utils.clamp(
+                -1,
+                1,
+                self.getVelocity() / 2600
+              );
+            },
+          });
+
+          gsap.ticker.add(() => {
+            const target = scrollVelocity * 2.4;
+
+            sectionHeadings.forEach((element) => {
+              const current = Number(
+                gsap.getProperty(element, 'skewY')
+              ) || 0;
+
+              gsap.set(element, {
+                skewY: current + (target - current) * 0.16,
+              });
+            });
+
+            scrollVelocity *= 0.88;
+          });
+
           gsap.utils
             .toArray<HTMLElement>('#about, .do, .tl')
             .forEach((section) => {
@@ -1110,12 +1178,10 @@ function App() {
             }
           );
 
-          gsap.utils
-            .toArray<HTMLElement>(
-              '.row'
-            )
-            .forEach(
-              (element) => {
+          const timelineRows =
+            gsap.utils.toArray<HTMLElement>('.row');
+
+          timelineRows.forEach((element) => {
                 gsap.fromTo(
                   element,
                   {
@@ -1136,8 +1202,25 @@ function App() {
                     },
                   }
                 );
-              }
-            );
+              });
+
+          const rowsWrap =
+            document.querySelector<HTMLElement>('.rows');
+
+          if (rowsWrap) {
+            ScrollTrigger.create({
+              trigger: '.rows',
+              start: 'top 78%',
+              end: 'bottom 38%',
+              scrub: 0.7,
+              onUpdate: (self) => {
+                rowsWrap.style.setProperty(
+                  '--fill',
+                  `${Math.round(self.progress * 100)}%`
+                );
+              },
+            });
+          }
 
           gsap.fromTo(
             '.hi,.role',
@@ -1201,6 +1284,16 @@ function App() {
                     ),
                   pin: true,
                   scrub: 1,
+                  snap: {
+                    snapTo: 1 / Math.max(projects.length - 1, 1),
+                    duration: {
+                      min: 0.25,
+                      max: 0.7,
+                    },
+                    ease: 'power2.out',
+                  },
+                  anticipatePin: 1,
+                  fastScrollEnd: true,
                   invalidateOnRefresh:
                     true,
                 },
