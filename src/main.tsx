@@ -1553,10 +1553,10 @@ function App() {
                     <h3>
                       {item.t}
                     </h3>
+                  </div>
 
-                    <div className="period">
-                      {item.s}
-                    </div>
+                  <div className="period">
+                    {item.s}
                   </div>
 
                   <p>
