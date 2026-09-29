@@ -44,8 +44,21 @@ document.querySelectorAll('[data-fallback-target]').forEach(function(link){
   const loader = document.getElementById('loader');
   const scene = document.getElementById('scene');
 
+  let THREE;
   try {
-    const THREE = await import('./three.module.js');
+    THREE = await import('./three.module.js');
+  } catch (error) {
+    console.error('Three.js module load failed:', error);
+    if (fallback) {
+      fallback.style.display = 'grid';
+      const p = fallback.querySelector('p');
+      if (p) p.textContent = 'DIAGNOSTIC: THREE.JS MODULE LOAD FAILED — ' + (error?.message || error);
+    }
+    loader?.classList.add('loaded');
+    return;
+  }
+
+  try {
     const renderer = new THREE.WebGLRenderer({ antialias: false });
     renderer.setPixelRatio(1);
     renderer.setSize(innerWidth, innerHeight, false);
@@ -81,11 +94,11 @@ document.querySelectorAll('[data-fallback-target]').forEach(function(link){
       renderer.setSize(innerWidth, innerHeight, false);
     });
   } catch (error) {
-    console.error('Portfolio 3D bootstrap failed:', error);
+    console.error('WebGL renderer bootstrap failed:', error);
     if (fallback) {
       fallback.style.display = 'grid';
       const p = fallback.querySelector('p');
-      if (p) p.textContent = 'DIAGNOSTIC: THREE.JS BOOTSTRAP FAILED';
+      if (p) p.textContent = 'DIAGNOSTIC: WEBGL RENDERER FAILED — ' + (error?.message || error);
     }
     loader?.classList.add('loaded');
   }
