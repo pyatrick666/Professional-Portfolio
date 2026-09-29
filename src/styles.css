@@ -6,8 +6,8 @@
   --fg: #ece8f3;
   --soft: #c9c4d6;
   --mute: #8c86a0;
-  --pu: #a67cff;
-  --pu2: #e0c4ff;
+  --pu: #7dff00;
+  --pu2: #c6ff8a;
   --line: #1c1826;
   --gut: clamp(20px, 7vw, 120px);
   --h1: clamp(2rem, 4.6vw, 4.4rem);
@@ -88,8 +88,49 @@ main {
   width: min(70vw, 760px);
   aspect-ratio: 1;
   transform: translateX(-50%);
-  background: radial-gradient(circle, rgba(166, 124, 255, 0.55), rgba(166, 124, 255, 0) 65%);
+  background: radial-gradient(circle, rgba(125, 255, 0, 0.55), rgba(125, 255, 0, 0) 65%);
   filter: blur(24px);
+}
+
+
+.avatar-shell {
+  position: absolute;
+  left: 50%;
+  bottom: -3%;
+  width: min(42vw, 560px);
+  height: min(70vh, 680px);
+  transform: translateX(-50%);
+  display: grid;
+  place-items: end center;
+  perspective: 1000px;
+}
+
+.web-avatar {
+  position: relative;
+  z-index: 3;
+  width: 86%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  transform-origin: 50% 80%;
+  filter: drop-shadow(0 28px 44px rgba(0, 0, 0, 0.42)) drop-shadow(0 0 28px rgba(125, 255, 0, 0.14));
+  transition: filter 0.35s ease;
+  will-change: transform, opacity;
+}
+
+.avatar-shell:hover .web-avatar {
+  filter: drop-shadow(0 30px 48px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 42px rgba(125, 255, 0, 0.28));
+}
+
+.avatar-ring {
+  position: absolute;
+  z-index: 2;
+  bottom: 8%;
+  width: 76%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(125, 255, 0, 0.22);
+  border-radius: 50%;
+  box-shadow: 0 0 90px rgba(125, 255, 0, 0.12), inset 0 0 50px rgba(125, 255, 0, 0.04);
 }
 
 .orb {
@@ -101,7 +142,7 @@ main {
   margin: -22px 0 0 -22px;
   border-radius: 50%;
   background: var(--pu2);
-  box-shadow: 0 0 40px 8px rgba(166, 124, 255, 0.5);
+  box-shadow: 0 0 40px 8px rgba(125, 255, 0, 0.5);
   pointer-events: none;
   z-index: 15;
   opacity: 0.9;
@@ -145,7 +186,7 @@ main {
   right: var(--gut);
   bottom: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(166, 124, 255, 0.28), transparent);
+  background: linear-gradient(90deg, transparent, rgba(125, 255, 0, 0.28), transparent);
   opacity: 0.65;
 }
 
@@ -161,7 +202,7 @@ main {
   width: 1.6rem;
   height: 1px;
   background: var(--pu);
-  box-shadow: 0 0 10px rgba(166, 124, 255, 0.8);
+  box-shadow: 0 0 10px rgba(125, 255, 0, 0.8);
 }
 
 .logo {
@@ -230,7 +271,7 @@ main {
 .rail a {
   width: 30px;
   height: 30px;
-  border: 1px solid #4a4360;
+  border: 1px solid #4b5c3e;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -258,7 +299,7 @@ section {
   padding: 0;
   overflow: hidden;
   background:
-    radial-gradient(circle at 50% 58%, rgba(166, 124, 255, 0.07), transparent 24%),
+    radial-gradient(circle at 50% 58%, rgba(125, 255, 0, 0.07), transparent 24%),
     linear-gradient(180deg, rgba(5, 3, 8, 0.08), rgba(5, 3, 8, 0.28));
 }
 
@@ -374,7 +415,7 @@ section {
 
 .card {
   position: relative;
-  border: 1px dashed #6b6480;
+  border: 1px dashed #66745b;
   padding: 2.2rem 2.4rem;
 }
 
@@ -560,7 +601,7 @@ section {
   position: relative;
   height: 14rem;
   border-radius: 0.6rem;
-  background: linear-gradient(135deg, #1a1030, #3b1f7a 60%, #a67cff);
+  background: linear-gradient(135deg, #1a1030, #3b1f7a 60%, #7dff00);
   opacity: 0.8;
   margin-top: auto;
   overflow: hidden;
@@ -571,7 +612,7 @@ section {
   content: '';
   position: absolute;
   inset: 12%;
-  border: 1px solid rgba(224, 196, 255, 0.24);
+  border: 1px solid rgba(198, 255, 138, 0.24);
   transform: skewX(-12deg);
 }
 
@@ -593,9 +634,9 @@ section {
   position: absolute;
   width: min(44vw, 620px);
   aspect-ratio: 1;
-  border: 1px solid rgba(166, 124, 255, 0.08);
+  border: 1px solid rgba(125, 255, 0, 0.08);
   border-radius: 50%;
-  box-shadow: 0 0 100px rgba(166, 124, 255, 0.05);
+  box-shadow: 0 0 100px rgba(125, 255, 0, 0.05);
 }
 
 .tech h2 {
@@ -657,6 +698,86 @@ section {
   color: var(--pu);
 }
 
+
+.social-list {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 0.8rem;
+}
+
+.social-link {
+  position: relative;
+  display: grid !important;
+  grid-template-columns: 42px 1fr auto;
+  align-items: center;
+  gap: 0.9rem;
+  width: min(25rem, 100%) !important;
+  margin: 0 !important;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--line) !important;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.015);
+  color: var(--fg) !important;
+  text-decoration: none !important;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.social-link:hover {
+  transform: translate3d(10px, -3px, 0);
+  border-color: var(--pu) !important;
+  background: rgba(125, 255, 0, 0.045);
+  box-shadow: 0 12px 34px rgba(125, 255, 0, 0.09), inset 0 0 22px rgba(125, 255, 0, 0.025);
+}
+
+.social-mark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #394631;
+  border-radius: 0.55rem;
+  color: var(--pu);
+  font: 700 0.72rem var(--display);
+  transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+.social-link:hover .social-mark {
+  transform: rotate(-4deg) scale(1.05);
+  background: var(--pu);
+  color: #071000;
+}
+
+.social-link > span:nth-child(2) {
+  min-width: 0;
+  border: 0 !important;
+  margin: 0 !important;
+  width: auto !important;
+}
+
+.social-link b {
+  display: block;
+  color: var(--fg);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.social-link small {
+  display: block;
+  margin: 0.1rem 0 0 !important;
+  color: var(--mute);
+  font-size: 0.72rem;
+}
+
+.social-link svg {
+  color: var(--pu);
+  transition: transform 0.3s ease;
+}
+
+.social-link:hover svg {
+  transform: translate(3px, -3px);
+}
+
 .credit {
   color: var(--mute);
 }
@@ -695,6 +816,16 @@ section {
   .hi,
   .role {
     position: static;
+  }
+
+  .avatar-shell {
+    width: min(76vw, 420px);
+    height: 58vh;
+    bottom: 4%;
+  }
+
+  .web-avatar {
+    width: 92%;
   }
 
   .hero-copy {
