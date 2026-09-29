@@ -55,17 +55,18 @@ scene.fog = new THREE.Fog(0x070a0d, 18, 105);
 const camera = new THREE.PerspectiveCamera(58, innerWidth / innerHeight, 0.05, 220);
 camera.position.set(0, 3.2, 7);
 
+// Keep renderer creation absolutely minimal. Advanced renderer options,
+// shadows and high pixel ratios are enabled later only if the base renderer works.
 try {
-  renderer = new THREE.WebGLRenderer({ antialias: false, alpha: false, powerPreference: 'low-power', failIfMajorPerformanceCaveat: false });
-  const pixelRatio = innerWidth <= 700 ? 1.25 : 1.5;
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, pixelRatio));
-  renderer.setSize(innerWidth, innerHeight);
+  renderer = new THREE.WebGLRenderer({ antialias: false });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, innerWidth <= 700 ? 1 : 1.25));
+  renderer.setSize(innerWidth, innerHeight, false);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   sceneEl.appendChild(renderer.domElement);
 } catch (error) {
-  showFatal('WebGL is unavailable in this browser. Use the portfolio links below to explore the work.');
+  console.error('Base WebGL renderer failed:', error);
+  renderer = null;
+  showFatal('WebGL could not be started on this device. The portfolio content is still available.');
 }
 
 if (!renderer) {
