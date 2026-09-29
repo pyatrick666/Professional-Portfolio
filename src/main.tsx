@@ -1,152 +1,689 @@
-import React,{useEffect,useRef,useState}from"react";
-import{createRoot}from"react-dom/client";
-import{ArrowDownRight,ArrowUpRight,Mail,Menu,X,ExternalLink}from"lucide-react";
-import{gsap}from"gsap";
-import{ScrollTrigger}from"gsap/ScrollTrigger";
-import*as THREE from"three";
-import"./styles.css";
+import React, { useEffect, useRef, useState } from 'react';
+import { ArrowUpRight, Gamepad2, Menu, X } from 'lucide-react';
+import { gsap } from 'gsap';
+import Lenis from 'lenis';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import * as THREE from 'three';
+import './styles.css';
+
 gsap.registerPlugin(ScrollTrigger);
 
-const PHOTO="https://pyatrick666.github.io/ePortfolio/profile.jpg";
+const EMAIL = 'pyatrick666@gmail.com';
 
-const projects=[
- {num:"01",name:"CHESSMATE",type:"MOBILE GAME",desc:"A Flutter chess experience with gameplay, monetisation and connected-play foundations.",tags:["FLUTTER","DART","FIREBASE","ADMOB"],href:"https://pyatrick666.itch.io/chessmate",label:"PLAY PROJECT"},
- {num:"02",name:"EPORTFOLIO",type:"WEB DEVELOPMENT",desc:"A responsive academic ePortfolio documenting practical web technologies through interactive demonstrations.",tags:["HTML","CSS","JAVASCRIPT","BOOTSTRAP"],href:"https://pyatrick666.github.io/ePortfolio/",label:"VIEW SITE"},
- {num:"03",name:"PROFESSIONAL PORTFOLIO",type:"CREATIVE DEVELOPMENT",desc:"An evolving personal portfolio combining React, WebGL, Three.js and motion design.",tags:["REACT","TYPESCRIPT","THREE.JS","GSAP"],href:"https://github.com/pyatrick666/Professional-Portfolio",label:"VIEW CODE"}
+const projects = [
+  { name: 'ChessMate', num: '01', type: 'Mobile / Game', tools: 'Flutter, Dart, Firebase, AdMob', href: 'https://pyatrick666.itch.io/chessmate' },
+  { name: 'ePortfolio', num: '02', type: 'Web / Coursework', tools: 'HTML, CSS, JavaScript, Bootstrap', href: 'https://pyatrick666.github.io/ePortfolio/' },
+  { name: 'Cit-E Cycling', num: '03', type: 'Web Portal', tools: 'PHP, MySQL, public site, admin portal', href: 'https://github.com/pyatrick666' },
+  { name: 'This Portfolio', num: '04', type: 'Web / Personal', tools: 'React, TypeScript, GSAP, Three.js', href: 'https://github.com/pyatrick666/Professional-Portfolio' }
 ];
 
-const skills=["React","TypeScript","JavaScript","Three.js","GSAP","Flutter","Dart","Firebase","C#","Java","Python","C","Node.js","Express","PHP","Django","MySQL","PostgreSQL","Linux","Networking","Cisco","Figma","Canva","Git / GitHub"];
+const stack = ['React', 'TypeScript', 'JavaScript', 'Flutter', 'Dart', 'Firebase', 'Node', 'Express', 'PHP', 'MySQL', 'Python', 'Java', 'C#', 'Linux', 'Cisco', 'Figma', 'Git'];
 
-function HeroScene(){
- const ref=useRef<HTMLDivElement>(null);
- useEffect(()=>{
-  const host=ref.current;if(!host)return;
-  const scene=new THREE.Scene();
-  const camera=new THREE.PerspectiveCamera(38,1,.1,100);camera.position.z=6;
-  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setClearColor(0,0);host.appendChild(renderer.domElement);
-  const group=new THREE.Group();scene.add(group);
-  const rings=new THREE.Group();group.add(rings);
-  const ringData=[[1.72,.012,.25,.65],[2.05,.009,-.5,.35],[2.35,.006,.85,.18]];
-  ringData.forEach(([radius,t,rx,opacity])=>{
-   const mesh=new THREE.Mesh(new THREE.TorusGeometry(radius,t,12,180),new THREE.MeshBasicMaterial({color:0xa99cff,transparent:true,opacity}));
-   mesh.rotation.x=rx;mesh.rotation.y=rx*.35;rings.add(mesh);
+const journey = [
+  { t: 'Web foundations', s: 'HTML · CSS · JavaScript · PHP', d: 'Hand-built sites and PHP back ends, including a cycling event portal with an admin area.' },
+  { t: 'Modern stack', s: 'React · TypeScript · GSAP', d: 'Component-driven front ends, motion design and interactive visual layers.' },
+  { t: 'Now', s: 'ISMT College · Univ. of Sunderland', d: 'BSc (Hons) IT, Computer Systems Engineering, while shipping mobile and web projects.' }
+];
+
+/* ---------- Scroll-driven 3D avatar ---------- */
+const SKIN = 0xc98b6b;
+const HAIR = 0x14101c;
+const HOODIE = 0x2b2733;
+const ACCENT = 0xa67cff;
+
+const pose = { x: 0, y: -1.1, s: 1.25, ry: 0, o: 1 };
+
+function makeMaterial(color: number, emissiveIntensity = 0) {
+  return new THREE.MeshStandardMaterial({
+    color,
+    roughness: 0.55,
+    metalness: 0.05,
+    emissive: color,
+    emissiveIntensity
   });
-  const core=new THREE.Mesh(new THREE.IcosahedronGeometry(.9,3),new THREE.MeshBasicMaterial({color:0x9a8cff,wireframe:true,transparent:true,opacity:.2}));
-  group.add(core);
-  const dotsGeo=new THREE.BufferGeometry(),count=180,positions=new Float32Array(count*3);
-  for(let i=0;i<count;i++){const a=Math.random()*Math.PI*2,r=2.1+Math.random()*1.1;positions[i*3]=Math.cos(a)*r;positions[i*3+1]=(Math.random()-.5)*2.5;positions[i*3+2]=Math.sin(a)*r}
-  dotsGeo.setAttribute("position",new THREE.BufferAttribute(positions,3));
-  const dots=new THREE.Points(dotsGeo,new THREE.PointsMaterial({color:0xc7bfff,size:.018,transparent:true,opacity:.75}));group.add(dots);
-  const light=new THREE.PointLight(0xa99cff,16,10);light.position.set(2,2,4);scene.add(light);
-  scene.add(new THREE.AmbientLight(0xffffff,.35));
-  const pointer={x:0,y:0},target={x:0,y:0};
-  const move=(e:PointerEvent)=>{target.x=(e.clientX/innerWidth-.5)*1.2;target.y=(e.clientY/innerHeight-.5)*-.9};
-  const resize=()=>{const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()};
-  addEventListener("pointermove",move,{passive:true});addEventListener("resize",resize);resize();
-  let raf=0;
-  const tick=()=>{raf=requestAnimationFrame(tick);pointer.x+=(target.x-pointer.x)*.035;pointer.y+=(target.y-pointer.y)*.035;group.rotation.y+=.0018;group.rotation.x=pointer.y*.12;group.position.x=pointer.x*.12;group.position.y=pointer.y*.08;rings.rotation.z+=.0025;dots.rotation.y-=.001;renderer.render(scene,camera)};
-  tick();
-  return()=>{cancelAnimationFrame(raf);removeEventListener("pointermove",move);removeEventListener("resize",resize);renderer.dispose();dotsGeo.dispose();host.removeChild(renderer.domElement)}
- },[]);
- return <div ref={ref} className="hero-webgl" aria-hidden="true"/>;
 }
 
-function SkillMarquee(){
- const rows=[skills.slice(0,8),skills.slice(8,16),skills.slice(16)];
- return <div className="skill-marquee">{rows.map((row,i)=><div className={"skill-track "+(i===1?"reverse":"")} key={i}><div className="skill-row">{[...row,...row].map((s,j)=><span className="skill-pill" key={s+"-"+j}>{s}<b>✦</b></span>)}</div></div>)}</div>
-}
+function buildAvatar() {
+  const group = new THREE.Group();
+  const head = new THREE.Group();
+  const eyes: THREE.Group[] = [];
 
-function App(){
- const[open,setOpen]=useState(false);
- useEffect(()=>{
-  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const ctx=gsap.context(()=>{
-   if(!reduce){
-    gsap.from(".hero-kicker",{y:25,opacity:0,duration:.8,delay:.2});
-    gsap.from(".hero-name span",{yPercent:120,opacity:0,duration:1.15,stagger:.1,delay:.25,ease:"power4.out"});
-    gsap.from(".hero-photo-wrap",{scale:.75,opacity:0,rotate:-4,duration:1.4,delay:.35,ease:"power4.out"});
-    gsap.from(".hero-side-note,.hero-bottom-bar",{opacity:0,y:25,duration:.8,delay:1});
-    gsap.utils.toArray<HTMLElement>(".reveal").forEach(el=>gsap.from(el,{y:65,opacity:0,duration:1,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 84%"}}));
-    gsap.utils.toArray<HTMLElement>(".project-card").forEach((el,i)=>gsap.from(el,{y:70,opacity:0,duration:.9,delay:i*.08,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 88%"}}));
-    gsap.to(".hero-orbit-ring",{rotate:360,duration:24,repeat:-1,ease:"none"});
-   }
+  group.add(head);
+  head.position.y = 1.4;
+
+  const add = (
+    geometry: THREE.BufferGeometry,
+    material: THREE.Material,
+    position: [number, number, number],
+    parent: THREE.Object3D = head
+  ) => {
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(...position);
+    parent.add(mesh);
+    return mesh;
+  };
+
+  add(new THREE.SphereGeometry(1, 48, 48), makeMaterial(SKIN), [0, 0, 0]).scale.set(1, 1.05, 0.95);
+
+  const hair = add(
+    new THREE.SphereGeometry(1.04, 48, 32, 0, Math.PI * 2, 0, Math.PI * 0.42),
+    makeMaterial(HAIR),
+    [0, 0.02, 0]
+  );
+  hair.scale.set(1, 1.05, 0.95);
+
+  [-1, 1].forEach((side) => {
+    add(new THREE.SphereGeometry(0.22, 24, 24), makeMaterial(SKIN), [side * 1, -0.05, 0]).scale.set(0.6, 1, 1);
+
+    const eye = new THREE.Group();
+    eye.position.set(side * 0.36, 0.1, 0.86);
+    head.add(eye);
+    eyes.push(eye);
+
+    add(new THREE.SphereGeometry(0.17, 24, 24), makeMaterial(0xffffff), [0, 0, 0], eye);
+    add(new THREE.SphereGeometry(0.09, 16, 16), makeMaterial(0x120c24), [0, 0, 0.13], eye);
+
+    const brow = add(new THREE.BoxGeometry(0.4, 0.07, 0.08), makeMaterial(HAIR), [side * 0.36, 0.4, 0.84]);
+    brow.rotation.z = -side * 0.15;
+
+    const earring = add(
+      new THREE.CylinderGeometry(0.3, 0.3, 0.18, 32),
+      makeMaterial(ACCENT, 0.25),
+      [side * 1.12, -0.05, 0]
+    );
+    earring.rotation.z = Math.PI / 2;
   });
-  return()=>ctx.revert();
- },[]);
- useEffect(()=>{
-  const move=(e:PointerEvent)=>{document.documentElement.style.setProperty("--mx",e.clientX+"px");document.documentElement.style.setProperty("--my",e.clientY+"px")};
-  addEventListener("pointermove",move,{passive:true});return()=>removeEventListener("pointermove",move)
- },[]);
- return <div className="site">
-  <div className="grain" aria-hidden="true"/><div className="cursor-orb" aria-hidden="true"/>
-  <header className="header">
-   <a className="brand" href="#home">PRATIK<span>.</span></a>
-   <a className="connect-mail" href="mailto:pyatrick666@gmail.com"><Mail size={12}/>pyatrick666@gmail.com</a>
-   <nav className={open?"nav open":"nav"} aria-label="Primary navigation">
-    <a href="#about" onClick={()=>setOpen(false)}>ABOUT</a><a href="#work" onClick={()=>setOpen(false)}>WORK</a><a href="#contact" onClick={()=>setOpen(false)}>CONTACT</a>
-   </nav>
-   <button className="menu" aria-label="Toggle navigation" aria-expanded={open} onClick={()=>setOpen(v=>!v)}>{open?<X size={20}/>:<Menu size={20}/>}</button>
-  </header>
 
-  <main id="smooth-content">
-   <section id="home" className="hero">
-    <div className="hero-grid" aria-hidden="true"/>
-    <div className="hero-orbit-ring" aria-hidden="true"><span/><i/><b/></div>
-    <HeroScene/>
-    <div className="hero-photo-wrap"><div className="photo-glow"/><div className="photo-frame"><img src={PHOTO} alt="Pratik Poudel" fetchPriority="high"/></div></div>
-    <div className="hero-copy">
-     <div className="hero-kicker mono"><span>BASED IN NEPAL</span><span>AVAILABLE FOR INTERNSHIPS</span></div>
-     <div className="hero-name"><span>PRATIK</span><span><i>POUDEL</i></span></div>
-     <div className="hero-description">IT STUDENT <b>×</b> CREATIVE DEVELOPER<br/>BUILDING DIGITAL EXPERIENCES.</div>
-    </div>
-    <div className="hero-side-note mono"><span>SCROLL</span><ArrowDownRight/></div>
-    <div className="hero-bottom-bar"><span>SOFTWARE</span><span>FULL-STACK</span><span>MOBILE</span><span>SYSTEMS</span><span>NETWORKING</span></div>
-   </section>
+  add(new THREE.SphereGeometry(0.11, 16, 16), makeMaterial(SKIN), [0, -0.1, 0.96]);
 
-   <section className="ticker"><div className="ticker-track"><span>CREATIVE DEVELOPER</span><b>✦</b><span>COMPUTER SYSTEMS</span><b>✦</b><span>FULL-STACK DEVELOPMENT</span><b>✦</b><span>WEBGL / MOTION</span><b>✦</b><span>CREATIVE DEVELOPER</span><b>✦</b></div></section>
+  const mouth = add(
+    new THREE.TorusGeometry(0.3, 0.035, 12, 32, Math.PI),
+    makeMaterial(0x3a1a1a),
+    [0, -0.32, 0.84]
+  );
+  mouth.rotation.z = Math.PI;
 
-   <section id="about" className="section about">
-    <div className="section-no mono">01</div><div className="section-inner">
-     <span className="eyebrow mono reveal">ABOUT ME</span>
-     <h2 className="display reveal">I BUILD WITH<br/><i>CURIOUSITY.</i></h2>
-     <div className="about-layout">
-      <p className="about-lead reveal">I’m Pratik Poudel, a BSc (Hons) Information Technology student specialising in Computer Systems Engineering at ISMT College, affiliated with the University of Sunderland.</p>
-      <div className="about-copy reveal"><p>I like working where software, systems and visual design overlap — from Flutter apps and full-stack interfaces to Linux, networking and interactive web experiences.</p><a href="https://github.com/pyatrick666" target="_blank" rel="noopener noreferrer" className="text-link">EXPLORE MY GITHUB <ArrowUpRight/></a></div>
-     </div>
-     <div className="about-stats reveal"><div><strong>2025—28</strong><small>DEGREE</small></div><div><strong>FLUTTER</strong><small>MOBILE</small></div><div><strong>REACT</strong><small>WEB</small></div><div><strong>LINUX</strong><small>SYSTEMS</small></div></div>
-    </div>
-   </section>
+  add(
+    new THREE.TorusGeometry(1.12, 0.06, 16, 48, Math.PI),
+    makeMaterial(ACCENT, 0.25),
+    [0, -0.05, 0]
+  );
 
-   <section id="work" className="section work">
-    <div className="section-no mono">02</div><div className="section-inner">
-     <span className="eyebrow mono reveal">SELECTED WORK</span>
-     <div className="work-heading"><h2 className="display reveal">SELECTED<br/><i>PROJECTS.</i></h2><p className="work-intro reveal">A selection of things I’ve built while learning, experimenting and turning ideas into working products.</p></div>
-     <div className="projects">{projects.map((p,i)=><a className={"project-card project-"+i} href={p.href} target="_blank" rel="noopener noreferrer" key={p.name}>
-      <div className="project-visual"><span>{p.num}</span><div className="visual-grid"/><div className="visual-word">{i===0?"CM":i===1?"EP":"PP"}</div><ArrowUpRight className="visual-arrow"/></div>
-      <div className="project-meta"><span className="mono">{p.type}</span><span className="mono">{p.num}</span></div>
-      <h3>{p.name}</h3><p>{p.desc}</p><div className="tags">{p.tags.map(t=><span key={t}>{t}</span>)}</div><div className="project-link mono">{p.label}<ExternalLink size={12}/></div>
-     </a>)}</div>
-    </div>
-   </section>
+  add(new THREE.CylinderGeometry(0.3, 0.34, 0.4, 24), makeMaterial(SKIN), [0, 0.6, 0], group);
+  add(new THREE.SphereGeometry(1.5, 48, 32), makeMaterial(HOODIE), [0, -0.25, 0], group).scale.set(1, 0.75, 0.7);
 
-   <section id="skills" className="section skills">
-    <div className="section-no mono">03</div><div className="section-inner">
-     <span className="eyebrow mono reveal">TECH STACK</span><h2 className="display reveal">TOOLS &<br/><i>TECHNOLOGIES.</i></h2>
-     <SkillMarquee/><p className="skills-note mono">A GROWING TOOLKIT — NOT A FINISHED LIST.</p>
-    </div>
-   </section>
-
-   <section id="contact" className="section contact">
-    <div className="section-no mono">04</div><div className="section-inner">
-     <span className="eyebrow mono reveal">GET IN TOUCH</span>
-     <h2 className="contact-title reveal">LET'S<br/><i>CREATE.</i></h2>
-     <div className="contact-bottom reveal"><p>Open to internships, collaborations and opportunities in software development, full-stack engineering and networking.</p><a className="contact-cta" href="mailto:pyatrick666@gmail.com">pyatrick666@gmail.com <ArrowUpRight/></a></div>
-     <div className="socials mono"><a href="https://github.com/pyatrick666" target="_blank" rel="noopener noreferrer">GITHUB ↗</a><a href="https://www.linkedin.com/in/pratik-poudel-b3264a263/" target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a><a href="https://pyatrick666.github.io/ePortfolio/" target="_blank" rel="noopener noreferrer">EPORTFOLIO ↗</a></div>
-    </div>
-   </section>
-  </main>
-  <footer className="mono"><span>© {new Date().getFullYear()} PRATIK POUDEL</span><span>REACT · THREE.JS · GSAP</span><a href="#home">BACK TO TOP ↑</a></footer>
- </div>
+  return { group, head, eyes };
 }
-createRoot(document.getElementById("root")!).render(<App/>);
+
+function Stage() {
+  const box = useRef<HTMLDivElement>(null);
+  const glow = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = box.current;
+    if (!el) return;
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    el.appendChild(renderer.domElement);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 50);
+    camera.position.z = 6;
+
+    const { group, head, eyes } = buildAvatar();
+    scene.add(group);
+
+    scene.add(new THREE.AmbientLight(0x8a70d0, 1.1));
+
+    const key = new THREE.DirectionalLight(0xffffff, 2.4);
+    key.position.set(-3, 3, 5);
+    scene.add(key);
+
+    const rim = new THREE.DirectionalLight(ACCENT, 5);
+    rim.position.set(3, 2, -3);
+    scene.add(rim);
+
+    const look = { x: 0, y: 0, tx: 0, ty: 0 };
+    const onMouseMove = (event: MouseEvent) => {
+      look.tx = event.clientX / window.innerWidth - 0.5;
+      look.ty = event.clientY / window.innerHeight - 0.5;
+    };
+
+    const fit = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      renderer.setSize(width, height, false);
+      camera.aspect = width / Math.max(height, 1);
+      camera.updateProjectionMatrix();
+    };
+
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('resize', fit);
+    fit();
+
+    let frame = 0;
+    let nextBlink = 2 + Math.random() * 2;
+    const clock = new THREE.Clock();
+
+    const loop = () => {
+      const time = clock.getElapsedTime();
+      const halfWidth = Math.tan(THREE.MathUtils.degToRad(20)) * camera.position.z * camera.aspect;
+
+      look.x += (look.tx - look.x) * 0.06;
+      look.y += (look.ty - look.y) * 0.06;
+
+      group.position.set(
+        pose.x * halfWidth,
+        pose.y + Math.sin(time * 1.2) * 0.04,
+        0
+      );
+      group.scale.setScalar(pose.s);
+      group.rotation.y = pose.ry + look.x * 0.5;
+      head.rotation.y = look.x * 0.5;
+      head.rotation.x = look.y * 0.3;
+
+      const blinking = time > nextBlink && time < nextBlink + 0.14;
+      if (time > nextBlink + 0.14) nextBlink = time + 2 + Math.random() * 3;
+      eyes.forEach((eye) => {
+        eye.scale.y = blinking ? 0.1 : 1;
+      });
+
+      renderer.domElement.style.opacity = String(pose.o);
+      if (glow.current) {
+        glow.current.style.left = (50 + pose.x * 50) + '%';
+        glow.current.style.opacity = String(pose.o);
+      }
+
+      renderer.render(scene, camera);
+      frame = requestAnimationFrame(loop);
+    };
+
+    loop();
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('resize', fit);
+
+      scene.traverse((object) => {
+        if (object instanceof THREE.Mesh) {
+          object.geometry.dispose();
+          const material = object.material;
+          if (Array.isArray(material)) material.forEach((item) => item.dispose());
+          else material.dispose();
+        }
+      });
+
+      renderer.dispose();
+      if (renderer.domElement.parentNode === el) el.removeChild(renderer.domElement);
+    };
+  }, []);
+
+  return (
+    <div className="stage" ref={box} aria-hidden="true">
+      <div className="halo" ref={glow} />
+    </div>
+  );
+}
+
+function Bubbles() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const context = canvas.getContext('2d');
+    if (!context) return;
+
+    let width = 0;
+    let height = 0;
+    let frame = 0;
+    const pointer = { x: -999, y: -999 };
+
+    const colors = ['#60a5fa', '#f7df1e', '#a67cff', '#7dd3fc', '#86efac', '#f0abfc'];
+
+    const bubbles = stack.map((label, index) => ({
+      label,
+      radius: 30 + Math.random() * 24,
+      x: 0,
+      y: 0,
+      vx: (Math.random() - 0.5) * 1.2,
+      vy: (Math.random() - 0.5) * 1.2,
+      color: colors[index % colors.length]
+    }));
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      width = rect.width;
+      height = rect.height;
+
+      canvas.width = Math.max(1, Math.round(width * dpr));
+      canvas.height = Math.max(1, Math.round(height * dpr));
+      context.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      bubbles.forEach((bubble) => {
+        bubble.x = Math.min(Math.max(bubble.x || Math.random() * width, bubble.radius), Math.max(bubble.radius, width - bubble.radius));
+        bubble.y = Math.min(Math.max(bubble.y || height * (0.4 + Math.random() * 0.3), height * 0.4 + bubble.radius), Math.max(height * 0.4 + bubble.radius, height - bubble.radius));
+      });
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      pointer.x = event.clientX - rect.left;
+      pointer.y = event.clientY - rect.top;
+    };
+
+    const loop = () => {
+      context.clearRect(0, 0, width, height);
+
+      for (const bubble of bubbles) {
+        bubble.x += bubble.vx;
+        bubble.y += bubble.vy;
+
+        if (bubble.x < bubble.radius || bubble.x > width - bubble.radius) bubble.vx *= -1;
+        if (bubble.y < height * 0.4 + bubble.radius || bubble.y > height - bubble.radius) bubble.vy *= -1;
+
+        const dx = bubble.x - pointer.x;
+        const dy = bubble.y - pointer.y;
+        const distance = Math.hypot(dx, dy);
+
+        if (distance > 0 && distance < 140) {
+          bubble.vx += (dx / distance) * 0.08;
+          bubble.vy += (dy / distance) * 0.08;
+        }
+
+        bubble.vx *= 0.995;
+        bubble.vy *= 0.995;
+
+        const gradient = context.createRadialGradient(
+          bubble.x - bubble.radius * 0.35,
+          bubble.y - bubble.radius * 0.35,
+          bubble.radius * 0.1,
+          bubble.x,
+          bubble.y,
+          bubble.radius
+        );
+        gradient.addColorStop(0, '#fff');
+        gradient.addColorStop(0.7, '#eee6f7');
+        gradient.addColorStop(1, bubble.color);
+
+        context.fillStyle = gradient;
+        context.beginPath();
+        context.arc(bubble.x, bubble.y, bubble.radius, 0, Math.PI * 2);
+        context.fill();
+
+        context.fillStyle = '#2a2140';
+        context.font = '500 ' + Math.max(10, bubble.radius * 0.32) + 'px Space Grotesk, sans-serif';
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.fillText(bubble.label, bubble.x, bubble.y);
+      }
+
+      frame = requestAnimationFrame(loop);
+    };
+
+    resize();
+    window.addEventListener('resize', resize);
+    canvas.addEventListener('pointermove', onPointerMove, { passive: true });
+    loop();
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('resize', resize);
+      canvas.removeEventListener('pointermove', onPointerMove);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="bubbles" aria-label="Technology stack" />;
+}
+
+function App() {
+  const [open, setOpen] = useState(false);
+  const root = useRef<HTMLDivElement>(null);
+  const lenis = useRef<Lenis | null>(null);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isNarrow = () => window.innerWidth < 800;
+
+    let raf: ((time: number) => void) | null = null;
+
+    if (!reducedMotion) {
+      const instance = new Lenis({ lerp: 0.09 });
+      lenis.current = instance;
+
+      const onScroll = () => ScrollTrigger.update();
+      instance.on('scroll', onScroll);
+
+      raf = (time: number) => instance.raf(time * 1000);
+      gsap.ticker.add(raf);
+      gsap.ticker.lagSmoothing(0);
+    }
+
+    const media = gsap.matchMedia();
+
+    const context = gsap.context(() => {
+      const animatePose = (
+        trigger: string,
+        values: gsap.TweenVars,
+        start = 'top bottom',
+        end = 'top top'
+      ) => {
+        gsap.to(pose, {
+          ...values,
+          ease: 'none',
+          immediateRender: false,
+          scrollTrigger: {
+            trigger,
+            start,
+            end,
+            scrub: reducedMotion ? false : 0.8,
+            invalidateOnRefresh: true
+          }
+        });
+      };
+
+      animatePose('#about', {
+        x: () => (isNarrow() ? 0 : -0.52),
+        y: -1.3,
+        s: 1.3,
+        ry: 0.55,
+        o: () => (isNarrow() ? 0.3 : 1)
+      });
+
+      animatePose('.do', {
+        x: () => (isNarrow() ? 0 : 0.1),
+        y: -0.9,
+        s: 0.95,
+        ry: -0.5,
+        o: () => (isNarrow() ? 0.3 : 1)
+      });
+
+      animatePose('.tl', {
+        x: 0,
+        y: -2.4,
+        s: 0.9,
+        ry: 0,
+        o: 0
+      });
+
+      gsap.utils.toArray<HTMLElement>('.rv').forEach((element) => {
+        gsap.fromTo(
+          element,
+          { y: 50, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1.1,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: element, start: 'top 88%' }
+          }
+        );
+      });
+
+      gsap.utils.toArray<HTMLElement>('.row').forEach((element) => {
+        gsap.fromTo(
+          element,
+          { opacity: 0.2, x: -20 },
+          {
+            opacity: 1,
+            x: 0,
+            scrollTrigger: {
+              trigger: element,
+              start: 'top 80%',
+              end: 'top 50%',
+              scrub: true
+            }
+          }
+        );
+      });
+
+      gsap.fromTo(
+        '.rows',
+        { '--fill': '0%' },
+        {
+          '--fill': '100%',
+          ease: 'none',
+          scrollTrigger: { trigger: '.rows', start: 'top 70%', end: 'bottom 60%', scrub: true }
+        }
+      );
+
+      gsap.fromTo(
+        '.hi,.role',
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 1.4, stagger: 0.15, ease: 'power3.out', delay: 0.2 }
+      );
+
+      gsap.to('.hero-copy', {
+        opacity: 0,
+        y: -60,
+        ease: 'none',
+        scrollTrigger: { trigger: '#home', start: 'top top', end: 'bottom 30%', scrub: true }
+      });
+
+      media.add('(min-width: 801px)', () => {
+        const track = document.querySelector<HTMLElement>('.track');
+        if (!track) return;
+
+        gsap.to(track, {
+          x: () => -(track.scrollWidth - window.innerWidth),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.work',
+            start: 'top top',
+            end: () => '+=' + Math.max(0, track.scrollWidth - window.innerWidth),
+            pin: true,
+            scrub: 1,
+            invalidateOnRefresh: true
+          }
+        });
+
+        gsap.utils.toArray<HTMLElement>('.pj .shot').forEach((element) => {
+          gsap.to(element, {
+            yPercent: -12,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '.work',
+              start: 'top top',
+              end: '+=2000',
+              scrub: true
+            }
+          });
+        });
+      });
+    }, root);
+
+    const orb = document.querySelector<HTMLElement>('.orb');
+    let removeOrbMove = () => {};
+
+    if (orb && !reducedMotion && !window.matchMedia('(pointer: coarse)').matches) {
+      const xTo = gsap.quickTo(orb, 'x', { duration: 0.5 });
+      const yTo = gsap.quickTo(orb, 'y', { duration: 0.5 });
+      const onMouseMove = (event: MouseEvent) => {
+        xTo(event.clientX);
+        yTo(event.clientY);
+      };
+
+      window.addEventListener('mousemove', onMouseMove, { passive: true });
+      removeOrbMove = () => window.removeEventListener('mousemove', onMouseMove);
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      removeOrbMove();
+      media.revert();
+      context.revert();
+
+      if (raf) gsap.ticker.remove(raf);
+      lenis.current?.destroy();
+      lenis.current = null;
+
+      pose.x = 0;
+      pose.y = -1.1;
+      pose.s = 1.25;
+      pose.ry = 0;
+      pose.o = 1;
+    };
+  }, []);
+
+  const go = (event: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    event.preventDefault();
+    setOpen(false);
+
+    const element = document.querySelector(id);
+    if (!element) return;
+
+    if (lenis.current) {
+      lenis.current.scrollTo(element);
+    } else {
+      element.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+      });
+    }
+  };
+
+  return (
+    <div className="site" ref={root}>
+      <div className="orb" aria-hidden="true" />
+      <Stage />
+
+      <header className="header">
+        <a className="logo" href="#home" onClick={(event) => go(event, '#home')}>pratik.dev</a>
+        <a className="mid" href={'mailto:' + EMAIL}>{EMAIL}</a>
+
+        <nav className={open ? 'nav open' : 'nav'} aria-label="Primary">
+          <a href="#about" onClick={(event) => go(event, '#about')}>About</a>
+          <a href="#work" onClick={(event) => go(event, '#work')}>Work</a>
+          <a href="#contact" onClick={(event) => go(event, '#contact')}>Contact</a>
+        </nav>
+
+        <button
+          className="menu"
+          type="button"
+          onClick={() => setOpen((value) => !value)}
+          aria-label="Toggle menu"
+          aria-expanded={open}
+          aria-controls="primary-navigation"
+        >
+          {open ? <X size={20} /> : <Menu size={20} />}
+        </button>
+      </header>
+
+      <aside className="rail" aria-label="Social links">
+        <a href="https://github.com/pyatrick666" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GH</a>
+        <a href="https://www.linkedin.com/in/pratik-poudel-b3264a263/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">in</a>
+        <a href="https://pyatrick666.itch.io/chessmate" target="_blank" rel="noopener noreferrer" aria-label="itch.io"><Gamepad2 size={14} /></a>
+      </aside>
+
+      <main>
+        <section id="home" className="hero">
+          <div className="hero-copy">
+            <div className="hi">
+              <small>Hello! I'm</small>
+              <h1>PRATIK<br />POUDEL</h1>
+            </div>
+
+            <div className="role">
+              <small>A Creative</small>
+              <div className="swap" aria-label="Developer and designer">
+                <span>DEVELOPER<br />DESIGNER</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="about" className="about">
+          <div className="eyebrow rv">About me</div>
+          <p className="rv">I'm an IT student at ISMT College Butwal, affiliated with the University of Sunderland, blending full-stack and mobile development with systems know-how and a designer's eye. Driven by curiosity, I keep exploring new tools.</p>
+        </section>
+
+        <section className="do">
+          <h2 className="big rv">What<br />I <em>do</em></h2>
+          <div className="cards rv">
+            <div className="card">
+              <h3>DEVELOP</h3>
+              <p>Web with React, TypeScript and PHP, mobile apps with Flutter and Dart, backed by computer systems and networking fundamentals.</p>
+            </div>
+            <div className="card">
+              <h3>DESIGN</h3>
+              <p>Interfaces drafted in Figma, then built with motion and atmosphere so the finished product feels intentional.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="tl">
+          <h2 className="rv">My learning &amp;<br />experience</h2>
+          <div className="rows">
+            {journey.map((item) => (
+              <div className="row" key={item.t}>
+                <div>
+                  <h3>{item.t}</h3>
+                  <span>{item.s}</span>
+                </div>
+                <p>{item.d}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="work" className="work">
+          <h2>My <em>Work</em></h2>
+          <div className="track">
+            {projects.map((project) => (
+              <a className="pj" key={project.name} href={project.href} target="_blank" rel="noopener noreferrer">
+                <div className="n">{project.num}</div>
+                <div>
+                  <h3>{project.name}</h3>
+                  <span>{project.type}</span>
+                </div>
+                <span>Tools and features<br />{project.tools}</span>
+                <div className="shot" aria-hidden="true" />
+                <ArrowUpRight aria-hidden="true" />
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section className="tech">
+          <h2>MY TECHSTACK</h2>
+          <Bubbles />
+        </section>
+
+        <section id="contact" className="contact">
+          <h2 className="rv">CONTACT</h2>
+          <div className="grid rv">
+            <div>
+              <small>Email</small>
+              <a href={'mailto:' + EMAIL}>{EMAIL}</a>
+              <small>Location</small>
+              <span>Butwal, Nepal</span>
+            </div>
+            <div>
+              <small>Social</small>
+              <a href="https://github.com/pyatrick666" target="_blank" rel="noopener noreferrer">Github ↗</a>
+              <a href="https://www.linkedin.com/in/pratik-poudel-b3264a263/" target="_blank" rel="noopener noreferrer">Linkedin ↗</a>
+              <a href="https://pyatrick666.itch.io/chessmate" target="_blank" rel="noopener noreferrer">itch.io ↗</a>
+            </div>
+            <div className="credit">
+              Designed and developed by <b>Pratik Poudel</b><br />
+              Layout inspired by moncy.dev<br />
+              © {new Date().getFullYear()}
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
+
+createRoot(document.getElementById('root')!).render(<App />);
