@@ -2,11 +2,6 @@
 
 A cinematic, interactive portfolio built with Three.js to showcase my technical skills, projects, and professional profile.
 
-**Live:** https://pyatrick666.github.io/Professional-Portfolio/  
-**GitHub:** https://github.com/pyatrick666  
-**LinkedIn:** https://www.linkedin.com/in/pratik-poudel-b3264a263/  
-**Email:** pyatrick666@gmail.com
-
 ## Overview
 
 I’m Pratik Poudel, a BSc (Hons) Information Technology — Computer Systems Engineering student at ISMT College.
