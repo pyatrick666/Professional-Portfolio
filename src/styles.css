@@ -831,9 +831,9 @@ section {
    ========================================================= */
 
 .tech {
-  align-items: center;
-  text-align: center;
-  padding: 0;
+  align-items: stretch;
+  justify-content: center;
+  padding: clamp(5rem, 9vh, 8rem) var(--gut);
   overflow: hidden;
   background: var(--bg);
 }
@@ -841,47 +841,118 @@ section {
 .tech::before {
   content: '';
   position: absolute;
-  width: min(44vw, 620px);
+  width: min(42vw, 560px);
   aspect-ratio: 1;
-  border: 1px solid rgba(125, 255, 0, 0.08);
+  border: 1px solid rgba(125, 255, 0, 0.055);
   border-radius: 50%;
-  box-shadow: 0 0 100px rgba(125, 255, 0, 0.05);
+  box-shadow: 0 0 120px rgba(125, 255, 0, 0.045);
+  pointer-events: none;
 }
 
 .tech h2 {
-  position: absolute;
-  top: 9%;
-  left: 0;
-  right: 0;
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  margin: 0 auto clamp(2.5rem, 5vh, 4rem);
   font:
     300 var(--h2)
     var(--display);
   z-index: 2;
   pointer-events: none;
+  text-align: center;
 }
 
-.bubbles {
+.stack-grid {
+  position: relative;
+  z-index: 2;
+  width: min(72rem, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.stack-card {
+  position: relative;
+  min-height: 6.2rem;
+  padding: 1.05rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.018);
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.stack-card::before {
+  content: '';
   position: absolute;
-  top: 18%;
-  right: 3%;
-  bottom: 5%;
-  left: 3%;
-  width: 94%;
-  height: 77%;
-  cursor: crosshair;
+  inset: 0;
+  background: radial-gradient(
+    circle at 90% 10%,
+    rgba(125, 255, 0, 0.13),
+    transparent 52%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.tech:hover .bubbles {
-  cursor: grab;
+.stack-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(125, 255, 0, 0.55);
+  background: rgba(125, 255, 0, 0.035);
+  box-shadow:
+    0 14px 35px rgba(0, 0, 0, 0.22),
+    0 0 24px rgba(125, 255, 0, 0.055);
 }
 
-.tech:active .bubbles {
-  cursor: grabbing;
+.stack-card:hover::before {
+  opacity: 1;
+}
+
+.stack-index {
+  position: relative;
+  color: var(--mute);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+}
+
+.stack-label {
+  position: relative;
+  color: var(--fg);
+  font:
+    500 1rem
+    var(--display);
+  letter-spacing: -0.01em;
+}
+
+.stack-dot {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: var(--pu);
+  box-shadow: 0 0 10px rgba(125, 255, 0, 0.65);
+  transition: transform 0.3s ease;
+}
+
+.stack-card:hover .stack-dot {
+  transform: scale(1.6);
 }
 
 /* =========================================================
    CONTACT
    ========================================================= */
+
 
 .contact {
   justify-content: flex-end;
