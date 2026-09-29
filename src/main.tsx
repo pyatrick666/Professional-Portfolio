@@ -982,7 +982,6 @@ function Bubbles() {
     return () => observer.disconnect();
   }, []);
   return <div ref={sectionRef} className="skills-physics" aria-label="Interactive technology stack">
-    <div className="skills-physics__copy"><span>INTERACTIVE STACK</span><p>Move through the toolkit. Hover the field and watch the technologies react.</p></div>
     <Canvas shadows dpr={[1, 1.5]} gl={{ alpha: true, stencil: false, depth: true, antialias: false }} camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }} onCreated={({ gl }) => { gl.toneMappingExposure = 1.5; }} className="tech-canvas">
       <ambientLight intensity={1} />
       <spotLight position={[20, 20, 25]} penumbra={1} angle={0.2} color="white" intensity={2} castShadow shadow-mapSize={[512, 512]} />
