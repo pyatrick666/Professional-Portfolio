@@ -1195,19 +1195,14 @@ section {
 .work-viewport {
   width: 100vw;
   margin-left: calc(var(--gut) * -1);
-  overflow-x: auto;
-  overflow-y: hidden;
-  overscroll-behavior-x: contain;
-  scrollbar-width: thin;
-  scrollbar-color: var(--pu) var(--line);
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
 }
 
 .work-flex {
   display: flex;
   width: max-content;
   gap: 0;
-  transform: none !important;
+  will-change: transform;
 }
 
 .work-box {
@@ -1399,11 +1394,6 @@ section {
     width: 100%;
     margin-left: 0;
     overflow: visible;
-    scrollbar-width: none;
-  }
-
-  .work-viewport::-webkit-scrollbar {
-    display: none;
   }
 
   .work-flex {
