@@ -2054,7 +2054,7 @@ function App() {
                   rel="noopener noreferrer"
                 >
                   <span className="social-mark">
-                    <Linkedin
+                    <LinkedinIcon
                       size={18}
                     />
                   </span>
@@ -2109,7 +2109,7 @@ function App() {
                   rel="noopener noreferrer"
                 >
                   <span className="social-mark">
-                    <Instagram
+                    <InstagramIcon
                       size={18}
                     />
                   </span>
