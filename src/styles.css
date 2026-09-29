@@ -564,7 +564,25 @@ section {
 
 .cards {
   width: min(30rem, 100%);
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0.8rem;
+  border: 1px solid transparent;
+  border-radius: 1rem;
+  background: transparent;
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.cards:has(.card:hover) {
+  background: rgba(125, 255, 0, 0.10);
+  border-color: rgba(125, 255, 0, 0.32);
+  box-shadow:
+    0 0 45px rgba(125, 255, 0, 0.10),
+    inset 0 0 35px rgba(125, 255, 0, 0.045);
 }
 
 .card {
@@ -1093,14 +1111,6 @@ section {
     background 0.35s ease,
     border-color 0.35s ease,
     box-shadow 0.35s ease;
-}
-
-.social-list:has(.social-link:hover) {
-  background: rgba(125, 255, 0, 0.10);
-  border-color: rgba(125, 255, 0, 0.32);
-  box-shadow:
-    0 0 45px rgba(125, 255, 0, 0.10),
-    inset 0 0 35px rgba(125, 255, 0, 0.045);
 }
 
 .social-link {
