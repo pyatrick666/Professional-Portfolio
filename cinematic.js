@@ -57,20 +57,38 @@ try {
 }
 
 if (!renderer) {
+  showFatal('WebGL could not be started. The portfolio content is still available.');
   $('#loader')?.classList.add('loaded');
 } else {
-  try {
-    initWorld();
-    initInterface();
-    initInput();
-    requestAnimationFrame(animate);
+  // Start the experience in safe stages. A failure in an optional layer
+  // must never trap the visitor behind the loading screen.
+  const startupSteps = [
+    ['world', initWorld],
+    ['interface', initInterface],
+    ['input', initInput]
+  ];
+
+  let startupFailed = false;
+
+  for (const [name, step] of startupSteps) {
+    try {
+      step();
+    } catch (error) {
+      startupFailed = true;
+      console.error('Portfolio startup failed in ' + name + ':', error);
+      break;
+    }
+  }
+
+  if (startupFailed) {
+    showFatal('The 3D experience could not finish starting. The portfolio content is still available.');
+    $('#loader')?.classList.add('loaded');
+  } else {
+    // The basic scene is ready before we remove the fallback watchdog.
     document.body.classList.remove('no-webgl');
     clearTimeout(window.__portfolioBootTimer);
-    setTimeout(() => document.body.classList.add('loaded'), 350);
-  } catch (error) {
-    console.error(error);
-    showFatal('The interactive scene could not finish starting. The portfolio content is still available.');
-    $('#loader')?.classList.add('loaded');
+    requestAnimationFrame(animate);
+    requestAnimationFrame(() => document.body.classList.add('loaded'));
   }
 }
 
