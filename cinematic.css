@@ -36,7 +36,9 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 .mobile-drive{display:none}
 #runtime-error{position:fixed;z-index:210;left:50%;bottom:28px;transform:translateX(-50%);width:min(560px,90vw);padding:12px 16px;background:#180d0d;border:1px solid rgba(255,100,100,.3);color:#ffb5b5;font-size:10px;letter-spacing:.05em;text-align:center}
 
-#webgl-fallback{display:none;position:fixed;inset:0;z-index:200;background:#05070b;color:#eef2f5;padding:32px;place-items:center;text-align:center}#webgl-fallback>div{width:min(680px,92vw)}#webgl-fallback h2{font:700 clamp(42px,8vw,78px)/.92 'Space Grotesk';margin:18px 0}#webgl-fallback em{color:var(--accent);font-style:normal}.fallback-links{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:28px}.fallback-links a{color:var(--accent);font-size:11px;letter-spacing:.14em}.no-webgl #webgl-fallback{display:grid}.no-webgl #loader,.no-webgl #scene,.no-webgl .rain-overlay,.no-webgl .vignette,.no-webgl #ride-intro,.no-webgl #ride-hud{display:none}
+#webgl-fallback{display:none;position:fixed;inset:0;z-index:200;background:#05070b;color:#eef2f5;padding:32px;place-items:center;text-align:center}#webgl-fallback>div{width:min(680px,92vw)}#webgl-fallback h2{font:700 clamp(42px,8vw,78px)/.92 'Space Grotesk';margin:18px 0}#webgl-fallback em{color:var(--accent);font-style:normal}.fallback-links{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:28px}.fallback-links a{color:var(--accent);font-size:11px;letter-spacing:.14em}.no-webgl #webgl-fallback{display:grid}
+.no-webgl .content-panel{z-index:60}
+.no-webgl #webgl-fallback .fallback-links a{cursor:pointer}.no-webgl #loader,.no-webgl #scene,.no-webgl .rain-overlay,.no-webgl .vignette,.no-webgl #ride-intro,.no-webgl #ride-hud{display:none}
 
 @keyframes rain{to{transform:translate3d(-15px,25px,0)}}@keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
 
