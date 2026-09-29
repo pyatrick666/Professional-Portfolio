@@ -1850,8 +1850,6 @@ function App() {
         </section>
 
         <Career />
-      <Contact />
-
         <section
           id="work"
           className="work-section"
