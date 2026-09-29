@@ -75,6 +75,27 @@ if (!renderer) {
 } else {
   // Start the experience in safe stages. A failure in an optional layer
   // must never trap the visitor behind the loading screen.
+  // Boot a tiny scene first. This proves WebGL is alive before any
+  // optional portfolio geometry, rain, labels or controls are initialized.
+  try {
+    const testLight = new THREE.AmbientLight(0xffffff, 0.8);
+    scene.add(testLight);
+    const testGeometry = new THREE.BoxGeometry(1.2, 1.2, 1.2);
+    const testMaterial = new THREE.MeshBasicMaterial({ color: 0x7df9ff, wireframe: true });
+    const testCube = new THREE.Mesh(testGeometry, testMaterial);
+    testCube.position.set(0, 1, 0);
+    scene.add(testCube);
+    renderer.render(scene, camera);
+    scene.remove(testCube, testLight);
+    testGeometry.dispose();
+    testMaterial.dispose();
+  } catch (error) {
+    console.error('Minimal 3D boot failed:', error);
+    showFatal('The 3D renderer could not start on this device. The portfolio content is still available.');
+    $('#loader')?.classList.add('loaded');
+    return;
+  }
+
   const startupSteps = [
     ['world', initWorld],
     ['interface', initInterface],
