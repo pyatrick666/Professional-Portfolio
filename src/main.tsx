@@ -26,137 +26,16 @@ const journey = [
   { t: 'Now', s: 'ISMT College · Univ. of Sunderland', d: 'BSc (Hons) IT, Computer Systems Engineering, while shipping mobile and web projects.' }
 ];
 
-/* ---------- Scroll-driven 3D avatar ---------- */
-const SKIN = 0xc98b6b;
-const HAIR = 0x14101c;
-const HOODIE = 0x2b2733;
-const ACCENT = 0xa67cff;
-const CAP = 0x09080d;
-const CAP_EDGE = 0x20172e;
+/* ---------- Web-sourced professional avatar ---------- */
+const ACCENT = 0x7dff00;
+const AVATAR_URL = 'https://img.icons8.com/3d-fluency/512/male-user.png';
 
 const pose = { x: 0, y: -1.1, s: 1.25, ry: 0, o: 1 };
-
-function makeMaterial(color: number, emissiveIntensity = 0) {
-  return new THREE.MeshStandardMaterial({
-    color,
-    roughness: 0.55,
-    metalness: 0.05,
-    emissive: color,
-    emissiveIntensity
-  });
-}
-
-function buildAvatar() {
-  const group = new THREE.Group();
-  const head = new THREE.Group();
-  const eyes: THREE.Group[] = [];
-
-  group.add(head);
-  head.position.y = 1.4;
-
-  const add = (
-    geometry: THREE.BufferGeometry,
-    material: THREE.Material,
-    position: [number, number, number],
-    parent: THREE.Object3D = head
-  ) => {
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(...position);
-    parent.add(mesh);
-    return mesh;
-  };
-
-  add(new THREE.SphereGeometry(1, 48, 48), makeMaterial(SKIN), [0, 0, 0]).scale.set(1, 1.05, 0.95);
-
-  const hair = add(
-    new THREE.SphereGeometry(1.04, 48, 32, 0, Math.PI * 2, 0, Math.PI * 0.42),
-    makeMaterial(HAIR),
-    [0, 0.02, 0]
-  );
-  hair.scale.set(1, 1.05, 0.95);
-
-  // Structured cap: low-profile crown + curved brim, with a restrained purple detail.
-  const cap = new THREE.Group();
-  cap.position.set(0, 0.66, 0.02);
-  head.add(cap);
-
-  const crown = new THREE.Mesh(
-    new THREE.SphereGeometry(0.9, 48, 24, 0, Math.PI * 2, 0, Math.PI * 0.54),
-    makeMaterial(CAP)
-  );
-  crown.scale.set(1.02, 0.78, 0.98);
-  cap.add(crown);
-
-  const band = new THREE.Mesh(
-    new THREE.TorusGeometry(0.79, 0.045, 10, 48),
-    makeMaterial(CAP_EDGE, 0.08)
-  );
-  band.scale.set(1, 1, 0.94);
-  cap.add(band);
-
-  const brim = new THREE.Mesh(
-    new THREE.SphereGeometry(0.62, 32, 16),
-    makeMaterial(CAP)
-  );
-  brim.scale.set(1.35, 0.09, 0.68);
-  brim.position.set(0, -0.02, 0.7);
-  brim.rotation.x = -0.08;
-  cap.add(brim);
-
-  const capMark = new THREE.Mesh(
-    new THREE.TorusGeometry(0.12, 0.022, 8, 24),
-    makeMaterial(ACCENT, 0.45)
-  );
-  capMark.position.set(0, 0.48, 0.42);
-  capMark.rotation.x = Math.PI * 0.5;
-  cap.add(capMark);
-
-  [-1, 1].forEach((side) => {
-    add(new THREE.SphereGeometry(0.22, 24, 24), makeMaterial(SKIN), [side * 1, -0.05, 0]).scale.set(0.6, 1, 1);
-
-    const eye = new THREE.Group();
-    eye.position.set(side * 0.36, 0.1, 0.86);
-    head.add(eye);
-    eyes.push(eye);
-
-    add(new THREE.SphereGeometry(0.17, 24, 24), makeMaterial(0xffffff), [0, 0, 0], eye);
-    add(new THREE.SphereGeometry(0.09, 16, 16), makeMaterial(0x120c24), [0, 0, 0.13], eye);
-
-    const brow = add(new THREE.BoxGeometry(0.4, 0.07, 0.08), makeMaterial(HAIR), [side * 0.36, 0.4, 0.84]);
-    brow.rotation.z = -side * 0.15;
-
-    const earring = add(
-      new THREE.CylinderGeometry(0.3, 0.3, 0.18, 32),
-      makeMaterial(ACCENT, 0.25),
-      [side * 1.12, -0.05, 0]
-    );
-    earring.rotation.z = Math.PI / 2;
-  });
-
-  add(new THREE.SphereGeometry(0.11, 16, 16), makeMaterial(SKIN), [0, -0.1, 0.96]);
-
-  const mouth = add(
-    new THREE.TorusGeometry(0.3, 0.035, 12, 32, Math.PI),
-    makeMaterial(0x3a1a1a),
-    [0, -0.32, 0.84]
-  );
-  mouth.rotation.z = Math.PI;
-
-  add(
-    new THREE.TorusGeometry(1.12, 0.06, 16, 48, Math.PI),
-    makeMaterial(ACCENT, 0.25),
-    [0, -0.05, 0]
-  );
-
-  add(new THREE.CylinderGeometry(0.3, 0.34, 0.4, 24), makeMaterial(SKIN), [0, 0.6, 0], group);
-  add(new THREE.SphereGeometry(1.5, 48, 32), makeMaterial(HOODIE), [0, -0.25, 0], group).scale.set(1, 0.75, 0.7);
-
-  return { group, head, eyes };
-}
 
 function Stage() {
   const box = useRef<HTMLDivElement>(null);
   const glow = useRef<HTMLDivElement>(null);
+  const avatar = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     const el = box.current;
@@ -171,10 +50,6 @@ function Stage() {
     const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 50);
     camera.position.z = 6;
 
-    const { group, head, eyes } = buildAvatar();
-    scene.add(group);
-
-    // Soft floating particles add depth without competing with the avatar.
     const particleGeometry = new THREE.BufferGeometry();
     const particlePositions = new Float32Array(90);
     for (let i = 0; i < particlePositions.length; i += 3) {
@@ -183,6 +58,7 @@ function Stage() {
       particlePositions[i + 2] = (Math.random() - 0.5) * 3 - 1;
     }
     particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+
     const particleMaterial = new THREE.PointsMaterial({
       color: ACCENT,
       size: 0.018,
@@ -190,16 +66,16 @@ function Stage() {
       opacity: 0.5,
       depthWrite: false
     });
+
     const particles = new THREE.Points(particleGeometry, particleMaterial);
     scene.add(particles);
-
-    scene.add(new THREE.AmbientLight(0x8a70d0, 1.1));
+    scene.add(new THREE.AmbientLight(0xffffff, 1.1));
 
     const key = new THREE.DirectionalLight(0xffffff, 2.4);
     key.position.set(-3, 3, 5);
     scene.add(key);
 
-    const rim = new THREE.DirectionalLight(ACCENT, 5);
+    const rim = new THREE.DirectionalLight(ACCENT, 4);
     rim.position.set(3, 2, -3);
     scene.add(rim);
 
@@ -222,7 +98,6 @@ function Stage() {
     fit();
 
     let frame = 0;
-    let nextBlink = 2 + Math.random() * 2;
     const clock = new THREE.Clock();
 
     const loop = () => {
@@ -231,26 +106,15 @@ function Stage() {
 
       look.x += (look.tx - look.x) * 0.06;
       look.y += (look.ty - look.y) * 0.06;
-
-      group.position.set(
-        pose.x * halfWidth,
-        pose.y + Math.sin(time * 1.2) * 0.04,
-        0
-      );
-      group.scale.setScalar(pose.s);
-      group.rotation.y = pose.ry + look.x * 0.5;
-      head.rotation.y = look.x * 0.5;
-      head.rotation.x = look.y * 0.3;
       particles.rotation.y = time * 0.018;
       particles.rotation.x = Math.sin(time * 0.25) * 0.04;
 
-      const blinking = time > nextBlink && time < nextBlink + 0.14;
-      if (time > nextBlink + 0.14) nextBlink = time + 2 + Math.random() * 3;
-      eyes.forEach((eye) => {
-        eye.scale.y = blinking ? 0.1 : 1;
-      });
+      if (avatar.current) {
+        avatar.current.style.transform =
+          `translate3d(${pose.x * halfWidth}px, ${pose.y * 34}px, 0) scale(${pose.s}) rotateY(${pose.ry + look.x * 8}deg) rotateX(${look.y * -3}deg)`;
+        avatar.current.style.opacity = String(pose.o);
+      }
 
-      renderer.domElement.style.opacity = String(pose.o);
       if (glow.current) {
         glow.current.style.left = (50 + pose.x * 50) + '%';
         glow.current.style.opacity = String(pose.o);
@@ -266,16 +130,8 @@ function Stage() {
       cancelAnimationFrame(frame);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('resize', fit);
-
-      scene.traverse((object) => {
-        if (object instanceof THREE.Mesh) {
-          object.geometry.dispose();
-          const material = object.material;
-          if (Array.isArray(material)) material.forEach((item) => item.dispose());
-          else material.dispose();
-        }
-      });
-
+      particleGeometry.dispose();
+      particleMaterial.dispose();
       renderer.dispose();
       if (renderer.domElement.parentNode === el) el.removeChild(renderer.domElement);
     };
@@ -284,6 +140,17 @@ function Stage() {
   return (
     <div className="stage" ref={box} aria-hidden="true">
       <div className="halo" ref={glow} />
+      <div className="avatar-shell">
+        <img
+          ref={avatar}
+          className="web-avatar"
+          src={AVATAR_URL}
+          alt=""
+          loading="eager"
+          referrerPolicy="no-referrer"
+        />
+        <span className="avatar-ring" />
+      </div>
     </div>
   );
 }
@@ -728,14 +595,29 @@ function App() {
               <small>Location</small>
               <span>Butwal, Nepal</span>
             </div>
-            <div>
-              <small>Social</small>
-              <a href="https://github.com/pyatrick666" target="_blank" rel="noopener noreferrer">Github ↗</a>
-              <a href="https://www.linkedin.com/in/pratik-poudel-b3264a263/" target="_blank" rel="noopener noreferrer">Linkedin ↗</a>
-              <a href="https://pyatrick666.itch.io/chessmate" target="_blank" rel="noopener noreferrer">itch.io ↗</a>
+            <div className="socials">
+              <small>Find me online</small>
+              <div className="social-list">
+                <a className="social-link" href="https://github.com/pyatrick666" target="_blank" rel="noopener noreferrer">
+                  <span className="social-mark">GH</span>
+                  <span><b>GitHub</b><small>@pyatrick666</small></span>
+                  <ArrowUpRight aria-hidden="true" />
+                </a>
+                <a className="social-link" href="https://www.linkedin.com/in/pratik-poudel-b3264a263/" target="_blank" rel="noopener noreferrer">
+                  <span className="social-mark">in</span>
+                  <span><b>LinkedIn</b><small>Pratik Poudel</small></span>
+                  <ArrowUpRight aria-hidden="true" />
+                </a>
+                <a className="social-link" href="https://pyatrick666.itch.io/chessmate" target="_blank" rel="noopener noreferrer">
+                  <span className="social-mark"><Gamepad2 size={15} /></span>
+                  <span><b>itch.io</b><small>ChessMate</small></span>
+                  <ArrowUpRight aria-hidden="true" />
+                </a>
+              </div>
             </div>
             <div className="credit">
               Designed and developed by <b>Pratik Poudel</b><br />
+              Avatar: Icons8 3D Fluency<br />
               Layout inspired by moncy.dev<br />
               © {new Date().getFullYear()}
             </div>
