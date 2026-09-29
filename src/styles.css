@@ -601,8 +601,10 @@ section {
 
 .swap {
   position: relative;
-  height: auto;
-  overflow: visible;
+  height: 2em;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   font:
     700 clamp(1.45rem, 2.7vw, 2.8rem) / 0.98
     var(--display);
@@ -624,6 +626,41 @@ section {
   animation: roleAccent 3.5s ease-in-out infinite;
 }
 
+.role-static,
+.role-changing {
+  display: block;
+}
+
+.role-static {
+  height: 1em;
+}
+
+.role-changing {
+  position: relative;
+  height: 1em;
+  overflow: hidden;
+}
+
+.role-changing > span {
+  display: block;
+  height: 1em;
+  animation: developerSwap 5s infinite cubic-bezier(.7, 0, .2, 1);
+}
+
+@keyframes developerSwap {
+  0%, 38% {
+    transform: translateY(0);
+  }
+
+  50%, 88% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
 @keyframes roleAccent {
   0%, 100% {
     transform: scaleX(0.35);
@@ -633,27 +670,6 @@ section {
   50% {
     transform: scaleX(1);
     opacity: 1;
-  }
-}
-
-.swap span {
-  display: block;
-  animation: none;
-}
-
-@keyframes swapWords {
-  0%,
-  42% {
-    transform: translateY(0);
-  }
-
-  52%,
-  92% {
-    transform: translateY(-50%);
-  }
-
-  100% {
-    transform: translateY(0);
   }
 }
 
