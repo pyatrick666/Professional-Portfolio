@@ -107,13 +107,51 @@ const projects = [
 ];
 
 const skillGroups = [
-  { label: '01', title: 'Frontend', description: 'Interfaces that feel fast, deliberate and alive.', skills: ['React', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Bootstrap'] },
-  { label: '02', title: 'Mobile & Apps', description: 'Cross-platform applications built for real use.', skills: ['Flutter', 'Dart', 'Firebase', 'C#', '.NET'] },
-  { label: '03', title: 'Backend & Data', description: 'APIs, services and data layers behind the interface.', skills: ['Node.js', 'Express', 'PHP', 'MySQL', 'Python', 'Java'] },
-  { label: '04', title: 'Systems & Design', description: 'The systems thinking and design tools behind my builds.', skills: ['Linux', 'Cisco', 'Git', 'Figma', 'UI/UX'] },
+  {
+    label: '01',
+    title: 'Frontend',
+    description: 'Modern interfaces, responsive layouts and interactive web experiences.',
+    skills: ['React', 'TypeScript', 'JavaScript', 'HTML5', 'CSS3', 'Bootstrap', 'Three.js', 'GSAP', 'Lenis'],
+  },
+  {
+    label: '02',
+    title: 'Backend & APIs',
+    description: 'Application logic, APIs, services and database-driven systems.',
+    skills: ['Node.js', 'Express.js', 'PHP', 'Python', 'Java', 'C#', '.NET'],
+  },
+  {
+    label: '03',
+    title: 'Databases & Cloud',
+    description: 'Data modelling, storage and cloud-connected applications.',
+    skills: ['MySQL', 'MongoDB', 'Firebase', 'SQL', 'AdMob'],
+  },
+  {
+    label: '04',
+    title: 'Mobile & Game Development',
+    description: 'Cross-platform apps and interactive projects built for real devices.',
+    skills: ['Flutter', 'Dart', 'Three.js', 'React Three Fiber', 'Rapier'],
+  },
+  {
+    label: '05',
+    title: 'Systems & Networking',
+    description: 'Computer systems, Linux and networking foundations.',
+    skills: ['Linux', 'CISCO', 'Computer Systems', 'Networking', 'Git', 'GitHub'],
+  },
+  {
+    label: '06',
+    title: 'UI/UX & Creative',
+    description: 'Design, prototyping and visual communication for digital products.',
+    skills: ['Figma', 'UI/UX Design', 'Canva', 'Graphic Design'],
+  },
+  {
+    label: '07',
+    title: 'Engineering Foundations',
+    description: 'Core concepts that support reliable software development.',
+    skills: ['OOP', 'Data Structures', 'Software Engineering', 'Web Development', 'Database Systems'],
+  },
 ];
 
-const stack = skillGroups.flatMap((group) => group.skills);
+const stack = [...new Set(skillGroups.flatMap((group) => group.skills))];
 
 const journey = [
   {
@@ -939,6 +977,22 @@ function Bubbles() {
       <Environment preset="city" environmentIntensity={0.5} />
       <EffectComposer enableNormalPass={false}><N8AO color="#0f002c" aoRadius={2} intensity={1.15} /></EffectComposer>
     </Canvas>
+    <div className="skills-index">
+      {skillGroups.map((group) => (
+        <div className="skills-group" key={group.label}>
+          <div className="skills-group__head">
+            <span>{group.label}</span>
+            <h3>{group.title}</h3>
+          </div>
+          <p>{group.description}</p>
+          <div className="skills-tags">
+            {group.skills.map((skill) => (
+              <span key={skill}>{skill}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
   </div>;
 }
 /* =========================================================
