@@ -1414,6 +1414,34 @@ function App() {
             }
           );
 
+          /* Pinned horizontal Work gallery */
+          const workSection = document.querySelector<HTMLElement>('.work-section');
+          const workFlex = document.querySelector<HTMLElement>('.work-flex');
+
+          if (workSection && workFlex) {
+            const setupWorkScroll = () => {
+              const distance = Math.max(0, workFlex.scrollWidth - window.innerWidth);
+              if (distance === 0) return;
+
+              gsap.to(workFlex, {
+                x: -distance,
+                ease: 'none',
+                scrollTrigger: {
+                  trigger: workSection,
+                  start: 'top top',
+                  end: () => `+=${Math.max(distance, window.innerHeight)}`,
+                  scrub: true,
+                  pin: true,
+                  anticipatePin: 1,
+                  invalidateOnRefresh: true,
+                  id: 'work-horizontal',
+                },
+              });
+            };
+
+            setupWorkScroll();
+          }
+
           gsap.to(
             '.hero-copy',
             {
@@ -1822,59 +1850,52 @@ function App() {
 
         <section
           id="work"
-          className="work"
+          className="work-section"
         >
-          <div className="work-head">
-            <div>
+          <div className="work-container section-container">
+            <div className="work-heading">
               <small>SELECTED REPOSITORIES</small>
               <h2>
-                My <em>Works</em>
+                My <span>Work</span>
               </h2>
+              <p>Scroll to explore the projects I have built across software, web, mobile and embedded development.</p>
             </div>
-            <a
-              className="work-github"
-              href="https://github.com/pyatrick666"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span>VIEW ALL ON GITHUB</span>
-              <ArrowUpRight aria-hidden="true" />
-            </a>
-          </div>
 
-          <div className="work-grid">
-            {projects.map((project) => (
-              <a
-                className="work-card"
-                key={project.name}
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div className="work-card-top">
-                  <span className="work-num">{project.num}</span>
-                  <span className="work-type">{project.type}</span>
-                  <ArrowUpRight className="work-arrow" aria-hidden="true" />
-                </div>
+            <div className="work-viewport">
+              <div className="work-flex">
+                {projects.map((project) => (
+                  <a
+                    className="work-box"
+                    key={project.name}
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div className="work-info">
+                      <div className="work-title">
+                        <h3>{project.num}</h3>
+                        <div>
+                          <h4>{project.name}</h4>
+                          <p>{project.type}</p>
+                        </div>
+                        <ArrowUpRight className="work-card-arrow" aria-hidden="true" />
+                      </div>
 
-                <div className="work-card-body">
-                  <h3>{project.name}</h3>
-                  <p>{project.description}</p>
-                </div>
+                      <h4>Tools and features</h4>
+                      <p>{project.tools.join(', ')}</p>
 
-                <div className="work-tags">
-                  {project.tools.map((tool) => (
-                    <span key={tool}>{tool}</span>
-                  ))}
-                </div>
+                      <span className="work-open">OPEN REPOSITORY ↗</span>
+                    </div>
 
-                <div className="work-card-footer">
-                  <span>OPEN REPOSITORY</span>
-                  <span className="work-line" />
-                  <span className="work-index">{project.num} / 08</span>
-                </div>
-              </a>
-            ))}
+                    <div className="work-project-visual" aria-hidden="true">
+                      <span>{project.num}</span>
+                      <strong>{project.name}</strong>
+                      <small>{project.type}</small>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
