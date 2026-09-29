@@ -180,10 +180,10 @@ const CAP = 0x09080d;
 const CAP_EDGE = 0x20172e;
 
 const pose = {
-  x: 0,
-  y: -1.1,
-  s: 1.14,
-  ry: 0,
+  x: -0.52,
+  y: -1.3,
+  s: 1.2,
+  ry: 0.55,
   o: 1,
 };
 
@@ -1216,7 +1216,7 @@ function App() {
           );
 
           animatePose(
-            '.tl',
+            '.career-section',
             {
               x: 0,
               y: -2.4,
@@ -1512,10 +1512,10 @@ function App() {
       lenis.current?.destroy();
       lenis.current = null;
 
-      pose.x = 0;
-      pose.y = -1.1;
-      pose.s = 1.14;
-      pose.ry = 0;
+      pose.x = -0.52;
+      pose.y = -1.3;
+      pose.s = 1.2;
+      pose.ry = 0.55;
       pose.o = 1;
     };
   }, []);
