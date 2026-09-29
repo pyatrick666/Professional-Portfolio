@@ -1414,7 +1414,7 @@ function App() {
             }
           );
 
-          /* Pinned horizontal Work gallery */
+          /* Pinned horizontal Work gallery — re-applied from 09539ff */
           const workSection = document.querySelector<HTMLElement>('.work-section');
           const workFlex = document.querySelector<HTMLElement>('.work-flex');
 
