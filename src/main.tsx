@@ -174,6 +174,25 @@ function Stage() {
     const { group, head, eyes } = buildAvatar();
     scene.add(group);
 
+    // Soft floating particles add depth without competing with the avatar.
+    const particleGeometry = new THREE.BufferGeometry();
+    const particlePositions = new Float32Array(90);
+    for (let i = 0; i < particlePositions.length; i += 3) {
+      particlePositions[i] = (Math.random() - 0.5) * 8;
+      particlePositions[i + 1] = (Math.random() - 0.5) * 5;
+      particlePositions[i + 2] = (Math.random() - 0.5) * 3 - 1;
+    }
+    particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+    const particleMaterial = new THREE.PointsMaterial({
+      color: ACCENT,
+      size: 0.018,
+      transparent: true,
+      opacity: 0.5,
+      depthWrite: false
+    });
+    const particles = new THREE.Points(particleGeometry, particleMaterial);
+    scene.add(particles);
+
     scene.add(new THREE.AmbientLight(0x8a70d0, 1.1));
 
     const key = new THREE.DirectionalLight(0xffffff, 2.4);
@@ -222,6 +241,8 @@ function Stage() {
       group.rotation.y = pose.ry + look.x * 0.5;
       head.rotation.y = look.x * 0.5;
       head.rotation.x = look.y * 0.3;
+      particles.rotation.y = time * 0.018;
+      particles.rotation.x = Math.sin(time * 0.25) * 0.04;
 
       const blinking = time > nextBlink && time < nextBlink + 0.14;
       if (time > nextBlink + 0.14) nextBlink = time + 2 + Math.random() * 3;
