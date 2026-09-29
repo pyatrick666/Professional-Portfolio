@@ -1959,14 +1959,12 @@ function App() {
                   className="row"
                   key={item.t}
                 >
-                  <div>
-                    <h3>
-                      {item.t}
-                    </h3>
+                  <h3>
+                    {item.t}
+                  </h3>
 
-                    <div className="period">
-                      {item.s}
-                    </div>
+                  <div className="period">
+                    {item.s}
                   </div>
 
                   <p>
