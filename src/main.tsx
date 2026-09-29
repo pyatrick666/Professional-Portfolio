@@ -43,6 +43,7 @@ import { EffectComposer, N8AO } from '@react-three/postprocessing';
 import { BallCollider, Physics, RigidBody, RapierRigidBody } from '@react-three/rapier';
 import './styles.css';
 import Career from './Career';
+import Work from './Work';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -1839,43 +1840,8 @@ function App() {
 
         <Career />
 
-        <section id="work" className="work-section">
-          <div className="work-container">
-            <h2>
-              My <span>Work</span>
-            </h2>
+        <Work />
 
-            <div className="work-flex">
-              {projects.map((project) => (
-                <a
-                  className="work-box"
-                  key={project.name}
-                  href={project.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div className="work-info">
-                    <div className="work-title">
-                      <h3>{project.num}</h3>
-                      <div>
-                        <h4>{project.name}</h4>
-                        <p>{project.type}</p>
-                      </div>
-                    </div>
-
-                    <h4>Tools and features</h4>
-                    <p>{project.tools}</p>
-                  </div>
-
-                  <div className="work-image" aria-hidden="true">
-                    <div className="work-image-grid" />
-                    <span>VIEW PROJECT ↗</span>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
 
         <section className="tech">
           <h2>MY TECHSTACK</h2>
