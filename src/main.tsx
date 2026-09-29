@@ -53,57 +53,65 @@ const projects = [
   {
     name: 'CarRentalApp',
     num: '01',
-    type: 'Desktop / Application',
-    tools: 'C#, .NET, Desktop Development',
+    type: 'Desktop Application',
+    description: 'A C# and .NET desktop application focused on practical application architecture and user workflows.',
+    tools: ['C#', '.NET', 'Desktop Development'],
     href: 'https://github.com/pyatrick666/CarRentalApp',
   },
   {
     name: 'AccountRegistrationSystem',
     num: '02',
-    type: 'Console / C#',
-    tools: 'C#, OOP, File Handling',
+    type: 'Console Application',
+    description: 'An object-oriented account registration and login system with validation and file-based persistence.',
+    tools: ['C#', 'OOP', 'File Handling'],
     href: 'https://github.com/pyatrick666/AccountRegistrationSystem',
   },
   {
     name: 'RaspberryPi-PICO',
     num: '03',
-    type: 'Embedded / Hardware',
-    tools: 'Raspberry Pi Pico, Embedded Systems',
+    type: 'Embedded Systems',
+    description: 'Hardware and embedded experiments built around the Raspberry Pi Pico.',
+    tools: ['Raspberry Pi Pico', 'Embedded Systems', 'Hardware'],
     href: 'https://github.com/pyatrick666/RaspberryPi-PICO',
   },
   {
     name: 'ePortfolio',
     num: '04',
-    type: 'Web / Coursework',
-    tools: 'HTML, CSS, JavaScript, Bootstrap',
+    type: 'Web Development',
+    description: 'A multi-page full-stack learning portfolio covering web foundations, interactive UI and responsive design.',
+    tools: ['HTML', 'CSS', 'JavaScript', 'Bootstrap'],
     href: 'https://github.com/pyatrick666/ePortfolio',
   },
   {
     name: 'cit-e-cycling-web-portal',
     num: '05',
-    type: 'Web / Full Stack',
-    tools: 'Web Development, Database, UI',
+    type: 'Full Stack Web',
+    description: 'A practical web portal project combining interface design, web development and database concepts.',
+    tools: ['Web Development', 'Database', 'UI'],
     href: 'https://github.com/pyatrick666/cit-e-cycling-web-portal',
   },
   {
     name: '360-VR-',
     num: '06',
-    type: 'VR / Interactive',
-    tools: '360° VR, Web Development',
+    type: 'VR / Interactive Web',
+    description: 'An interactive 360-degree virtual reality experience built for the browser.',
+    tools: ['360° VR', 'Web Development', 'Interactive Media'],
     href: 'https://github.com/pyatrick666/360-VR-',
   },
   {
     name: 'ChessMate',
     num: '07',
-    type: 'Mobile / Game',
-    tools: 'Flutter, Dart, Firebase, AdMob',
+    type: 'Mobile Game',
+    description: 'A Flutter chess application with real-device gameplay and connected services.',
+    tools: ['Flutter', 'Dart', 'Firebase', 'AdMob'],
     href: 'https://github.com/pyatrick666/ChessMate',
   },
   {
     name: 'pyatrick666',
     num: '08',
     type: 'GitHub Profile',
-    tools: 'Profile, Projects and Open Source Work',
+    description: 'My public developer profile featuring projects, experiments and open-source work.',
+    tools: ['GitHub', 'Open Source', 'Projects'],
     href: 'https://github.com/pyatrick666/pyatrick666',
   },
 ];
@@ -1048,7 +1056,7 @@ function PortfolioLoader({ onComplete }: { onComplete: () => void }) {
   return (
     <div className={`portfolio-loader ${clicked ? 'is-exiting' : ''}`} role="status" aria-live="polite">
       <div className="loader-header">
-        <a href="#home" className="loader-title">patrick</a>
+        <a href="#home" className="loader-title">patrick.dev</a>
         <div className={`loader-game ${clicked ? 'loader-out' : ''}`}>
           <div className="loader-game-container">
             <div className="loader-game-in">
@@ -1585,7 +1593,7 @@ function App() {
             )
           }
         >
-          patrick
+          patrick.dev
         </a>
 
         <a
@@ -1816,59 +1824,59 @@ function App() {
           id="work"
           className="work"
         >
-          <h2>
-            My <em>Work</em>
-          </h2>
+          <div className="work-head">
+            <div>
+              <small>SELECTED REPOSITORIES</small>
+              <h2>
+                My <em>Works</em>
+              </h2>
+            </div>
+            <a
+              className="work-github"
+              href="https://github.com/pyatrick666"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>VIEW ALL ON GITHUB</span>
+              <ArrowUpRight aria-hidden="true" />
+            </a>
+          </div>
 
-          <div className="track">
-            {projects.map(
-              (project) => (
-                <a
-                  className="pj"
-                  key={
-                    project.name
-                  }
-                  href={
-                    project.href
-                  }
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div className="n">
-                    {project.num}
-                  </div>
+          <div className="work-grid">
+            {projects.map((project) => (
+              <a
+                className="work-card"
+                key={project.name}
+                href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="work-card-top">
+                  <span className="work-num">{project.num}</span>
+                  <span className="work-type">{project.type}</span>
+                  <ArrowUpRight className="work-arrow" aria-hidden="true" />
+                </div>
 
-                  <div>
-                    <h3>
-                      {project.name}
-                    </h3>
+                <div className="work-card-body">
+                  <h3>{project.name}</h3>
+                  <p>{project.description}</p>
+                </div>
 
-                    <span>
-                      {project.type}
-                    </span>
-                  </div>
+                <div className="work-tags">
+                  {project.tools.map((tool) => (
+                    <span key={tool}>{tool}</span>
+                  ))}
+                </div>
 
-                  <span>
-                    Tools and
-                    features
-                    <br />
-                    {project.tools}
-                  </span>
-
-                  <div
-                    className="shot"
-                    aria-hidden="true"
-                  />
-
-                  <ArrowUpRight
-                    aria-hidden="true"
-                  />
-                </a>
-              )
-            )}
+                <div className="work-card-footer">
+                  <span>OPEN REPOSITORY</span>
+                  <span className="work-line" />
+                  <span className="work-index">{project.num} / 08</span>
+                </div>
+              </a>
+            ))}
           </div>
         </section>
-
 
         <section className="tech">
           <h2>MY TECHSTACK</h2>
