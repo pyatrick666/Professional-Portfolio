@@ -102,25 +102,14 @@ const projects = [
   },
 ];
 
-const stack = [
-  'React',
-  'TypeScript',
-  'JavaScript',
-  'Flutter',
-  'Dart',
-  'Firebase',
-  'Node',
-  'Express',
-  'PHP',
-  'MySQL',
-  'Python',
-  'Java',
-  'C#',
-  'Linux',
-  'Cisco',
-  'Figma',
-  'Git',
+const skillGroups = [
+  { label: '01', title: 'Frontend', description: 'Interfaces that feel fast, deliberate and alive.', skills: ['React', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Bootstrap'] },
+  { label: '02', title: 'Mobile & Apps', description: 'Cross-platform applications built for real use.', skills: ['Flutter', 'Dart', 'Firebase', 'C#', '.NET'] },
+  { label: '03', title: 'Backend & Data', description: 'APIs, services and data layers behind the interface.', skills: ['Node.js', 'Express', 'PHP', 'MySQL', 'Python', 'Java'] },
+  { label: '04', title: 'Systems & Design', description: 'The systems thinking and design tools behind my builds.', skills: ['Linux', 'Cisco', 'Git', 'Figma', 'UI/UX'] },
 ];
+
+const stack = skillGroups.flatMap((group) => group.skills);
 
 const journey = [
   {
@@ -881,20 +870,32 @@ function Stage() {
 
 function Bubbles() {
   return (
-    <div className="stack-grid" aria-label="Technology stack">
-      {stack.map((label, index) => (
-        <div
-          className="stack-card"
-          key={label}
-          style={{ '--i': index } as React.CSSProperties}
-        >
-          <span className="stack-index">
-            {String(index + 1).padStart(2, '0')}
-          </span>
-          <span className="stack-label">{label}</span>
-          <span className="stack-dot" aria-hidden="true" />
-        </div>
-      ))}
+    <div className="skills-layout" aria-label="Skills and technologies">
+      <div className="skills-intro">
+        <span className="skills-kicker">THE TOOLKIT</span>
+        <p>A growing technical stack shaped by projects, coursework and constant experimentation.</p>
+        <div className="skills-signal" aria-hidden="true"><span /><span /><span /></div>
+      </div>
+      <div className="skills-groups">
+        {skillGroups.map((group) => (
+          <article className="skill-group" key={group.title}>
+            <div className="skill-group__top">
+              <span>{group.label}</span>
+              <span className="skill-group__line" />
+              <span>{String(group.skills.length).padStart(2, '0')} skills</span>
+            </div>
+            <h3>{group.title}</h3>
+            <p>{group.description}</p>
+            <div className="skill-pills">
+              {group.skills.map((skill, index) => (
+                <span className="skill-pill" key={skill}>
+                  <i>{String(index + 1).padStart(2, '0')}</i>{skill}
+                </span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   );
 }
