@@ -1060,32 +1060,31 @@ function App() {
             });
 
           gsap.utils
-            .toArray<HTMLElement>(
-              '.rv'
-            )
-            .forEach(
-              (element) => {
-                gsap.fromTo(
-                  element,
-                  {
-                    y: 50,
-                    opacity: 0,
+            .toArray<HTMLElement>('.rv')
+            .forEach((element) => {
+              gsap.fromTo(
+                element,
+                {
+                  y: 55,
+                  opacity: 0,
+                  scale: 0.97,
+                  filter: 'blur(8px)',
+                },
+                {
+                  y: 0,
+                  opacity: 1,
+                  scale: 1,
+                  filter: 'blur(0px)',
+                  duration: 1.35,
+                  ease: 'power3.out',
+                  scrollTrigger: {
+                    trigger: element,
+                    start: 'top 88%',
+                    toggleActions: 'play none none reverse',
                   },
-                  {
-                    y: 0,
-                    opacity: 1,
-                    duration: 1.1,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                      trigger:
-                        element,
-                      start:
-                        'top 88%',
-                    },
-                  }
-                );
-              }
-            );
+                }
+              );
+            });
 
           gsap.fromTo(
             '.cards .card',
