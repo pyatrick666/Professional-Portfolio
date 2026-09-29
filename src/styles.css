@@ -640,13 +640,33 @@ section {
 }
 
 .swap {
+  position: relative;
   height: 1.15em;
   overflow: hidden;
   font:
     700 var(--h1) / 1.15
     var(--display);
   color: var(--soft);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.swap::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0.05em;
+  width: 3.5rem;
+  height: 2px;
+  background: var(--pu);
+  box-shadow: 0 0 16px rgba(125, 255, 0, 0.55);
+  transform-origin: left;
+  animation: roleAccent 3.5s ease-in-out infinite;
+}
+
+@keyframes roleAccent {
+  0%, 100% { transform: scaleX(0.35); opacity: 0.45; }
+  50% { transform: scaleX(1); opacity: 1; }
 }
 
 .swap span {
