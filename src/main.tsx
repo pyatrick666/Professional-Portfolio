@@ -1247,11 +1247,32 @@ function App() {
   const [open, setOpen] =
     useState(false);
 
+  const [loading, setLoading] =
+    useState(true);
+
   const root =
     useRef<HTMLDivElement>(null);
 
   const lenis =
     useRef<Lenis | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const minimumDisplay = new Promise<void>((resolve) => {
+      window.setTimeout(resolve, 1400);
+    });
+
+    const fontsReady = document.fonts?.ready ?? Promise.resolve();
+
+    Promise.all([minimumDisplay, fontsReady]).then(() => {
+      if (mounted) setLoading(false);
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     const reducedMotion =
@@ -1642,6 +1663,19 @@ function App() {
       className="site"
       ref={root}
     >
+      <div
+        className={`loader ${loading ? '' : 'loader--hidden'}`}
+        aria-hidden={!loading}
+      >
+        <div className="loader__content">
+          <div className="loader__mark">P</div>
+          <div className="loader__line">
+            <span />
+          </div>
+          <p>INITIALIZING PORTFOLIO</p>
+        </div>
+      </div>
+
       <div
         className="orb"
         aria-hidden="true"
