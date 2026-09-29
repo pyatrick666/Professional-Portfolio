@@ -1,0 +1,134 @@
+.contact-section {
+  width: 100%;
+  padding: 140px 0 70px;
+  background: #0b080c;
+  color: #eae5ec;
+}
+
+.contact-container {
+  width: min(1200px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.contact-container > h3 {
+  margin: 0 0 70px;
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  line-height: .9;
+  font-weight: 400;
+  letter-spacing: -.06em;
+  text-transform: uppercase;
+}
+
+.contact-flex {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap: 3rem;
+  border-top: 1px solid rgba(234,229,236,.18);
+  padding-top: 2rem;
+}
+
+.contact-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.contact-box h4 {
+  margin: 0 0 1rem;
+  color: #9f96a5;
+  font-size: .78rem;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.contact-box p {
+  margin: 0 0 2rem;
+}
+
+.contact-box a {
+  color: #eae5ec;
+  text-decoration: none;
+  transition: color .3s ease, transform .3s ease;
+}
+
+.contact-box a:hover,
+.contact-box a:focus-visible {
+  color: var(--pu);
+}
+
+.contact-social {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  margin: 0 0 .9rem;
+  font-size: 1.05rem;
+}
+
+.contact-social svg {
+  transition: transform .3s ease;
+}
+
+.contact-social:hover svg {
+  transform: translate(3px, -3px);
+}
+
+.contact-credit {
+  align-self: flex-end;
+}
+
+.contact-credit h2 {
+  margin: 0 0 1.5rem;
+  font-size: clamp(1.8rem, 3vw, 3.2rem);
+  line-height: 1.05;
+  font-weight: 400;
+  letter-spacing: -.045em;
+}
+
+.contact-credit h2 span {
+  color: var(--pu);
+}
+
+.contact-credit h5 {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  margin: 0;
+  color: #9f96a5;
+  font-size: .8rem;
+  font-weight: 400;
+}
+
+@media (max-width: 900px) {
+  .contact-flex {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .contact-credit {
+    grid-column: 1 / -1;
+    align-self: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-section {
+    padding: 100px 0 50px;
+  }
+
+  .contact-container {
+    width: min(100% - 32px, 1200px);
+  }
+
+  .contact-container > h3 {
+    margin-bottom: 50px;
+  }
+
+  .contact-flex {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .contact-credit {
+    grid-column: auto;
+  }
+}
