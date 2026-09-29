@@ -983,6 +983,139 @@ section {
   .career-info-box::before { left: -2.2rem; width: 1.5rem; }
 }
 /* =========================================================
+   PROJECTS
+   ========================================================= */
+
+
+
+.work {
+  padding:
+    clamp(100px, 14vh, 140px)
+    0
+    0;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.work h2 {
+  font:
+    300 var(--h2)
+    var(--display);
+  padding:
+    0
+    var(--gut)
+    2.5rem;
+}
+
+.work h2 em {
+  font-style: normal;
+  color: var(--pu);
+  font-weight: 700;
+}
+
+.track {
+  display: flex;
+  border-top: 1px solid var(--line);
+  flex: 1;
+  width: max-content;
+}
+
+.pj {
+  position: relative;
+  flex: 0 0 min(38rem, 88vw);
+  border-right: 1px solid var(--line);
+  padding: 3rem 2.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.pj:first-child {
+  margin-left: var(--gut);
+  border-left: 1px solid var(--line);
+}
+
+.pj .n {
+  font:
+    700 clamp(2.4rem, 4vw, 4rem)
+    var(--display);
+}
+
+.pj h3 {
+  font-size: 1.6rem;
+}
+
+.pj span {
+  color: var(--mute);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.pj svg {
+  color: var(--pu);
+  transition: transform 0.35s ease;
+}
+
+.pj:hover svg {
+  transform: translate(4px, -4px);
+}
+
+.pj::after {
+  content: 'VIEW PROJECT';
+  position: absolute;
+  top: 3.2rem;
+  right: 2.8rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  color: var(--mute);
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.pj:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pj .shot {
+  position: relative;
+  height: 14rem;
+  border-radius: 0.6rem;
+  background:
+    linear-gradient(
+      135deg,
+      #1a1030,
+      #3b1f7a 60%,
+      #7dff00
+    );
+  opacity: 0.8;
+  margin-top: auto;
+  overflow: hidden;
+  transition:
+    transform 0.55s cubic-bezier(0.2, 0.75, 0.2, 1),
+    opacity 0.35s ease;
+}
+
+.pj .shot::before {
+  content: '';
+  position: absolute;
+  inset: 12%;
+  border: 1px solid rgba(198, 255, 138, 0.24);
+  transform: skewX(-12deg);
+}
+
+.pj:hover .shot {
+  transform: scale(1.025);
+  opacity: 1;
+}
+
+
+/* =========================================================
    TECH STACK
    ========================================================= */
 
