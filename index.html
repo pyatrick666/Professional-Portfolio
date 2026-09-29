@@ -38,23 +38,25 @@ document.querySelectorAll('[data-fallback-target]').forEach(function(link){
   });
 });
 </script>
-<script type="module">
-(async function () {
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+(function () {
   const fallback = document.getElementById('webgl-fallback');
   const loader = document.getElementById('loader');
   const scene = document.getElementById('scene');
 
-  let THREE;
-  try {
-    THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js');
-  } catch (error) {
-    console.error('Three.js module load failed:', error);
+  function showError(message) {
+    console.error(message);
     if (fallback) {
       fallback.style.display = 'grid';
       const p = fallback.querySelector('p');
-      if (p) p.textContent = 'DIAGNOSTIC: THREE.JS MODULE LOAD FAILED — ' + (error?.message || error);
+      if (p) p.textContent = '3D STARTUP FAILED — ' + message;
     }
     loader?.classList.add('loaded');
+  }
+
+  if (!window.THREE) {
+    showError('Three.js could not be loaded.');
     return;
   }
 
@@ -69,8 +71,7 @@ document.querySelectorAll('[data-fallback-target]').forEach(function(link){
 
     const testScene = new THREE.Scene();
     testScene.background = new THREE.Color(0x070a0d);
-    const light = new THREE.AmbientLight(0xffffff, 1);
-    testScene.add(light);
+    testScene.add(new THREE.AmbientLight(0xffffff, 1));
 
     const geometry = new THREE.BoxGeometry(1, 1, 1);
     const material = new THREE.MeshBasicMaterial({ color: 0x7df9ff, wireframe: true });
@@ -94,13 +95,7 @@ document.querySelectorAll('[data-fallback-target]').forEach(function(link){
       renderer.setSize(innerWidth, innerHeight, false);
     });
   } catch (error) {
-    console.error('WebGL renderer bootstrap failed:', error);
-    if (fallback) {
-      fallback.style.display = 'grid';
-      const p = fallback.querySelector('p');
-      if (p) p.textContent = 'DIAGNOSTIC: WEBGL RENDERER FAILED — ' + (error?.message || error);
-    }
-    loader?.classList.add('loaded');
+    showError(error?.message || String(error));
   }
 })();
 </script>
