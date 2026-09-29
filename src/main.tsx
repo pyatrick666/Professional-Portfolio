@@ -1796,78 +1796,32 @@ function App() {
           </p>
         </section>
 
-        <section className="do whatIDO">
-          <div className="what-box">
-            <h2 className="title">
-              W<span className="hat-h2">HAT</span>
-              <div>
-                I<span className="do-h2"> DO</span>
-              </div>
-            </h2>
-          </div>
-
-          <div className="what-box">
-            <div className="what-box-in">
-              <div className="what-border2" aria-hidden="true">
-                <svg width="100%" height="100%" preserveAspectRatio="none">
-                  <line x1="0" y1="0" x2="0" y2="100%" />
-                  <line x1="100%" y1="0" x2="100%" y2="100%" />
-                </svg>
-              </div>
-
-              <div className="what-content what-noTouch" onClick={(event) => handleWhatClick(event.currentTarget)}>
-                <div className="what-border1" aria-hidden="true">
-                  <svg width="100%" height="100%" preserveAspectRatio="none">
-                    <line x1="0" y1="0" x2="100%" y2="0" />
-                    <line x1="0" y1="100%" x2="100%" y2="100%" />
-                  </svg>
-                </div>
-                <div className="what-corner" aria-hidden="true" />
-
-                <div className="what-content-in">
-                  <h3>DEVELOP</h3>
-                  <h4>Software development</h4>
-                  <p>
-                    I build responsive web experiences, full-stack applications
-                    and mobile projects with a focus on practical, maintainable
-                    solutions.
-                  </p>
-                  <h5>Skillset &amp; tools</h5>
-                  <div className="what-content-flex">
-                    {['JavaScript', 'TypeScript', 'React', 'Three.js', 'Flutter', 'Node.js', 'Express.js', 'PHP', 'MySQL', 'CSS'].map((skill) => (
-                      <span className="what-tags" key={skill}>{skill}</span>
-                    ))}
-                  </div>
-                  <div className="what-arrow" aria-hidden="true">↗</div>
-                </div>
-              </div>
-
-              <div className="what-content what-noTouch">
-                <div className="what-border1" aria-hidden="true">
-                  <svg width="100%" height="100%" preserveAspectRatio="none">
-                    <line x1="0" y1="100%" x2="100%" y2="100%" />
-                  </svg>
-                </div>
-                <div className="what-corner" aria-hidden="true" />
-
-                <div className="what-content-in">
-                  <h3>SOFTWARE ENGINEER</h3>
-                  <h4>Engineering &amp; systems</h4>
-                  <p>
-                    I work across software, backend systems and computer
-                    networking, turning technical requirements into reliable
-                    and usable products.
-                  </p>
-                  <h5>Skillset &amp; tools</h5>
-                  <div className="what-content-flex">
-                    {['C#', '.NET', 'Python', 'Java', 'Linux', 'CISCO', 'Networking', 'Git', 'GitHub', 'OOP'].map((skill) => (
-                      <span className="what-tags" key={skill}>{skill}</span>
-                    ))}
-                  </div>
-                  <div className="what-arrow" aria-hidden="true">↗</div>
-                </div>
-              </div>
+        <section className="do">
+          <h2 className="big rv">What<br />I <em>do</em></h2>
+          <div className="cards rv">
+            <div className="card">
+              <h3>DEVELOP</h3>
+              <p>Web with React, TypeScript and PHP, mobile apps with Flutter and Dart, backed by computer systems and networking fundamentals.</p>
             </div>
+            <div className="card">
+              <h3>SOFTWARE ENGINEER</h3>
+              <p>Build reliable software across web, mobile and backend systems, with a focus on clean architecture, practical problem-solving and maintainable code.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="tl">
+          <h2 className="rv">My learning &amp;<br />experience</h2>
+          <div className="rows">
+            {journey.map((item) => (
+              <div className="row" key={item.t}>
+                <div>
+                  <h3>{item.t}</h3>
+                  <span>{item.s}</span>
+                </div>
+                <p>{item.d}</p>
+              </div>
+            ))}
           </div>
         </section>
 
