@@ -548,7 +548,7 @@ function App() {
             </div>
 
             <div className="role">
-              <small>A Creative</small>
+              <small>A Software Engineer</small>
               <div className="swap" aria-label="Software Engineer and Developer">
                 <span>SOFTWARE ENGINEER<br />DEVELOPER</span>
               </div>
