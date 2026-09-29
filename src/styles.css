@@ -847,7 +847,7 @@ section {
 
 .tech h2 {
   position: absolute;
-  top: 32%;
+  top: 9%;
   left: 0;
   right: 0;
   font:
@@ -859,9 +859,12 @@ section {
 
 .bubbles {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  top: 18%;
+  right: 3%;
+  bottom: 5%;
+  left: 3%;
+  width: 94%;
+  height: 77%;
   cursor: crosshair;
 }
 
@@ -1111,7 +1114,16 @@ section {
   }
 
   .tech h2 {
-    top: 24%;
+    top: 8%;
+  }
+
+  .bubbles {
+    top: 18%;
+    right: 2%;
+    bottom: 4%;
+    left: 2%;
+    width: 96%;
+    height: 78%;
   }
 
   .tech::before {
