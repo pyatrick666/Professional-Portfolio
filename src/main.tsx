@@ -160,11 +160,6 @@ const journey = [
     d: 'Built a foundation in web development, from semantic front ends to PHP-backed websites and practical coursework.',
   },
   {
-    t: 'Modern stack',
-    s: '2021–2023 · React · TypeScript · Flutter',
-    d: 'Moved into component-driven applications, mobile development, APIs and interactive front-end experiences.',
-  },
-  {
     t: 'Networking',
     s: '2023–Now · Computer Systems · Networking · Linux',
     d: 'Developing deeper systems and networking skills alongside my BSc (Hons) IT studies at ISMT College.',
@@ -1850,24 +1845,16 @@ function App() {
         </section>
 
         <section className="tl">
-          <div className="tl-heading rv">
-            <span className="tl-kicker">02 / JOURNEY</span>
-            <h2>My learning &amp;<br /><em>experience</em></h2>
-          </div>
-
-          <div className="journey">
-            {journey.map((item, index) => (
-              <article className="journey-item rv" key={item.t}>
-                <div className="journey-marker">
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <i />
-                </div>
-                <div className="journey-content">
-                  <div className="journey-meta">{item.s}</div>
+          <h2 className="rv">My learning &amp;<br />experience</h2>
+          <div className="rows">
+            {journey.map((item) => (
+              <div className="row" key={item.t}>
+                <div>
                   <h3>{item.t}</h3>
-                  <p>{item.d}</p>
+                  <span>{item.s}</span>
                 </div>
-              </article>
+                <p>{item.d}</p>
+              </div>
             ))}
           </div>
         </section>
