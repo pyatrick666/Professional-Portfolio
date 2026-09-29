@@ -156,37 +156,20 @@ const stack = [...new Set(skillGroups.flatMap((group) => group.skills))];
 const journey = [
   {
     t: 'Web foundations',
-    c: 'HTML · CSS · JavaScript · PHP',
-    s: '2019–2021',
+    s: '2019–2021 · HTML · CSS · JavaScript · PHP',
     d: 'Built a foundation in web development, from semantic front ends to PHP-backed websites and practical coursework.',
   },
   {
     t: 'Modern stack',
-    c: 'React · TypeScript · Flutter',
-    s: '2021–2023',
+    s: '2021–2023 · React · TypeScript · Flutter',
     d: 'Moved into component-driven applications, mobile development, APIs and interactive front-end experiences.',
   },
   {
     t: 'Networking',
-    c: 'Computer Systems · Networking · Linux',
-    s: '2023–NOW',
+    s: '2023–Now · Computer Systems · Networking · Linux',
     d: 'Developing deeper systems and networking skills alongside my BSc (Hons) IT studies at ISMT College.',
   },
 ];
-
-function handleWhatClick(container: HTMLDivElement) {
-  const active = container.classList.toggle('what-content-active');
-
-  const parent = container.parentElement;
-  if (!parent) return;
-
-  Array.from(parent.children).forEach((sibling) => {
-    if (sibling !== container) {
-      sibling.classList.toggle('what-sibling', active);
-      sibling.classList.remove('what-content-active');
-    }
-  });
-}
 
 /* =========================================================
    THREE.JS ORIGINAL 3D AVATAR
@@ -1895,26 +1878,29 @@ function App() {
             experience
           </h2>
 
-          <div className="career-info">
-            <div className="career-timeline" aria-hidden="true">
-              <div className="career-line" />
-              <div className="career-dot" />
-            </div>
+          <div className="rows">
+            {journey.map(
+              (item) => (
+                <div
+                  className="row"
+                  key={item.t}
+                >
+                  <div>
+                    <h3>
+                      {item.t}
+                    </h3>
 
-            <div className="career-cards">
-              {journey.map((item) => (
-                <article className="career-info-box row" key={item.t}>
-                  <div className="career-info-in">
-                    <div className="career-role">
-                      <h4>{item.t}</h4>
-                      <h5>{item.c}</h5>
+                    <div className="period">
+                      {item.s}
                     </div>
-                    <h3>{item.s}</h3>
                   </div>
-                  <p>{item.d}</p>
-                </article>
-              ))}
-            </div>
+
+                  <p>
+                    {item.d}
+                  </p>
+                </div>
+              )
+            )}
           </div>
         </section>
 
