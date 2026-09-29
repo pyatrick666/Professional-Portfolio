@@ -430,30 +430,8 @@ main {
   color: var(--pu);
 }
 
-.header::after {
-  content: '';
-  position: absolute;
-  left: var(--gut);
-  right: var(--gut);
-  bottom: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(125, 255, 0, 0.28), transparent);
-  opacity: 0.65;
-}
-
 .header .logo {
   position: relative;
-}
-
-.header .logo::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -0.35rem;
-  width: 1.6rem;
-  height: 1px;
-  background: var(--pu);
-  box-shadow: 0 0 10px rgba(125, 255, 0, 0.8);
 }
 
 .logo {
@@ -464,9 +442,13 @@ main {
 }
 
 .mid {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   color: var(--mute) !important;
   text-transform: none;
   letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 
 .nav {
