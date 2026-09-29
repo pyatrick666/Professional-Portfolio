@@ -1798,9 +1798,7 @@ function App() {
 
         <section className="do">
           <div className="do-heading rv">
-            <span className="do-index">01 / CAPABILITIES</span>
             <h2 className="big">What<br /><em>I do</em></h2>
-            <p className="do-intro">I design and build digital products that feel clear, fast and intentional — from polished interfaces to functional software systems.</p>
           </div>
 
           <div className="cards">
