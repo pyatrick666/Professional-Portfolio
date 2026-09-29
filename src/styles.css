@@ -208,8 +208,13 @@ main {
 }
 
 @keyframes loaderBall {
-  from { left: 15%; }
-  to { left: 85%; }
+  from {
+    left: 15%;
+  }
+
+  to {
+    left: 85%;
+  }
 }
 
 .loader-marquee {
@@ -237,7 +242,9 @@ main {
 }
 
 @keyframes loaderMarquee {
-  to { transform: translateX(-50%); }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .loader-wrap {
@@ -276,7 +283,9 @@ main {
   border: 1px solid rgba(125,255,0,.2);
   border-radius: .9rem;
   background: rgba(7,5,10,.72);
-  box-shadow: 0 30px 100px rgba(0,0,0,.35), inset 0 0 50px rgba(125,255,0,.025);
+  box-shadow:
+    0 30px 100px rgba(0,0,0,.35),
+    inset 0 0 50px rgba(125,255,0,.025);
   backdrop-filter: blur(14px);
   transition:
     transform .8s cubic-bezier(.22,1,.36,1),
@@ -286,7 +295,9 @@ main {
 
 .loader-button.loading-complete {
   border-color: rgba(125,255,0,.55);
-  box-shadow: 0 0 70px rgba(125,255,0,.12), inset 0 0 45px rgba(125,255,0,.04);
+  box-shadow:
+    0 0 70px rgba(125,255,0,.12),
+    inset 0 0 45px rgba(125,255,0,.04);
   transform: scale(1.035);
 }
 
@@ -614,8 +625,15 @@ section {
 }
 
 @keyframes roleAccent {
-  0%, 100% { transform: scaleX(0.35); opacity: 0.45; }
-  50% { transform: scaleX(1); opacity: 1; }
+  0%, 100% {
+    transform: scaleX(0.35);
+    opacity: 0.45;
+  }
+
+  50% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
 }
 
 .swap span {
@@ -751,7 +769,10 @@ section {
     linear-gradient(145deg, rgba(255,255,255,.025), transparent 55%),
     rgba(5,3,8,.42);
   overflow: hidden;
-  transition: transform .55s cubic-bezier(.22,1,.36,1), background .45s ease, border-color .45s ease;
+  transition:
+    transform .55s cubic-bezier(.22,1,.36,1),
+    background .45s ease,
+    border-color .45s ease;
 }
 
 .card:last-child {
@@ -884,115 +905,252 @@ section {
   align-items: center;
   overflow: hidden;
 }
-.career-container { width: min(78rem, 100%); margin: 0 auto; }
+
+.career-container {
+  width: min(78rem, 100%);
+  margin: 0 auto;
+}
+
 .career-container > h2 {
   margin: 0 0 4rem;
-  font: 300 clamp(3.5rem, 7vw, 7rem) / .92 var(--display);
+
+  font:
+    300 clamp(3.5rem, 7vw, 7rem) / .92
+    var(--display);
+
   letter-spacing: -.055em;
+  color: var(--fg);
 }
-.career-container > h2 span { color: var(--pu); font-weight: 700; }
+
+/* Only the & is neon green */
+.career-container > h2 span {
+  color: #7dff00;
+  font-weight: 700;
+
+  text-shadow:
+    0 0 8px rgba(125, 255, 0, .7),
+    0 0 25px rgba(125, 255, 0, .35);
+}
+
+/* =========================================================
+   TIMELINE
+   ========================================================= */
+
 .career-info {
   position: relative;
+
   display: grid;
   grid-template-columns: 3rem 1fr;
+
   gap: 0 2rem;
 }
+
 .career-timeline {
   grid-column: 1;
   grid-row: 1 / span 3;
+
+  position: relative;
+
   width: 1px;
   min-height: 100%;
+
   margin-left: .55rem;
-  background: linear-gradient(to bottom, transparent, var(--pu) 8%, var(--line) 50%, transparent 96%);
+
+  background: var(--line);
 }
+
+/* =========================================================
+   MOVING NEON DOT ONLY
+   ========================================================= */
+
+.career-timeline::after {
+  content: '';
+
+  position: absolute;
+
+  left: 50%;
+  top: -10px;
+
+  width: 9px;
+  height: 9px;
+
+  transform: translateX(-50%);
+
+  border-radius: 50%;
+
+  background: #7dff00;
+
+  box-shadow:
+    0 0 6px #7dff00,
+    0 0 14px #7dff00,
+    0 0 25px rgba(125, 255, 0, .8);
+
+  animation:
+    timelineDotTravel
+    3.5s
+    linear
+    infinite;
+}
+
+@keyframes timelineDotTravel {
+  0% {
+    top: -10px;
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    top: calc(100% - 5px);
+    opacity: 0;
+  }
+}
+
+/* Main timeline point stays normal */
 .career-dot {
   position: sticky;
+
   top: 45%;
+
   width: 10px;
   height: 10px;
+
   margin-left: -4.5px;
+
   border-radius: 50%;
-  background: var(--pu);
-  box-shadow: 0 0 18px rgba(125,255,0,.65);
+
+  background: var(--fg);
+
+  box-shadow: none;
 }
+
+/* =========================================================
+   EXPERIENCE ROWS
+   ========================================================= */
+
 .career-info-box {
   grid-column: 2;
+
   position: relative;
+
   padding: 2.4rem 0 2.8rem;
+
   border-top: 1px solid var(--line);
-  transition: transform .45s cubic-bezier(.22,1,.36,1);
+
+  transition:
+    transform .45s cubic-bezier(.22,1,.36,1);
 }
-.career-info-box:last-child { border-bottom: 1px solid var(--line); }
-.career-info-box:hover { transform: translateX(10px); }
+
+.career-info-box:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.career-info-box:hover {
+  transform: translateX(10px);
+}
+
 .career-info-box::before {
   content: '';
+
   position: absolute;
+
   left: -5rem;
   top: -1px;
+
   width: 3rem;
   height: 1px;
+
   background: var(--pu);
+
   transform: scaleX(0);
   transform-origin: right;
+
   transition: transform .4s ease;
 }
-.career-info-box:hover::before { transform: scaleX(1); }
+
+.career-info-box:hover::before {
+  transform: scaleX(1);
+}
+
+/* =========================================================
+   EXPERIENCE TITLE
+   ========================================================= */
+
 .career-info-in {
   display: flex;
+
   align-items: flex-start;
   justify-content: space-between;
+
   gap: 2rem;
 }
+
 .career-role h4 {
   margin: 0;
+
   color: var(--fg);
-  font-size: clamp(1.35rem, 2.4vw, 2.2rem);
+
+  font-size:
+    clamp(1.35rem, 2.4vw, 2.2rem);
+
   letter-spacing: -.035em;
 }
+
 .career-role h5 {
   margin: .55rem 0 0;
+
   color: var(--pu);
+
   font-size: .68rem;
   font-weight: 500;
+
   letter-spacing: .11em;
+
   text-transform: uppercase;
 }
+
 .career-info-in > h3 {
   margin: 0;
+
   color: var(--mute);
-  font: 500 clamp(.8rem, 1.1vw, 1rem) / 1 var(--display);
+
+  font:
+    500 clamp(.8rem, 1.1vw, 1rem) / 1
+    var(--display);
+
   letter-spacing: .1em;
+
   white-space: nowrap;
 }
+
 .career-info-box > p {
   max-width: 44rem;
+
   margin: 1.3rem 0 0;
+
   color: var(--mute);
+
   font-size: .94rem;
+
   line-height: 1.8;
 }
-@media (max-width: 800px) {
-  .career-section { min-height: auto; padding-top: 100px; padding-bottom: 100px; }
-  .career-container > h2 { margin-bottom: 2.8rem; font-size: clamp(3.2rem, 14vw, 5rem); }
-  .career-info { grid-template-columns: 1rem 1fr; gap: 0 1.2rem; }
-  .career-timeline { margin-left: .45rem; }
-  .career-info-box { padding: 1.8rem 0 2.2rem; }
-  .career-info-in { flex-direction: column; gap: .9rem; }
-  .career-role h4 { font-size: 1.35rem; }
-  .career-info-box > p { font-size: .86rem; line-height: 1.7; }
-  .career-info-box::before { left: -2.2rem; width: 1.5rem; }
-}
+
 /* =========================================================
    PROJECTS
    ========================================================= */
-
-
 
 .work {
   padding:
     clamp(100px, 14vh, 140px)
     0
     0;
+
   justify-content: flex-start;
   overflow: hidden;
 }
@@ -1001,6 +1159,7 @@ section {
   font:
     300 var(--h2)
     var(--display);
+
   padding:
     0
     var(--gut)
@@ -1023,11 +1182,16 @@ section {
 .pj {
   position: relative;
   flex: 0 0 min(38rem, 88vw);
+
   border-right: 1px solid var(--line);
+
   padding: 3rem 2.8rem;
+
   display: flex;
   flex-direction: column;
+
   gap: 1.1rem;
+
   color: var(--fg);
   text-decoration: none;
 }
@@ -1064,14 +1228,20 @@ section {
 
 .pj::after {
   content: 'VIEW PROJECT';
+
   position: absolute;
   top: 3.2rem;
   right: 2.8rem;
+
   font-size: 0.62rem;
   letter-spacing: 0.16em;
+
   color: var(--mute);
+
   opacity: 0;
+
   transform: translateY(6px);
+
   transition:
     opacity 0.3s ease,
     transform 0.3s ease;
@@ -1084,8 +1254,11 @@ section {
 
 .pj .shot {
   position: relative;
+
   height: 14rem;
+
   border-radius: 0.6rem;
+
   background:
     linear-gradient(
       135deg,
@@ -1093,9 +1266,13 @@ section {
       #3b1f7a 60%,
       #7dff00
     );
+
   opacity: 0.8;
+
   margin-top: auto;
+
   overflow: hidden;
+
   transition:
     transform 0.55s cubic-bezier(0.2, 0.75, 0.2, 1),
     opacity 0.35s ease;
@@ -1103,9 +1280,12 @@ section {
 
 .pj .shot::before {
   content: '';
+
   position: absolute;
   inset: 12%;
+
   border: 1px solid rgba(198, 255, 138, 0.24);
+
   transform: skewX(-12deg);
 }
 
@@ -1113,7 +1293,6 @@ section {
   transform: scale(1.025);
   opacity: 1;
 }
-
 
 /* =========================================================
    TECH STACK
@@ -1208,7 +1387,6 @@ section {
    CONTACT
    ========================================================= */
 
-
 .contact {
   justify-content: flex-end;
   border-top: 1px solid var(--line);
@@ -1219,6 +1397,7 @@ section {
   font:
     300 var(--h2)
     var(--display);
+
   margin-bottom: 2.4rem;
 }
 
@@ -1265,6 +1444,7 @@ section {
   border: 1px solid transparent;
   border-radius: 1rem;
   background: transparent;
+
   transition:
     background 0.35s ease,
     border-color 0.35s ease,
@@ -1273,28 +1453,45 @@ section {
 
 .social-link {
   position: relative;
+
   display: grid !important;
+
   grid-template-columns: 42px 1fr auto;
+
   align-items: center;
+
   gap: 0.9rem;
+
   width: 100% !important;
+
   margin: 0 !important;
+
   padding: 0.8rem 0.9rem;
+
   border: 1px solid var(--line) !important;
+
   border-radius: 0.75rem;
+
   background: rgba(255, 255, 255, 0.015);
+
   color: var(--fg) !important;
+
   text-decoration: none !important;
 }
 
 .social-mark {
   width: 42px;
   height: 42px;
+
   display: grid;
   place-items: center;
+
   border: 1px solid #394631;
+
   border-radius: 0.55rem;
+
   color: var(--pu);
+
   font:
     700 0.72rem
     var(--display);
@@ -1343,6 +1540,7 @@ section {
    ========================================================= */
 
 @media (max-width: 800px) {
+
   .mid {
     position: absolute;
     left: 50%;
@@ -1360,13 +1558,20 @@ section {
 
   .nav {
     display: none;
+
     position: absolute;
+
     top: 60px;
     right: 20px;
+
     flex-direction: column;
+
     background: #0d0a14;
+
     padding: 1.2rem 1.6rem;
+
     gap: 1rem;
+
     border: 1px solid var(--line);
   }
 
@@ -1383,7 +1588,9 @@ section {
     display: flex;
     flex-direction: column;
     justify-content: center;
+
     gap: 2rem;
+
     padding: 0 var(--gut);
   }
 
@@ -1435,6 +1642,49 @@ section {
     font-size: .86rem;
   }
 
+  /* Career mobile */
+  .career-section {
+    min-height: auto;
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+
+  .career-container > h2 {
+    margin-bottom: 2.8rem;
+    font-size: clamp(3.2rem, 14vw, 5rem);
+  }
+
+  .career-info {
+    grid-template-columns: 1rem 1fr;
+    gap: 0 1.2rem;
+  }
+
+  .career-timeline {
+    margin-left: .45rem;
+  }
+
+  .career-info-box {
+    padding: 1.8rem 0 2.2rem;
+  }
+
+  .career-info-in {
+    flex-direction: column;
+    gap: .9rem;
+  }
+
+  .career-role h4 {
+    font-size: 1.35rem;
+  }
+
+  .career-info-box > p {
+    font-size: .86rem;
+    line-height: 1.7;
+  }
+
+  .career-info-box::before {
+    left: -2.2rem;
+    width: 1.5rem;
+  }
 
   .grid {
     grid-template-columns: 1fr;
@@ -1500,7 +1750,12 @@ section {
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
   .swap span {
+    animation: none;
+  }
+
+  .career-timeline::after {
     animation: none;
   }
 
@@ -1514,25 +1769,41 @@ section {
   }
 }
 
+/* =========================================================
+   SKILLS INDEX
+   ========================================================= */
 
 .skills-index {
   position: relative;
   z-index: 4;
+
   width: min(78rem, 100%);
+
   margin: 1.25rem auto 0;
+
   display: grid;
+
   grid-template-columns: repeat(2, minmax(0, 1fr));
+
   gap: 1px;
+
   border: 1px solid rgba(125,255,0,.1);
+
   border-radius: 1.25rem;
+
   overflow: hidden;
+
   background: rgba(125,255,0,.08);
 }
 
 .skills-group {
   padding: clamp(1.2rem, 2vw, 1.8rem);
+
   background: rgba(7,7,9,.92);
-  transition: background .35s ease, transform .35s ease;
+
+  transition:
+    background .35s ease,
+    transform .35s ease;
 }
 
 .skills-group:hover {
@@ -1554,16 +1825,23 @@ section {
 
 .skills-group h3 {
   margin: 0;
+
   font-size: clamp(1rem, 1.6vw, 1.25rem);
+
   font-weight: 500;
+
   letter-spacing: -.02em;
 }
 
 .skills-group p {
   margin: .55rem 0 .9rem;
+
   max-width: 34rem;
+
   color: var(--mute);
+
   font-size: .72rem;
+
   line-height: 1.55;
 }
 
@@ -1576,41 +1854,57 @@ section {
 .skills-tags span {
   display: inline-flex;
   align-items: center;
+
   min-height: 1.8rem;
+
   padding: .28rem .62rem;
+
   border: 1px solid rgba(255,255,255,.09);
+
   border-radius: 999px;
+
   color: var(--soft);
+
   background: rgba(255,255,255,.025);
+
   font-size: .68rem;
+
   letter-spacing: .01em;
-  transition: border-color .25s ease, color .25s ease, background .25s ease, transform .25s ease;
+
+  transition:
+    border-color .25s ease,
+    color .25s ease,
+    background .25s ease,
+    transform .25s ease;
 }
 
 .skills-tags span:hover {
   border-color: rgba(125,255,0,.45);
+
   color: var(--pu);
+
   background: rgba(125,255,0,.06);
+
   transform: translateY(-2px);
 }
 
 @media (max-width: 800px) {
+
   .skills-index {
     grid-template-columns: 1fr;
     border-radius: 1rem;
   }
 }
 
+/* =========================================================
+   HEADER EMAIL HOVER
+   ========================================================= */
 
-
-/* Neon hover for the header email */
 .mid:hover,
 .mid:focus-visible {
   color: #39ff14 !important;
 }
 
-
-/* Header email hover */
 .header .mid:hover,
 .header .mid:focus-visible {
   color: #39ff14 !important;
