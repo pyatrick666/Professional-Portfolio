@@ -6,7 +6,14 @@
 <title>Pratik Poudel — Digital Trail</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="cinematic.css">
+<link rel="stylesheet" href="cinematic.css"><script>
+window.__portfolioBootTimer=setTimeout(function(){
+  document.body.classList.add('no-webgl');
+  var f=document.getElementById('webgl-fallback'),l=document.getElementById('loader');
+  if(f){var p=f.querySelector('p');if(p)p.textContent='The interactive scene is taking too long to start. The portfolio content is still available.';f.style.display='grid';}
+  if(l)l.classList.add('loaded');
+},8000);
+</script>
 </head>
 <body>
 <div id="webgl-fallback"><div><span class="kicker">PRATIK POUDEL / PROFESSIONAL PORTFOLIO</span><h2>Clean work.<br><em>No 3D required.</em></h2><p>Your browser could not start the interactive experience. The portfolio content is still available below.</p><div class="fallback-links"><a href="#about">ABOUT</a><a href="#work">WORK</a><a href="#skills">SKILLS</a><a href="#contact">CONTACT</a></div></div></div><div id="loader"><div class="loader-mark">PP<span>.</span></div><div class="loader-line"><i></i></div><p>ENTERING THE DIGITAL TRAIL</p></div>
