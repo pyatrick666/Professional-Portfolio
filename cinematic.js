@@ -45,7 +45,8 @@ camera.position.set(0, 3.2, 7);
 
 try {
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
+  const pixelRatio = innerWidth <= 700 ? 1.25 : 1.5;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, pixelRatio));
   renderer.setSize(innerWidth, innerHeight);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.shadowMap.enabled = true;
@@ -79,7 +80,8 @@ function initWorld() {
   const moon = new THREE.DirectionalLight(0xb9d0e8, 2.2);
   moon.position.set(-18, 24, 12);
   moon.castShadow = true;
-  moon.shadow.mapSize.set(1024, 1024);
+  const shadowSize = innerWidth <= 700 ? 512 : 1024;
+  moon.shadow.mapSize.set(shadowSize, shadowSize);
   moon.shadow.camera.left = -35;
   moon.shadow.camera.right = 35;
   moon.shadow.camera.top = 35;
@@ -485,7 +487,7 @@ function createBike() {
 }
 
 function createAtmosphere() {
-  const rainCount = 900;
+  const rainCount = innerWidth <= 700 ? 360 : 700;
   const positions = new Float32Array(rainCount * 3);
   for (let i = 0; i < rainCount; i++) {
     positions[i * 3] = (Math.random() - 0.5) * 70;
@@ -525,6 +527,12 @@ function initInterface() {
 
   $('#ride-hud')?.setAttribute('aria-live', 'polite');
   $('#location-card')?.addEventListener('click', () => { if (state.activeLocation >= 0) openLocation(state.activeLocation); });
+  $('#location-card')?.addEventListener('keydown', (e) => {
+    if ((e.key === 'Enter' || e.key === ' ') && state.activeLocation >= 0) {
+      e.preventDefault();
+      openLocation(state.activeLocation);
+    }
+  });
   addEventListener('keydown', (e) => { if (e.key.toLowerCase() === 'e' && state.started && state.activeLocation >= 0) openLocation(state.activeLocation); });
 }
 
@@ -616,10 +624,13 @@ function createMobileControls() {
       state[action] = false;
       button.classList.remove('pressed');
     };
-    button.addEventListener('pointerdown', press);
+    button.addEventListener('pointerdown', (e) => {
+      button.setPointerCapture?.(e.pointerId);
+      press(e);
+    });
     button.addEventListener('pointerup', release);
     button.addEventListener('pointercancel', release);
-    button.addEventListener('pointerleave', release);
+    button.addEventListener('lostpointercapture', release);
   });
 }
 
@@ -820,7 +831,8 @@ addEventListener('resize', () => {
   camera.updateProjectionMatrix();
   if (renderer) {
     renderer.setSize(innerWidth, innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
+    const pixelRatio = innerWidth <= 700 ? 1.25 : 1.5;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, pixelRatio));
   }
 });
 
