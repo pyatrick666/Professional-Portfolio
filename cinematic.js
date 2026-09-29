@@ -63,6 +63,7 @@ if (!renderer) {
     initInterface();
     initInput();
     requestAnimationFrame(animate);
+    document.body.classList.remove('no-webgl');
     clearTimeout(window.__portfolioBootTimer);
     setTimeout(() => document.body.classList.add('loaded'), 350);
   } catch (error) {
@@ -113,7 +114,9 @@ function trackX(z) {
 function trackHeading(z) {
   const dz = 0.08;
   const dx = trackX(z + dz) - trackX(z - dz);
-  return Math.atan2(dx, 2 * dz);
+  // Forward travel is toward decreasing Z, so the heading follows the
+  // downhill travel direction rather than the opposite tangent.
+  return Math.atan2(-dx, 2 * dz);
 }
 
 function createTrack() {
@@ -476,8 +479,9 @@ function createBike() {
 
   bikeVisual.scale.setScalar(1.08);
   const startZ = 5.5;
+  state.heading = trackHeading(startZ);
   bike.position.set(trackX(startZ), terrainY(trackX(startZ), startZ) + 0.03, startZ);
-  bike.rotation.y = trackHeading(startZ);
+  bike.rotation.y = state.heading;
 }
 
 function createAtmosphere() {
@@ -729,9 +733,11 @@ function updateCamera(dt, time) {
   look.y += mobile ? 0.72 : 0.92;
   camera.lookAt(look);
 
+  // Headlight lives inside the bike visual group, so its target stays local.
+  // The bike group itself handles movement and rotation.
   if (headLight) {
-    headLight.position.set(bike.position.x, bike.position.y + 1.55, bike.position.z);
-    headLight.target.position.copy(bike.position).addScaledVector(forward, 10);
+    headLight.position.set(0, 1.62, -0.9);
+    headLight.target.position.set(0, 1.1, -8);
   }
 
   const speedLabel = $('#ride-speed');
