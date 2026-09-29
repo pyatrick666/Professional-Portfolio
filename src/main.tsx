@@ -27,7 +27,7 @@ const journey = [
 
 /* ---------- Web-sourced professional avatar ---------- */
 const ACCENT = 0x7dff00;
-const AVATAR_URL = 'https://img.icons8.com/3d-fluency/512/male-user.png';
+const AVATAR_URL = 'https://pyatrick666.github.io/ePortfolio/profile.jpg';
 
 const pose = { x: 0, y: -1.1, s: 1.25, ry: 0, o: 1 };
 
@@ -648,7 +648,7 @@ function App() {
             </div>
             <div className="credit">
               Designed and developed by <b>Pratik Poudel</b><br />
-              Avatar: Icons8 3D Fluency<br />
+              Portrait: ePortfolio profile photo<br />
               Layout inspired by moncy.dev<br />
               © {new Date().getFullYear()}
             </div>
