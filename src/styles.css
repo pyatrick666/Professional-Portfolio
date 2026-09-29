@@ -601,10 +601,10 @@ section {
 
 .swap {
   position: relative;
-  height: 1.15em;
-  overflow: hidden;
+  height: auto;
+  overflow: visible;
   font:
-    700 var(--h1) / 1.15
+    700 clamp(1.45rem, 2.7vw, 2.8rem) / 0.98
     var(--display);
   color: var(--soft);
   letter-spacing: -0.045em;
@@ -638,11 +638,7 @@ section {
 
 .swap span {
   display: block;
-  animation:
-    swapWords
-    5s
-    infinite
-    cubic-bezier(0.7, 0, 0.2, 1);
+  animation: none;
 }
 
 @keyframes swapWords {
