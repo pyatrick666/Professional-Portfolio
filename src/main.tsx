@@ -1020,6 +1020,19 @@ function App() {
             }
           );
 
+          gsap.to('.about .rv', {
+            y: -36,
+            opacity: 0,
+            scale: 0.97,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '#about',
+              start: '55% top',
+              end: 'bottom top',
+              scrub: reducedMotion ? false : 1,
+            },
+          });
+
           gsap.utils
             .toArray<HTMLElement>(
               '.rv'
