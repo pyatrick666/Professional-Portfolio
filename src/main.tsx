@@ -1038,7 +1038,7 @@ function PortfolioLoader({ onComplete }: { onComplete: () => void }) {
 
       <div
         className={`loader-wrap ${clicked ? 'loading-clicked' : ''}`}
-        style={{ '--mouse-x': `${mouse.x}px`, '--mouse-y': `${mouse.y}px` } as React.CSSProperties}
+        style={{ '--mouse-x': `${mouse.x}px`, '--mouse-y': `${mouse.y}px`, '--loader-progress': `${percent}%` } as React.CSSProperties}
         onMouseMove={handleMouseMove}
       >
         <div className="loader-hover" />
