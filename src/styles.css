@@ -911,6 +911,7 @@ section {
   margin: 0 auto;
 }
 
+/* Entire Learning & Experience heading is neon green */
 .career-container > h2 {
   margin: 0 0 4rem;
 
@@ -919,10 +920,15 @@ section {
     var(--display);
 
   letter-spacing: -.055em;
-  color: var(--fg);
+
+  color: #7dff00;
+
+  text-shadow:
+    0 0 8px rgba(125, 255, 0, .35),
+    0 0 25px rgba(125, 255, 0, .15);
 }
 
-/* Only the & is neon green */
+/* Keep the & consistent */
 .career-container > h2 span {
   color: #7dff00;
   font-weight: 700;
@@ -959,75 +965,11 @@ section {
   background: var(--line);
 }
 
-/* =========================================================
-   MOVING NEON DOT ONLY
-   ========================================================= */
+/* Moving dot completely removed */
 
-.career-timeline::after {
-  content: '';
-
-  position: absolute;
-
-  left: 50%;
-  top: -10px;
-
-  width: 9px;
-  height: 9px;
-
-  transform: translateX(-50%);
-
-  border-radius: 50%;
-
-  background: #7dff00;
-
-  box-shadow:
-    0 0 6px #7dff00,
-    0 0 14px #7dff00,
-    0 0 25px rgba(125, 255, 0, .8);
-
-  animation:
-    timelineDotTravel
-    3.5s
-    linear
-    infinite;
-}
-
-@keyframes timelineDotTravel {
-  0% {
-    top: -10px;
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 1;
-  }
-
-  90% {
-    opacity: 1;
-  }
-
-  100% {
-    top: calc(100% - 5px);
-    opacity: 0;
-  }
-}
-
-/* Main timeline point stays normal */
+/* Main timeline dot also removed */
 .career-dot {
-  position: sticky;
-
-  top: 45%;
-
-  width: 10px;
-  height: 10px;
-
-  margin-left: -4.5px;
-
-  border-radius: 50%;
-
-  background: var(--fg);
-
-  box-shadow: none;
+  display: none;
 }
 
 /* =========================================================
@@ -1066,7 +1008,7 @@ section {
   width: 3rem;
   height: 1px;
 
-  background: var(--pu);
+  background: var(--line);
 
   transform: scaleX(0);
   transform-origin: right;
@@ -1105,7 +1047,7 @@ section {
 .career-role h5 {
   margin: .55rem 0 0;
 
-  color: var(--pu);
+  color: var(--mute);
 
   font-size: .68rem;
   font-weight: 500;
@@ -1139,6 +1081,61 @@ section {
   font-size: .94rem;
 
   line-height: 1.8;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .career-section {
+    min-height: auto;
+
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+
+  .career-container > h2 {
+    margin-bottom: 2.8rem;
+
+    font-size:
+      clamp(3.2rem, 14vw, 5rem);
+  }
+
+  .career-info {
+    grid-template-columns: 1rem 1fr;
+
+    gap: 0 1.2rem;
+  }
+
+  .career-timeline {
+    margin-left: .45rem;
+  }
+
+  .career-info-box {
+    padding: 1.8rem 0 2.2rem;
+  }
+
+  .career-info-in {
+    flex-direction: column;
+
+    gap: .9rem;
+  }
+
+  .career-role h4 {
+    font-size: 1.35rem;
+  }
+
+  .career-info-box > p {
+    font-size: .86rem;
+    line-height: 1.7;
+  }
+
+  .career-info-box::before {
+    left: -2.2rem;
+    width: 1.5rem;
+  }
 }
 
 /* =========================================================
