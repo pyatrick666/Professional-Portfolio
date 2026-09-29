@@ -1412,45 +1412,7 @@ function App() {
             }
           );
 
-          media.add('(min-width: 801px)', () => {
-            const workSection = document.querySelector<HTMLElement>('.work-section');
-            const workFlex = document.querySelector<HTMLElement>('.work-flex');
-            const firstBox = document.querySelector<HTMLElement>('.work-box');
 
-            if (!workSection || !workFlex || !firstBox) return;
-
-            const setTranslateX = () => {
-              const boxWidth = firstBox.getBoundingClientRect().width;
-              const gap = parseFloat(window.getComputedStyle(workFlex).gap) || 0;
-              const totalWidth = workFlex.scrollWidth;
-              const maxTranslate = Math.max(0, totalWidth - window.innerWidth);
-              return Math.min(maxTranslate, Math.max(0, boxWidth * projects.length - window.innerWidth + gap * (projects.length - 1)));
-            };
-
-            const timeline = gsap.timeline({
-              scrollTrigger: {
-                trigger: workSection,
-                start: 'top top',
-                end: () => '+=' + setTranslateX(),
-                scrub: 1,
-                pin: true,
-                id: 'work-horizontal',
-                invalidateOnRefresh: true,
-                anticipatePin: 1,
-                fastScrollEnd: true,
-              },
-            });
-
-            timeline.to(workFlex, {
-              x: () => -setTranslateX(),
-              ease: 'none',
-            });
-
-            return () => {
-              timeline.kill();
-              ScrollTrigger.getById('work-horizontal')?.kill();
-            };
-          });
         },
         root
       );
