@@ -43,7 +43,6 @@ import { EffectComposer, N8AO } from '@react-three/postprocessing';
 import { BallCollider, Physics, RigidBody, RapierRigidBody } from '@react-three/rapier';
 import './styles.css';
 import Career from './Career';
-import Work from './Work';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -1237,7 +1236,7 @@ function App() {
 
           const sectionHeadings =
             gsap.utils.toArray<HTMLElement>(
-              '#about .big, .do .big, .career-container h2, .work-container h2, .tech h2, .contact h2'
+              '#about .big, .do .big, .career-container h2, .work h2, .tech h2, .contact h2'
             );
 
           let scrollVelocity = 0;
@@ -1811,7 +1810,62 @@ function App() {
 
         <Career />
 
-        <Work />
+        <section
+          id="work"
+          className="work"
+        >
+          <h2>
+            My <em>Work</em>
+          </h2>
+
+          <div className="track">
+            {projects.map(
+              (project) => (
+                <a
+                  className="pj"
+                  key={
+                    project.name
+                  }
+                  href={
+                    project.href
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <div className="n">
+                    {project.num}
+                  </div>
+
+                  <div>
+                    <h3>
+                      {project.name}
+                    </h3>
+
+                    <span>
+                      {project.type}
+                    </span>
+                  </div>
+
+                  <span>
+                    Tools and
+                    features
+                    <br />
+                    {project.tools}
+                  </span>
+
+                  <div
+                    className="shot"
+                    aria-hidden="true"
+                  />
+
+                  <ArrowUpRight
+                    aria-hidden="true"
+                  />
+                </a>
+              )
+            )}
+          </div>
+        </section>
 
 
         <section className="tech">
