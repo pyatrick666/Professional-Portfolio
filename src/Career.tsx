@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import "./styles/Career.css";
 
 const milestones = [
@@ -32,6 +33,40 @@ const milestones = [
 ];
 
 const Career = () => {
+  const infoRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const info = infoRef.current;
+    if (!info) return;
+
+    let frame = 0;
+
+    const updateDot = () => {
+      const rect = info.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const start = viewportHeight * 0.72;
+      const travel = Math.max(rect.height - viewportHeight * 0.44, 1);
+      const progress = Math.max(0, Math.min(1, (start - rect.top) / travel));
+
+      info.style.setProperty("--dot-progress", String(progress));
+      frame = 0;
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(updateDot);
+    };
+
+    updateDot();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", updateDot);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", updateDot);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
     <div className="career-section section-container" id="career">
       <div className="career-container">
@@ -40,7 +75,7 @@ const Career = () => {
           <br /> experience
         </h2>
 
-        <div className="career-info">
+        <div className="career-info" ref={infoRef}>
           <div className="career-timeline">
             <div className="career-dot"></div>
           </div>
