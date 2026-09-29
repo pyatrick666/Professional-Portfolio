@@ -174,6 +174,20 @@ const journey = [
   },
 ];
 
+function handleWhatClick(container: HTMLDivElement) {
+  const active = container.classList.toggle('what-content-active');
+
+  const parent = container.parentElement;
+  if (!parent) return;
+
+  Array.from(parent.children).forEach((sibling) => {
+    if (sibling !== container) {
+      sibling.classList.toggle('what-sibling', active);
+      sibling.classList.remove('what-content-active');
+    }
+  });
+}
+
 /* =========================================================
    THREE.JS ORIGINAL 3D AVATAR
    ========================================================= */
@@ -1835,7 +1849,7 @@ function App() {
                 </svg>
               </div>
 
-              <div className="what-content what-noTouch">
+              <div className="what-content what-noTouch" onClick={(event) => handleWhatClick(event.currentTarget)}>
                 <div className="what-border1" aria-hidden="true">
                   <svg width="100%" height="100%" preserveAspectRatio="none">
                     <line x1="0" y1="0" x2="100%" y2="0" />
