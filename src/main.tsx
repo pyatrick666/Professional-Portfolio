@@ -1720,7 +1720,7 @@ function App() {
 
             <div className="role">
               <small>
-                A Software Engineer
+                A Creative
               </small>
 
               <div className="swap">
