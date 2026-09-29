@@ -42,6 +42,7 @@ import { Environment } from '@react-three/drei';
 import { EffectComposer, N8AO } from '@react-three/postprocessing';
 import { BallCollider, Physics, RigidBody, RapierRigidBody } from '@react-three/rapier';
 import './styles.css';
+import Career from './Career';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -1226,7 +1227,7 @@ function App() {
 
           const sectionHeadings =
             gsap.utils.toArray<HTMLElement>(
-              '#about .big, .do .big, .tl h2, .work h2, .tech h2, .contact h2'
+              '#about .big, .do .big, .career-container h2, .work-container h2, .tech h2, .contact h2'
             );
 
           let scrollVelocity = 0;
@@ -1258,7 +1259,7 @@ function App() {
           });
 
           gsap.utils
-            .toArray<HTMLElement>('#about, .do, .tl')
+            .toArray<HTMLElement>('#about, .do, .career-section')
             .forEach((section) => {
               gsap.fromTo(
                 section,
@@ -1336,7 +1337,7 @@ function App() {
           );
 
           const timelineRows =
-            gsap.utils.toArray<HTMLElement>('.row');
+            gsap.utils.toArray<HTMLElement>('.career-info-box');
 
           timelineRows.forEach((element) => {
                 gsap.fromTo(
@@ -1362,11 +1363,11 @@ function App() {
               });
 
           const rowsWrap =
-            document.querySelector<HTMLElement>('.rows');
+            document.querySelector<HTMLElement>('.career-info');
 
           if (rowsWrap) {
             ScrollTrigger.create({
-              trigger: '.rows',
+              trigger: '.career-info',
               start: 'top 78%',
               end: 'bottom 38%',
               scrub: 0.7,
@@ -1836,59 +1837,7 @@ function App() {
           </div>
         </section>
 
-        <section className="career-section section-container">
-          <div className="career-container">
-            <h2>
-              My career <span>&amp;</span>
-              <br /> experience
-            </h2>
-
-            <div className="career-info">
-              <div className="career-timeline" aria-hidden="true">
-                <div className="career-dot" />
-              </div>
-
-              <article className="career-info-box">
-                <div className="career-info-in">
-                  <div className="career-role">
-                    <h4>Web Development Foundations</h4>
-                    <h5>Self-directed learning &amp; coursework</h5>
-                  </div>
-                  <h3>2019–2021</h3>
-                </div>
-                <p>
-                  Built my foundation in HTML, CSS, JavaScript and PHP through practical web projects and coursework, developing an early interest in creating interactive digital experiences.
-                </p>
-              </article>
-
-              <article className="career-info-box">
-                <div className="career-info-in">
-                  <div className="career-role">
-                    <h4>BSc (Hons) Information Technology</h4>
-                    <h5>ISMT College · University of Sunderland</h5>
-                  </div>
-                  <h3>2025–NOW</h3>
-                </div>
-                <p>
-                  Studying Computer Systems Engineering with a focus on software development, databases, web technologies, enterprise projects, computer systems and networking.
-                </p>
-              </article>
-
-              <article className="career-info-box">
-                <div className="career-info-in">
-                  <div className="career-role">
-                    <h4>Software Engineering &amp; Networking</h4>
-                    <h5>Current development</h5>
-                  </div>
-                  <h3>NOW</h3>
-                </div>
-                <p>
-                  Continuing to build practical experience across full-stack and mobile development, Linux, networking, UI/UX and interactive applications while developing projects for my professional portfolio.
-                </p>
-              </article>
-            </div>
-          </div>
-        </section>
+        <Career />
 
         <section id="work" className="work-section">
           <div className="work-container">
