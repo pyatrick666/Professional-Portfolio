@@ -2,13 +2,38 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   ArrowUpRight,
-  Github,
   Gamepad2,
-  Instagram,
-  Linkedin,
   Menu,
   X,
 } from 'lucide-react';
+
+type SocialIconProps = { size?: number };
+
+function GithubIcon({ size = 18 }: SocialIconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 .7A11.3 11.3 0 0 0 8.43 22.92c.57.1.78-.25.78-.55v-2.16c-3.18.69-3.85-1.34-3.85-1.34-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.54-.29-5.2-1.27-5.2-5.66 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.13 1.17A10.9 10.9 0 0 1 12 6.16c.97 0 1.94.13 2.84.38 2.16-1.48 3.12-1.17 3.12-1.17.62 1.57.23 2.73.12 3.02.73.8 1.17 1.82 1.17 3.07 0 4.4-2.67 5.36-5.21 5.65.41.35.78 1.04.78 2.1v3.11c0 .3.2.65.79.54A11.3 11.3 0 0 0 12 .7Z" />
+    </svg>
+  );
+}
+
+function InstagramIcon({ size = 18 }: SocialIconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function LinkedinIcon({ size = 18 }: SocialIconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M5.2 3.5A2.2 2.2 0 1 1 5.2 7.9a2.2 2.2 0 0 1 0-4.4ZM3.4 9.2h3.6V21H3.4V9.2Zm5.8 0h3.45v1.61h.05c.48-.9 1.65-1.86 3.4-1.86 3.64 0 4.31 2.4 4.31 5.52V21h-3.6v-5.79c0-1.38-.03-3.15-1.92-3.15-1.92 0-2.22 1.5-2.22 3.05V21H9.2V9.2Z" />
+    </svg>
+  );
+}
 import { gsap } from 'gsap';
 import Lenis from 'lenis';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -1725,7 +1750,7 @@ function App() {
           rel="noopener noreferrer"
           aria-label="GitHub"
         >
-          <Github size={14} />
+          <GithubIcon size={14} />
         </a>
 
         <a
@@ -1734,7 +1759,7 @@ function App() {
           rel="noopener noreferrer"
           aria-label="LinkedIn"
         >
-          <Linkedin size={14} />
+          <LinkedinIcon size={14} />
         </a>
 
         <a
@@ -1752,7 +1777,7 @@ function App() {
           rel="noopener noreferrer"
           aria-label="Instagram"
         >
-          <Instagram size={14} />
+          <InstagramIcon size={14} />
         </a>
       </aside>
 
@@ -2003,7 +2028,7 @@ function App() {
                   rel="noopener noreferrer"
                 >
                   <span className="social-mark">
-                    <Github size={18} />
+                    <GithubIcon size={18} />
                   </span>
 
                   <span>
