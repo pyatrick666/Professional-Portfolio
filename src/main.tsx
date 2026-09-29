@@ -210,11 +210,27 @@ function makeMaterial(
 
 function buildAvatar() {
   const group = new THREE.Group();
+  const torso = new THREE.Group();
   const head = new THREE.Group();
+  const leftArm = new THREE.Group();
+  const rightArm = new THREE.Group();
   const eyes: THREE.Group[] = [];
+  const accentMeshes: THREE.Mesh[] = [];
 
-  group.add(head);
-  head.position.y = 1.4;
+  group.add(torso, head, leftArm, rightArm);
+  torso.position.y = -0.55;
+  head.position.set(0, 1.55, 0);
+
+  const mat = {
+    skin: makeMaterial(SKIN),
+    hair: makeMaterial(HAIR),
+    hoodie: makeMaterial(HOODIE),
+    hoodieDark: makeMaterial(0x17131e),
+    accent: makeMaterial(ACCENT, 0.3),
+    white: makeMaterial(0xf2eff7),
+    dark: makeMaterial(0x08070d),
+    keyboard: makeMaterial(0x24202d),
+  };
 
   const add = (
     geometry: THREE.BufferGeometry,
@@ -222,274 +238,182 @@ function buildAvatar() {
     position: [number, number, number],
     parent: THREE.Object3D = head
   ) => {
-    const mesh = new THREE.Mesh(
-      geometry,
-      material
-    );
-
+    const mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(...position);
     parent.add(mesh);
-
     return mesh;
   };
 
+  // --- Head / face ---
   const face = add(
-    new THREE.SphereGeometry(1, 48, 48),
-    makeMaterial(SKIN),
+    new THREE.SphereGeometry(1, 48, 32),
+    mat.skin,
     [0, 0, 0]
   );
-
-  face.scale.set(1, 1.05, 0.95);
+  face.scale.set(0.94, 1.05, 0.9);
 
   const hair = add(
-    new THREE.SphereGeometry(
-      1.04,
-      48,
-      32,
-      0,
-      Math.PI * 2,
-      0,
-      Math.PI * 0.42
-    ),
-    makeMaterial(HAIR),
-    [0, 0.02, 0]
+    new THREE.SphereGeometry(1.01, 48, 32, 0, Math.PI * 2, 0, Math.PI * 0.47),
+    mat.hair,
+    [0, 0.08, 0]
   );
+  hair.scale.set(0.98, 1.08, 0.94);
 
-  hair.scale.set(1, 1.05, 0.95);
+  // Hair fringe gives the character a distinct silhouette.
+  [-0.48, -0.16, 0.16, 0.48].forEach((x, i) => {
+    const lock = add(
+      new THREE.SphereGeometry(0.32, 24, 20),
+      mat.hair,
+      [x, 0.42 - Math.abs(x) * 0.18, 0.72]
+    );
+    lock.scale.set(0.75, 1.35 - i * 0.05, 0.48);
+    lock.rotation.z = x * 0.18;
+  });
 
-  const cap = new THREE.Group();
-
-  cap.position.set(0, 0.66, 0.02);
-  head.add(cap);
-
-  const crown = new THREE.Mesh(
-    new THREE.SphereGeometry(
-      0.9,
-      48,
-      24,
-      0,
-      Math.PI * 2,
-      0,
-      Math.PI * 0.54
-    ),
-    makeMaterial(CAP)
-  );
-
-  crown.scale.set(1.02, 0.78, 0.98);
-  cap.add(crown);
-
-  const band = new THREE.Mesh(
-    new THREE.TorusGeometry(
-      0.79,
-      0.045,
-      10,
-      48
-    ),
-    makeMaterial(CAP_EDGE, 0.08)
-  );
-
-  band.scale.set(1, 1, 0.94);
-  cap.add(band);
-
-  const brim = new THREE.Mesh(
-    new THREE.SphereGeometry(
-      0.62,
-      32,
-      16
-    ),
-    makeMaterial(CAP)
-  );
-
-  brim.scale.set(1.35, 0.09, 0.68);
-  brim.position.set(0, -0.02, 0.7);
-  brim.rotation.x = -0.08;
-  cap.add(brim);
-
-  const capMark = new THREE.Mesh(
-    new THREE.TorusGeometry(
-      0.12,
-      0.022,
-      8,
-      24
-    ),
-    makeMaterial(ACCENT, 0.45)
-  );
-
-  capMark.position.set(
-    0,
-    0.48,
-    0.42
-  );
-
-  capMark.rotation.x =
-    Math.PI * 0.5;
-
-  cap.add(capMark);
-
+  // Ears.
   [-1, 1].forEach((side) => {
-    add(
-      new THREE.SphereGeometry(
-        0.22,
-        24,
-        24
-      ),
-      makeMaterial(SKIN),
-      [side * 1, -0.05, 0]
-    ).scale.set(
-      0.6,
-      1,
-      1
+    const ear = add(
+      new THREE.SphereGeometry(0.22, 24, 24),
+      mat.skin,
+      [side * 0.92, -0.02, 0]
     );
+    ear.scale.set(0.55, 1, 0.8);
 
-    const eye =
-      new THREE.Group();
-
-    eye.position.set(
-      side * 0.36,
-      0.1,
-      0.86
-    );
-
+    const eye = new THREE.Group();
+    eye.position.set(side * 0.34, 0.08, 0.84);
     head.add(eye);
     eyes.push(eye);
 
-    add(
-      new THREE.SphereGeometry(
-        0.17,
-        24,
-        24
-      ),
-      makeMaterial(0xffffff),
-      [0, 0, 0],
-      eye
-    );
-
-    add(
-      new THREE.SphereGeometry(
-        0.09,
-        16,
-        16
-      ),
-      makeMaterial(0x120c24),
-      [0, 0, 0.13],
-      eye
-    );
+    add(new THREE.SphereGeometry(0.16, 24, 24), mat.white, [0, 0, 0], eye);
+    add(new THREE.SphereGeometry(0.078, 18, 18), mat.dark, [0, 0, 0.13], eye);
 
     const brow = add(
-      new THREE.BoxGeometry(
-        0.4,
-        0.07,
-        0.08
-      ),
-      makeMaterial(HAIR),
-      [
-        side * 0.36,
-        0.4,
-        0.84,
-      ]
+      new THREE.BoxGeometry(0.38, 0.065, 0.075),
+      mat.hair,
+      [side * 0.34, 0.37, 0.82]
     );
-
-    brow.rotation.z =
-      -side * 0.15;
+    brow.rotation.z = -side * 0.12;
 
     const earring = add(
-      new THREE.CylinderGeometry(
-        0.3,
-        0.3,
-        0.18,
-        32
-      ),
-      makeMaterial(
-        ACCENT,
-        0.25
-      ),
-      [
-        side * 1.12,
-        -0.05,
-        0,
-      ]
+      new THREE.TorusGeometry(0.115, 0.025, 10, 24),
+      mat.accent,
+      [side * 0.98, -0.08, 0.02]
     );
-
-    earring.rotation.z =
-      Math.PI / 2;
+    earring.rotation.y = Math.PI / 2;
+    accentMeshes.push(earring);
   });
 
-  add(
-    new THREE.SphereGeometry(
-      0.11,
-      16,
-      16
-    ),
-    makeMaterial(SKIN),
-    [0, -0.1, 0.96]
-  );
-
+  // Nose and subtle smile.
+  add(new THREE.SphereGeometry(0.11, 16, 16), mat.skin, [0, -0.08, 0.94]);
   const mouth = add(
-    new THREE.TorusGeometry(
-      0.3,
-      0.035,
-      12,
-      32,
-      Math.PI
-    ),
-    makeMaterial(0x3a1a1a),
-    [0, -0.32, 0.84]
+    new THREE.TorusGeometry(0.24, 0.028, 10, 28, Math.PI),
+    makeMaterial(0x321821),
+    [0, -0.32, 0.86]
   );
+  mouth.rotation.z = Math.PI;
 
-  mouth.rotation.z =
-    Math.PI;
-
-  add(
-    new THREE.TorusGeometry(
-      1.12,
-      0.06,
-      16,
-      48,
-      Math.PI
-    ),
-    makeMaterial(
-      ACCENT,
-      0.25
-    ),
-    [0, -0.05, 0]
+  // --- Hoodie torso ---
+  const chest = new THREE.Mesh(
+    new THREE.SphereGeometry(1.48, 48, 32),
+    mat.hoodie
   );
+  chest.scale.set(1.05, 0.82, 0.72);
+  chest.position.set(0, 0.02, 0);
+  torso.add(chest);
 
-  add(
-    new THREE.CylinderGeometry(
-      0.3,
-      0.34,
-      0.4,
-      24
-    ),
-    makeMaterial(SKIN),
-    [0, 0.6, 0],
-    group
+  const hood = new THREE.Mesh(
+    new THREE.TorusGeometry(0.68, 0.19, 18, 48, Math.PI * 1.7),
+    mat.hoodieDark
   );
+  hood.position.set(0, 0.48, 0.48);
+  hood.rotation.x = Math.PI / 2;
+  torso.add(hood);
 
-  const hoodie = add(
-    new THREE.SphereGeometry(
-      1.5,
-      48,
-      32
-    ),
-    makeMaterial(HOODIE),
-    [0, -0.25, 0],
-    group
+  const collar = new THREE.Mesh(
+    new THREE.TorusGeometry(0.44, 0.045, 12, 32),
+    mat.accent
   );
+  collar.position.set(0, 0.5, 0.54);
+  collar.rotation.x = Math.PI / 2;
+  torso.add(collar);
+  accentMeshes.push(collar);
 
-  hoodie.scale.set(
-    1,
-    0.75,
-    0.7
+  // Glowing developer badge.
+  const badge = new THREE.Mesh(
+    new THREE.BoxGeometry(0.5, 0.28, 0.035),
+    mat.dark
   );
+  badge.position.set(0, 0.03, 0.72);
+  torso.add(badge);
+
+  const badgeMark = new THREE.Mesh(
+    new THREE.TorusGeometry(0.08, 0.018, 8, 20),
+    mat.accent
+  );
+  badgeMark.position.set(0, 0.03, 0.75);
+  badgeMark.rotation.x = Math.PI / 2;
+  torso.add(badgeMark);
+  accentMeshes.push(badgeMark);
+
+  // --- Arms + hands ---
+  const makeArm = (side: number, parent: THREE.Group) => {
+    const shoulder = new THREE.Mesh(
+      new THREE.SphereGeometry(0.43, 32, 24),
+      mat.hoodie
+    );
+    shoulder.position.set(side * 1.08, 0.05, 0);
+    shoulder.scale.set(0.9, 1.45, 0.9);
+    parent.add(shoulder);
+
+    const forearm = new THREE.Mesh(
+      new THREE.CapsuleGeometry(0.25, 0.85, 8, 20),
+      mat.hoodie
+    );
+    forearm.position.set(side * 1.18, -0.72, 0.08);
+    forearm.rotation.z = side * -0.13;
+    parent.add(forearm);
+
+    const hand = new THREE.Mesh(
+      new THREE.SphereGeometry(0.27, 24, 20),
+      mat.skin
+    );
+    hand.position.set(side * 1.23, -1.2, 0.13);
+    hand.scale.set(0.9, 0.72, 0.9);
+    parent.add(hand);
+  };
+
+  makeArm(-1, leftArm);
+  makeArm(1, rightArm);
+
+  // Floating code panel in front of the chest adds a developer identity
+  // without depending on any external model asset.
+  const panel = new THREE.Group();
+  panel.position.set(0, -0.15, 0.82);
+  torso.add(panel);
+
+  const panelBody = new THREE.Mesh(
+    new THREE.BoxGeometry(1.15, 0.58, 0.06),
+    mat.dark
+  );
+  panel.add(panelBody);
+
+  [-0.16, 0, 0.16].forEach((y, index) => {
+    const line = new THREE.Mesh(
+      new THREE.BoxGeometry(index === 1 ? 0.62 : 0.78, 0.028, 0.018),
+      index === 1 ? mat.accent : mat.keyboard
+    );
+    line.position.set(-0.06, y, 0.045);
+    panel.add(line);
+    if (index === 1) accentMeshes.push(line);
+  });
 
   return {
     group,
     head,
     eyes,
+    accentMeshes,
   };
 }
-
 function Stage() {
   const box =
     useRef<HTMLDivElement>(null);
