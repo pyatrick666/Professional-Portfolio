@@ -156,17 +156,20 @@ const stack = [...new Set(skillGroups.flatMap((group) => group.skills))];
 const journey = [
   {
     t: 'Web foundations',
-    s: '2019–2021 · HTML · CSS · JavaScript · PHP',
+    c: 'HTML · CSS · JavaScript · PHP',
+    s: '2019–2021',
     d: 'Built a foundation in web development, from semantic front ends to PHP-backed websites and practical coursework.',
   },
   {
     t: 'Modern stack',
-    s: '2021–2023 · React · TypeScript · Flutter',
+    c: 'React · TypeScript · Flutter',
+    s: '2021–2023',
     d: 'Moved into component-driven applications, mobile development, APIs and interactive front-end experiences.',
   },
   {
     t: 'Networking',
-    s: '2023–Now · Computer Systems · Networking · Linux',
+    c: 'Computer Systems · Networking · Linux',
+    s: '2023–NOW',
     d: 'Developing deeper systems and networking skills alongside my BSc (Hons) IT studies at ISMT College.',
   },
 ];
@@ -1865,29 +1868,26 @@ function App() {
             experience
           </h2>
 
-          <div className="rows">
-            {journey.map(
-              (item) => (
-                <div
-                  className="row"
-                  key={item.t}
-                >
-                  <div>
-                    <h3>
-                      {item.t}
-                    </h3>
-                  </div>
+          <div className="career-info">
+            <div className="career-timeline" aria-hidden="true">
+              <div className="career-line" />
+              <div className="career-dot" />
+            </div>
 
-                  <div className="period">
-                    {item.s}
+            <div className="career-cards">
+              {journey.map((item) => (
+                <article className="career-info-box row" key={item.t}>
+                  <div className="career-info-in">
+                    <div className="career-role">
+                      <h4>{item.t}</h4>
+                      <h5>{item.c}</h5>
+                    </div>
+                    <h3>{item.s}</h3>
                   </div>
-
-                  <p>
-                    {item.d}
-                  </p>
-                </div>
-              )
-            )}
+                  <p>{item.d}</p>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
