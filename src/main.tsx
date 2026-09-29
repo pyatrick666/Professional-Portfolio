@@ -170,7 +170,7 @@ function Bubbles() {
     let frame = 0;
     const pointer = { x: -999, y: -999 };
 
-    const colors = ['#60a5fa', '#f7df1e', '#a67cff', '#7dd3fc', '#86efac', '#f0abfc'];
+    const colors = ['#7dff00', '#c6ff8a', '#b7ff66', '#9cff33', '#e8ffd1', '#66cc00'];
 
     const bubbles = stack.map((label, index) => ({
       label,
@@ -236,7 +236,7 @@ function Bubbles() {
           bubble.radius
         );
         gradient.addColorStop(0, '#fff');
-        gradient.addColorStop(0.7, '#eee6f7');
+        gradient.addColorStop(0.7, '#eff7e8');
         gradient.addColorStop(1, bubble.color);
 
         context.fillStyle = gradient;
@@ -244,7 +244,7 @@ function Bubbles() {
         context.arc(bubble.x, bubble.y, bubble.radius, 0, Math.PI * 2);
         context.fill();
 
-        context.fillStyle = '#2a2140';
+        context.fillStyle = '#17210f';
         context.font = '500 ' + Math.max(10, bubble.radius * 0.32) + 'px Space Grotesk, sans-serif';
         context.textAlign = 'center';
         context.textBaseline = 'middle';
