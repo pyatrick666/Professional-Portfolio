@@ -1797,16 +1797,57 @@ function App() {
         </section>
 
         <section className="do">
-          <h2 className="big rv">What<br />I <em>do</em></h2>
-          <div className="cards rv">
-            <div className="card">
-              <h3>DEVELOP</h3>
-              <p>Web with React, TypeScript and PHP, mobile apps with Flutter and Dart, backed by computer systems and networking fundamentals.</p>
-            </div>
-            <div className="card">
-              <h3>SOFTWARE ENGINEER</h3>
-              <p>Build reliable software across web, mobile and backend systems, with a focus on clean architecture, practical problem-solving and maintainable code.</p>
-            </div>
+          <div className="do-heading rv">
+            <span className="do-index">01 / CAPABILITIES</span>
+            <h2 className="big">What<br /><em>I do</em></h2>
+            <p className="do-intro">I design and build digital products that feel clear, fast and intentional — from polished interfaces to functional software systems.</p>
+          </div>
+
+          <div className="cards">
+            <article className="card rv">
+              <div className="card-top">
+                <span>01</span>
+                <span className="card-arrow">↗</span>
+              </div>
+              <h3>DEVELOPMENT</h3>
+              <p>Web applications, mobile experiences and interactive interfaces built with modern tools and a strong focus on usability.</p>
+              <div className="card-tags">
+                <span>React</span>
+                <span>TypeScript</span>
+                <span>Flutter</span>
+                <span>Three.js</span>
+              </div>
+            </article>
+
+            <article className="card rv">
+              <div className="card-top">
+                <span>02</span>
+                <span className="card-arrow">↗</span>
+              </div>
+              <h3>SOFTWARE ENGINEERING</h3>
+              <p>Reliable systems shaped around clean architecture, practical problem-solving, maintainable code and solid engineering foundations.</p>
+              <div className="card-tags">
+                <span>C# / .NET</span>
+                <span>APIs</span>
+                <span>Databases</span>
+                <span>Linux</span>
+              </div>
+            </article>
+
+            <article className="card rv">
+              <div className="card-top">
+                <span>03</span>
+                <span className="card-arrow">↗</span>
+              </div>
+              <h3>UI / UX & CREATIVE</h3>
+              <p>Interfaces and visual systems designed in Figma and Canva, balancing strong visual direction with practical user experience.</p>
+              <div className="card-tags">
+                <span>Figma</span>
+                <span>UI / UX</span>
+                <span>Canva</span>
+                <span>Motion</span>
+              </div>
+            </article>
           </div>
         </section>
 
