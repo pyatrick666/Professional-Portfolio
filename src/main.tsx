@@ -1858,7 +1858,6 @@ function App() {
         >
           <div className="work-container section-container">
             <div className="work-heading">
-              <small>SELECTED REPOSITORIES</small>
               <h2>
                 My <span>Work</span>
               </h2>
