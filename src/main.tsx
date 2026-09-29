@@ -1048,6 +1048,30 @@ function App() {
               }
             );
 
+          gsap.fromTo(
+            '.cards .card',
+            {
+              y: 90,
+              scale: 0.9,
+              opacity: 0,
+              filter: 'blur(10px)',
+            },
+            {
+              y: 0,
+              scale: 1,
+              opacity: 1,
+              filter: 'blur(0px)',
+              duration: 0.9,
+              stagger: 0.18,
+              ease: 'back.out(1.45)',
+              scrollTrigger: {
+                trigger: '.cards',
+                start: 'top 82%',
+                toggleActions: 'play none none reverse',
+              },
+            }
+          );
+
           gsap.utils
             .toArray<HTMLElement>(
               '.row'
