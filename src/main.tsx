@@ -1785,8 +1785,6 @@ function App() {
                   SOFTWARE
                   <br />
                   ENGINEER
-                  <br />
-                  DEVELOPER
                 </span>
               </div>
             </div>
