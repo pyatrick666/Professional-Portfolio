@@ -1606,5 +1606,5 @@ section {
 /* Neon hover for the header email */
 .mid:hover,
 .mid:focus-visible {
-  color: var(--pu) !important;
+  color: #39ff14 !important;
 }
