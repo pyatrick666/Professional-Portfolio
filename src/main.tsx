@@ -996,18 +996,20 @@ function Bubbles() {
     </Canvas>
     <div className="skills-index">
       {skillGroups.map((group) => (
-        <div className="skills-group" key={group.label}>
-          <div className="skills-group__head">
-            <span>{group.label}</span>
-            <h3>{group.title}</h3>
+        <article className="skills-group" key={group.label}>
+          <div className="skills-group__top">
+            <span className="skills-group__number">{group.label}</span>
+            <span className="skills-group__line" />
+            <span className="skills-group__count">{String(group.skills.length).padStart(2, '0')} skills</span>
           </div>
+          <h3>{group.title}</h3>
           <p>{group.description}</p>
           <div className="skills-tags">
             {group.skills.map((skill) => (
               <span key={skill}>{skill}</span>
             ))}
           </div>
-        </div>
+        </article>
       ))}
     </div>
   </div>;
@@ -1993,9 +1995,16 @@ function App() {
         </section>
 
         <section className="tech">
-          <h2>
-            MY TECHSTACK
-          </h2>
+          <div className="tech-heading">
+            <div>
+              <span className="tech-kicker">THE TOOLKIT</span>
+              <h2>MY <em>TECHSTACK</em></h2>
+            </div>
+            <p>
+              A practical stack built across interfaces, backend systems,
+              mobile, databases, networking and creative technology.
+            </p>
+          </div>
 
           <Bubbles />
         </section>
