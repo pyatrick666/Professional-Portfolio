@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ArrowUpRight, Gamepad2, Menu, X } from 'lucide-react';
+import { ArrowUpRight, Github, Gamepad2, Instagram, Linkedin, Menu, X } from 'lucide-react';
 import { gsap } from 'gsap';
 import Lenis from 'lenis';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -14,16 +14,16 @@ const EMAIL = 'pyatrick666@gmail.com';
 const projects = [
   { name: 'ChessMate', num: '01', type: 'Mobile / Game', tools: 'Flutter, Dart, Firebase, AdMob', href: 'https://pyatrick666.itch.io/chessmate' },
   { name: 'ePortfolio', num: '02', type: 'Web / Coursework', tools: 'HTML, CSS, JavaScript, Bootstrap', href: 'https://pyatrick666.github.io/ePortfolio/' },
-  { name: 'Cit-E Cycling', num: '03', type: 'Web Portal', tools: 'PHP, MySQL, public site, admin portal', href: 'https://github.com/pyatrick666' },
-  { name: 'This Portfolio', num: '04', type: 'Web / Personal', tools: 'React, TypeScript, GSAP, Three.js', href: 'https://github.com/pyatrick666/Professional-Portfolio' }
+  { name: 'Cit-E Cycling', num: '03', type: 'Web Portal', tools: 'PHP, MySQL, public site, admin portal', href: 'https://github.com/pyatrick666/Cit-E-Cycling' },
+  { name: 'More on GitHub', num: '04', type: 'Open Source / Projects', tools: 'Explore my remaining repositories and builds', href: 'https://github.com/pyatrick666?tab=repositories' }
 ];
 
 const stack = ['React', 'TypeScript', 'JavaScript', 'Flutter', 'Dart', 'Firebase', 'Node', 'Express', 'PHP', 'MySQL', 'Python', 'Java', 'C#', 'Linux', 'Cisco', 'Figma', 'Git'];
 
 const journey = [
-  { t: 'Web foundations', s: 'HTML · CSS · JavaScript · PHP', d: 'Hand-built sites and PHP back ends, including a cycling event portal with an admin area.' },
-  { t: 'Modern stack', s: 'React · TypeScript · GSAP', d: 'Component-driven front ends, motion design and interactive visual layers.' },
-  { t: 'Now', s: 'ISMT College · Univ. of Sunderland', d: 'BSc (Hons) IT, Computer Systems Engineering, while shipping mobile and web projects.' }
+  { t: 'Web foundations', s: '2019–2021 · HTML · CSS · JavaScript · PHP', d: 'Built a foundation in web development, from semantic front ends to PHP-backed websites and practical coursework.' },
+  { t: 'Modern stack', s: '2021–2023 · React · TypeScript · Flutter', d: 'Moved into component-driven applications, mobile development, APIs and interactive front-end experiences.' },
+  { t: 'Networking', s: '2023–Now · Computer Systems · Networking · Linux', d: 'Developing deeper systems and networking skills alongside my BSc (Hons) IT studies at ISMT College.' }
 ];
 
 /* ---------- Web-sourced professional avatar ---------- */
@@ -168,24 +168,29 @@ function Bubbles() {
     let width = 0;
     let height = 0;
     let frame = 0;
-    const pointer = { x: -999, y: -999 };
+    let hovered = false;
+    const pointer = { x: 0, y: 0 };
 
     const colors = ['#7dff00', '#c6ff8a', '#b7ff66', '#9cff33', '#e8ffd1', '#66cc00'];
+    const center = { x: 0, y: 0 };
 
     const bubbles = stack.map((label, index) => ({
       label,
       radius: 30 + Math.random() * 24,
       x: 0,
       y: 0,
-      vx: (Math.random() - 0.5) * 1.2,
-      vy: (Math.random() - 0.5) * 1.2,
-      color: colors[index % colors.length]
+      tx: 0,
+      ty: 0,
+      vx: 0,
+      vy: 0,
+      color: colors[index % colors.length],
+      angle: (index / stack.length) * Math.PI * 2,
+      orbit: 95 + (index % 3) * 34
     }));
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
       width = rect.width;
       height = rect.height;
 
@@ -193,39 +198,56 @@ function Bubbles() {
       canvas.height = Math.max(1, Math.round(height * dpr));
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
 
+      center.x = width / 2;
+      center.y = height / 2 + 70;
+
       bubbles.forEach((bubble) => {
-        bubble.x = Math.min(Math.max(bubble.x || Math.random() * width, bubble.radius), Math.max(bubble.radius, width - bubble.radius));
-        bubble.y = Math.min(Math.max(bubble.y || height * (0.4 + Math.random() * 0.3), height * 0.4 + bubble.radius), Math.max(height * 0.4 + bubble.radius, height - bubble.radius));
+        bubble.x = center.x;
+        bubble.y = center.y;
+        bubble.tx = center.x;
+        bubble.ty = center.y;
       });
+    };
+
+    const onPointerEnter = () => {
+      hovered = true;
+    };
+
+    const onPointerLeave = () => {
+      hovered = false;
     };
 
     const onPointerMove = (event: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
       pointer.x = event.clientX - rect.left;
       pointer.y = event.clientY - rect.top;
+      hovered = true;
     };
 
     const loop = () => {
       context.clearRect(0, 0, width, height);
 
       for (const bubble of bubbles) {
-        bubble.x += bubble.vx;
-        bubble.y += bubble.vy;
+        if (hovered) {
+          const dx = bubble.x - pointer.x;
+          const dy = bubble.y - pointer.y;
+          const distance = Math.max(1, Math.hypot(dx, dy));
+          const influence = Math.max(0, 1 - distance / 260);
+          const spread = bubble.orbit * influence;
 
-        if (bubble.x < bubble.radius || bubble.x > width - bubble.radius) bubble.vx *= -1;
-        if (bubble.y < height * 0.4 + bubble.radius || bubble.y > height - bubble.radius) bubble.vy *= -1;
-
-        const dx = bubble.x - pointer.x;
-        const dy = bubble.y - pointer.y;
-        const distance = Math.hypot(dx, dy);
-
-        if (distance > 0 && distance < 140) {
-          bubble.vx += (dx / distance) * 0.08;
-          bubble.vy += (dy / distance) * 0.08;
+          bubble.tx = center.x + Math.cos(bubble.angle) * spread;
+          bubble.ty = center.y + Math.sin(bubble.angle) * spread;
+        } else {
+          bubble.tx = center.x;
+          bubble.ty = center.y;
         }
 
-        bubble.vx *= 0.995;
-        bubble.vy *= 0.995;
+        bubble.vx += (bubble.tx - bubble.x) * 0.018;
+        bubble.vy += (bubble.ty - bubble.y) * 0.018;
+        bubble.vx *= 0.84;
+        bubble.vy *= 0.84;
+        bubble.x += bubble.vx;
+        bubble.y += bubble.vy;
 
         const gradient = context.createRadialGradient(
           bubble.x - bubble.radius * 0.35,
@@ -256,12 +278,16 @@ function Bubbles() {
 
     resize();
     window.addEventListener('resize', resize);
+    canvas.addEventListener('pointerenter', onPointerEnter, { passive: true });
+    canvas.addEventListener('pointerleave', onPointerLeave, { passive: true });
     canvas.addEventListener('pointermove', onPointerMove, { passive: true });
     loop();
 
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener('resize', resize);
+      canvas.removeEventListener('pointerenter', onPointerEnter);
+      canvas.removeEventListener('pointerleave', onPointerLeave);
       canvas.removeEventListener('pointermove', onPointerMove);
     };
   }, []);
@@ -485,7 +511,7 @@ function App() {
       <Stage />
 
       <header className="header">
-        <a className="logo" href="#home" onClick={(event) => go(event, '#home')}>pratik.dev</a>
+        <a className="logo" href="#home" onClick={(event) => go(event, '#home')}>patrick</a>
         <a className="mid" href={'mailto:' + EMAIL}>{EMAIL}</a>
 
         <nav id="primary-navigation" className={open ? 'nav open' : 'nav'} aria-label="Primary">
@@ -507,9 +533,10 @@ function App() {
       </header>
 
       <aside className="rail" aria-label="Social links">
-        <a href="https://github.com/pyatrick666" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GH</a>
-        <a href="https://www.linkedin.com/in/pratik-poudel-b3264a263/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">in</a>
+        <a href="https://github.com/pyatrick666" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><Github size={14} /></a>
+        <a href="https://www.linkedin.com/in/pratik-poudel-b3264a263/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin size={14} /></a>
         <a href="https://pyatrick666.itch.io/chessmate" target="_blank" rel="noopener noreferrer" aria-label="itch.io"><Gamepad2 size={14} /></a>
+        <a href="https://www.instagram.com/pyatrick666/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Instagram size={14} /></a>
       </aside>
 
       <main>
@@ -522,8 +549,8 @@ function App() {
 
             <div className="role">
               <small>A Creative</small>
-              <div className="swap" aria-label="Developer and designer">
-                <span>DEVELOPER<br />DESIGNER</span>
+              <div className="swap" aria-label="Software Engineer and Developer">
+                <span>SOFTWARE ENGINEER<br />DEVELOPER</span>
               </div>
             </div>
           </div>
@@ -542,8 +569,8 @@ function App() {
               <p>Web with React, TypeScript and PHP, mobile apps with Flutter and Dart, backed by computer systems and networking fundamentals.</p>
             </div>
             <div className="card">
-              <h3>DESIGN</h3>
-              <p>Interfaces drafted in Figma, then built with motion and atmosphere so the finished product feels intentional.</p>
+              <h3>SOFTWARE ENGINEER</h3>
+              <p>Build reliable software across web, mobile and backend systems, with a focus on clean architecture, practical problem-solving and maintainable code.</p>
             </div>
           </div>
         </section>
@@ -599,18 +626,23 @@ function App() {
               <small>Find me online</small>
               <div className="social-list">
                 <a className="social-link" href="https://github.com/pyatrick666" target="_blank" rel="noopener noreferrer">
-                  <span className="social-mark">GH</span>
+                  <span className="social-mark"><Github size={18} aria-hidden="true" /></span>
                   <span><b>GitHub</b><small>@pyatrick666</small></span>
                   <ArrowUpRight aria-hidden="true" />
                 </a>
                 <a className="social-link" href="https://www.linkedin.com/in/pratik-poudel-b3264a263/" target="_blank" rel="noopener noreferrer">
-                  <span className="social-mark">in</span>
+                  <span className="social-mark"><Linkedin size={18} aria-hidden="true" /></span>
                   <span><b>LinkedIn</b><small>Pratik Poudel</small></span>
                   <ArrowUpRight aria-hidden="true" />
                 </a>
                 <a className="social-link" href="https://pyatrick666.itch.io/chessmate" target="_blank" rel="noopener noreferrer">
                   <span className="social-mark"><Gamepad2 size={15} /></span>
                   <span><b>itch.io</b><small>ChessMate</small></span>
+                  <ArrowUpRight aria-hidden="true" />
+                </a>
+                <a className="social-link" href="https://www.instagram.com/pyatrick666/" target="_blank" rel="noopener noreferrer">
+                  <span className="social-mark"><Instagram size={18} aria-hidden="true" /></span>
+                  <span><b>Instagram</b><small>@pyatrick666</small></span>
                   <ArrowUpRight aria-hidden="true" />
                 </a>
               </div>
