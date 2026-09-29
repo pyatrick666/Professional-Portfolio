@@ -1199,17 +1199,26 @@ section {
     height: 11rem;
   }
 
-  .tech h2 {
-    top: 8%;
+  .tech {
+    padding: 5rem var(--gut);
   }
 
-  .bubbles {
-    top: 18%;
-    right: 2%;
-    bottom: 4%;
-    left: 2%;
-    width: 96%;
-    height: 78%;
+  .tech h2 {
+    margin-bottom: 2rem;
+  }
+
+  .stack-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+
+  .stack-card {
+    min-height: 5.4rem;
+    padding: 0.85rem;
+  }
+
+  .stack-label {
+    font-size: 0.88rem;
   }
 
   .tech::before {
