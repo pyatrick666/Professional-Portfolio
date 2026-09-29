@@ -119,14 +119,15 @@
 }
 
 .career-dot {
-  position: sticky;
-  top: 45vh;
+  position: absolute;
+  top: calc(var(--dot-progress, 0) * 100%);
+  left: 0;
   display: block;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   background-color: #7dff00;
   width: 9px;
   height: 9px;
-  margin-left: 50%;
+  margin-left: 0;
   border-radius: 50%;
   box-shadow:
     0 0 5px 2px rgba(125,255,0,.75),
@@ -220,8 +221,9 @@
   }
 
   .career-dot {
+    left: 0;
     margin-left: 0;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
   }
 
   .career-container {
