@@ -892,6 +892,8 @@ function Bubbles() {
           vy: 0,
           tx: 0,
           ty: 0,
+          bx: 0,
+          by: 0,
           angle:
             (index /
               stack.length) *
@@ -948,26 +950,75 @@ function Bubbles() {
         0
       );
 
-      const centerX =
-        width / 2;
+      const columns = Math.max(
+        3,
+        Math.min(
+          6,
+          Math.floor(width / 190)
+        )
+      );
 
-      const centerY =
-        height * 0.58;
+      const rows = Math.ceil(
+        bubbles.length / columns
+      );
+
+      const horizontalPadding = Math.min(
+        80,
+        width * 0.07
+      );
+
+      const verticalPadding = Math.min(
+        90,
+        height * 0.11
+      );
+
+      const usableWidth = Math.max(
+        width - horizontalPadding * 2,
+        1
+      );
+
+      const usableHeight = Math.max(
+        height - verticalPadding * 2,
+        1
+      );
 
       bubbles.forEach(
-        (bubble) => {
-          bubble.x =
-            centerX;
+        (bubble, index) => {
+          const row = Math.floor(
+            index / columns
+          );
 
-          bubble.y =
-            centerY;
+          const column = index % columns;
+          const itemsInRow = Math.min(
+            columns,
+            bubbles.length - row * columns
+          );
 
-          bubble.tx =
-            centerX;
+          const rowWidth = Math.max(
+            itemsInRow - 1,
+            1
+          );
 
-          bubble.ty =
-            centerY;
+          const x =
+            itemsInRow === 1
+              ? width / 2
+              : horizontalPadding +
+                (column / rowWidth) *
+                  usableWidth;
 
+          const y =
+            rows === 1
+              ? height / 2
+              : verticalPadding +
+                (row / Math.max(rows - 1, 1)) *
+                  usableHeight;
+
+          bubble.bx = x;
+          bubble.by = y;
+          bubble.x = x;
+          bubble.y = y;
+          bubble.tx = x;
+          bubble.ty = y;
           bubble.vx = 0;
           bubble.vy = 0;
         }
@@ -1011,71 +1062,18 @@ function Bubbles() {
         height
       );
 
-      const centerX =
-        width / 2;
-
-      const centerY =
-        height * 0.58;
-
       bubbles.forEach(
         (bubble) => {
+          bubble.tx = bubble.bx;
+          bubble.ty = bubble.by;
+
           if (hovering) {
-            const dx =
-              pointer.x -
-              centerX;
-
-            const dy =
-              pointer.y -
-              centerY;
-
-            const distance =
-              Math.max(
-                40,
-                Math.hypot(
-                  dx,
-                  dy
-                )
-              );
-
-            const cursorInfluence =
-              Math.min(
-                1,
-                300 /
-                  distance
-              );
-
-            const angleOffset =
-              Math.atan2(
-                dy,
-                dx
-              );
-
-            bubble.tx =
-              centerX +
-              Math.cos(
-                bubble.angle +
-                  angleOffset *
-                    0.12
-              ) *
-                bubble.orbit *
-                cursorInfluence;
-
-            bubble.ty =
-              centerY +
-              Math.sin(
-                bubble.angle +
-                  angleOffset *
-                    0.12
-              ) *
-                bubble.orbit *
-                cursorInfluence;
-
             const cursorDx =
-              bubble.x -
+              bubble.bx -
               pointer.x;
 
             const cursorDy =
-              bubble.y -
+              bubble.by -
               pointer.y;
 
             const cursorDistance =
@@ -1085,34 +1083,27 @@ function Bubbles() {
               );
 
             if (
-              cursorDistance >
-                0 &&
-              cursorDistance <
-                190
+              cursorDistance > 0 &&
+              cursorDistance < 220
             ) {
               const force =
-                (190 -
+                (220 -
                   cursorDistance) /
-                190;
+                220;
+
+              const push =
+                force * force * 150;
 
               bubble.tx +=
                 (cursorDx /
                   cursorDistance) *
-                100 *
-                force;
+                push;
 
               bubble.ty +=
                 (cursorDy /
                   cursorDistance) *
-                100 *
-                force;
+                push;
             }
-          } else {
-            bubble.tx =
-              centerX;
-
-            bubble.ty =
-              centerY;
           }
 
           bubble.vx +=
