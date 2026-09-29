@@ -46,25 +46,60 @@ const EMAIL = 'pyatrick666@gmail.com';
 
 const projects = [
   {
-    name: 'ChessMate',
+    name: 'CarRentalApp',
     num: '01',
-    type: 'Mobile / Game',
-    tools: 'Flutter, Dart, Firebase, AdMob',
-    href: 'https://pyatrick666.itch.io/chessmate',
+    type: 'Desktop / Application',
+    tools: 'C#, .NET, Desktop Development',
+    href: 'https://github.com/pyatrick666/CarRentalApp',
+  },
+  {
+    name: 'AccountRegistrationSystem',
+    num: '02',
+    type: 'Console / C#',
+    tools: 'C#, OOP, File Handling',
+    href: 'https://github.com/pyatrick666/AccountRegistrationSystem',
+  },
+  {
+    name: 'RaspberryPi-PICO',
+    num: '03',
+    type: 'Embedded / Hardware',
+    tools: 'Raspberry Pi Pico, Embedded Systems',
+    href: 'https://github.com/pyatrick666/RaspberryPi-PICO',
   },
   {
     name: 'ePortfolio',
-    num: '02',
+    num: '04',
     type: 'Web / Coursework',
     tools: 'HTML, CSS, JavaScript, Bootstrap',
-    href: 'https://pyatrick666.github.io/ePortfolio/',
+    href: 'https://github.com/pyatrick666/ePortfolio',
   },
   {
-    name: 'GitHub Projects',
-    num: '03',
-    type: 'More Projects',
-    tools: 'Explore my remaining public repositories and builds',
-    href: 'https://github.com/pyatrick666?tab=repositories',
+    name: 'cit-e-cycling-web-portal',
+    num: '05',
+    type: 'Web / Full Stack',
+    tools: 'Web Development, Database, UI',
+    href: 'https://github.com/pyatrick666/cit-e-cycling-web-portal',
+  },
+  {
+    name: '360-VR-',
+    num: '06',
+    type: 'VR / Interactive',
+    tools: '360° VR, Web Development',
+    href: 'https://github.com/pyatrick666/360-VR-',
+  },
+  {
+    name: 'ChessMate',
+    num: '07',
+    type: 'Mobile / Game',
+    tools: 'Flutter, Dart, Firebase, AdMob',
+    href: 'https://github.com/pyatrick666/ChessMate',
+  },
+  {
+    name: 'pyatrick666',
+    num: '08',
+    type: 'GitHub Profile',
+    tools: 'Profile, Projects and Open Source Work',
+    href: 'https://github.com/pyatrick666/pyatrick666',
   },
 ];
 
@@ -1938,9 +1973,9 @@ function App() {
                       {item.t}
                     </h3>
 
-                    <span>
+                    <div className="period">
                       {item.s}
-                    </span>
+                    </div>
                   </div>
 
                   <p>
