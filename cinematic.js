@@ -90,6 +90,7 @@ function initWorld() {
   createTrack();
   createWorldProps();
   createLocations();
+  createLocationStructures();
   createBike();
   createAtmosphere();
 }
@@ -245,6 +246,65 @@ const locations = [
   { id: 'skills', number: '03', title: 'THE WORKSHOP', z: -49, side: -1, subtitle: 'CAPABILITIES' },
   { id: 'contact', number: '04', title: 'THE EXIT', z: -68, side: 1, subtitle: 'CONTACT' }
 ];
+
+
+function createLocationStructures() {
+  const wallMat = new THREE.MeshStandardMaterial({color:0x151b1e,roughness:0.82,metalness:0.18});
+  const roofMat = new THREE.MeshStandardMaterial({color:0x252d31,roughness:0.68,metalness:0.3});
+  const trimMat = new THREE.MeshStandardMaterial({color:0xd7ff3f,emissive:0xd7ff3f,emissiveIntensity:2.2});
+  const glassMat = new THREE.MeshStandardMaterial({color:0x29414a,roughness:0.22,metalness:0.45,transparent:true,opacity:0.72});
+  const crateMat = new THREE.MeshStandardMaterial({color:0x5b4631,roughness:0.9});
+
+  function building(location, width, depth) {
+    const g = new THREE.Group();
+    const x = location.x + location.side * 2.0;
+    const z = location.z;
+    const y = terrainY(x,z);
+    g.position.set(x,y,z);
+    const body = new THREE.Mesh(new THREE.BoxGeometry(width,3.2,depth),wallMat);
+    body.position.y=1.6; body.castShadow=true; body.receiveShadow=true; g.add(body);
+    const roof = new THREE.Mesh(new THREE.BoxGeometry(width+0.45,0.22,depth+0.45),roofMat);
+    roof.position.y=3.25; roof.castShadow=true; g.add(roof);
+    const strip = new THREE.Mesh(new THREE.BoxGeometry(width*0.82,0.08,0.08),trimMat);
+    strip.position.set(0,2.72,-depth/2-0.045); g.add(strip);
+    const door = new THREE.Mesh(new THREE.BoxGeometry(1.15,2.25,0.08),glassMat);
+    door.position.set(0,1.12,-depth/2-0.06); g.add(door);
+    for(let i=0;i<3;i++){
+      const crate=new THREE.Mesh(new THREE.BoxGeometry(.55,.5,.55),crateMat);
+      crate.position.set(-width*.35+i*.62,.25,-depth/2-.32); crate.rotation.y=(i-1)*.15; crate.castShadow=true; g.add(crate);
+    }
+    scene.add(g);
+    location.structure=g;
+  }
+
+  building(locations[0],4.8,4.2);
+
+  const garage=locations[1], gx=garage.x+garage.side*2.1, gz=garage.z, gy=terrainY(gx,gz);
+  const gg=new THREE.Group(); gg.position.set(gx,gy,gz);
+  const shell=new THREE.Mesh(new THREE.BoxGeometry(6.8,3.8,5.2),wallMat); shell.position.y=1.9; shell.castShadow=true; gg.add(shell);
+  const bay=new THREE.Mesh(new THREE.BoxGeometry(4.5,2.8,.12),glassMat); bay.position.set(0,1.42,-2.66); gg.add(bay);
+  const beam=new THREE.Mesh(new THREE.BoxGeometry(6.95,.18,.18),trimMat); beam.position.set(0,3.35,-2.72); gg.add(beam);
+  for(let i=0;i<2;i++){const post=new THREE.Mesh(new THREE.BoxGeometry(.16,3.5,.2),roofMat); post.position.set(-3.05+i*6.1,1.75,-2.7); gg.add(post);}
+  const sign=makeLabel('02','GARAGE');
+  sign.scale.set(3.8,1.15,1); sign.position.set(0,4.15,-2.75); gg.add(sign);
+  scene.add(gg); garage.structure=gg;
+
+  const workshop=locations[2], wx=workshop.x+workshop.side*2.0, wz=workshop.z, wy=terrainY(wx,wz);
+  const wg=new THREE.Group(); wg.position.set(wx,wy,wz);
+  const bench=new THREE.Mesh(new THREE.BoxGeometry(5.8,1.1,2.7),wallMat); bench.position.y=.55; bench.castShadow=true; wg.add(bench);
+  const roof=new THREE.Mesh(new THREE.BoxGeometry(6.4,.2,3.2),roofMat); roof.position.y=3.3; wg.add(roof);
+  for(let i=0;i<4;i++){const p=new THREE.Mesh(new THREE.CylinderGeometry(.1,.1,3.2,8),roofMat);p.position.set(-2.7+i*1.8,1.6,0);wg.add(p);}
+  const screen=new THREE.Mesh(new THREE.BoxGeometry(2.2,1.25,.08),glassMat); screen.position.set(0,2.2,-1.45);wg.add(screen);
+  const ws=makeLabel('03','WORKSHOP'); ws.scale.set(3.8,1.15,1); ws.position.set(0,3.9,-1.7);wg.add(ws);
+  scene.add(wg); workshop.structure=wg;
+
+  const exit=locations[3], ex=exit.x+exit.side*1.7, ez=exit.z, ey=terrainY(ex,ez);
+  const gate=new THREE.Group(); gate.position.set(ex,ey,ez);
+  for(const sx of [-2.5,2.5]){const p=new THREE.Mesh(new THREE.BoxGeometry(.25,4,.25),roofMat);p.position.set(sx,2,0);gate.add(p);}
+  const top=new THREE.Mesh(new THREE.BoxGeometry(5.25,.3,.3),trimMat);top.position.y=3.65;gate.add(top);
+  const exitSign=makeLabel('04','EXIT'); exitSign.scale.set(3.5,1.05,1);exitSign.position.set(0,3.25,0);gate.add(exitSign);
+  scene.add(gate); exit.structure=gate;
+}
 
 function createLocations() {
   const signMat = new THREE.MeshStandardMaterial({
@@ -453,6 +513,8 @@ function initInterface() {
   });
 
   $('#ride-hud')?.setAttribute('aria-live', 'polite');
+  $('#location-card')?.addEventListener('click', () => { if (state.activeLocation >= 0) openLocation(state.activeLocation); });
+  addEventListener('keydown', (e) => { if (e.key.toLowerCase() === 'e' && state.started && state.activeLocation >= 0) openLocation(state.activeLocation); });
 }
 
 function openPanel(id) {
@@ -681,6 +743,17 @@ function updateCamera(dt, time) {
       rain.geometry.attributes.position.needsUpdate = true;
     }
   }
+}
+
+function openLocation(index) {
+  const location = locations[index];
+  if (!location) return;
+  state.cameraShake = Math.max(state.cameraShake, 0.08);
+  document.body.classList.add('location-transition');
+  setTimeout(() => {
+    openPanel(location.id);
+    document.body.classList.remove('location-transition');
+  }, 260);
 }
 
 function updateLocations(time) {
