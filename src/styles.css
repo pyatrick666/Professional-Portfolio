@@ -640,33 +640,13 @@ section {
 }
 
 .swap {
-  width: min(46vw, 38rem);
-  min-width: 22rem;
   height: 1.15em;
   overflow: hidden;
   font:
-    700 clamp(2rem, 3.65vw, 3.6rem) / 1.15
+    700 var(--h1) / 1.15
     var(--display);
   color: var(--soft);
-  letter-spacing: -0.045em;
-}
-
-.role {
-  width: min(46vw, 38rem);
-}
-
-.swap span {
-  display: block;
-  white-space: nowrap;
-  animation:
-    swapWords
-    5s
-    infinite
-    cubic-bezier(0.7, 0, 0.2, 1);
-}
-
-.swap span br {
-  display: block;
+  letter-spacing: -0.02em;
 }
 
 .swap span {
