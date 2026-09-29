@@ -1414,37 +1414,9 @@ function App() {
             }
           );
 
-          /* Pinned horizontal Work gallery */
-          const workSection = document.querySelector<HTMLElement>('.work-section');
-          const workFlex = document.querySelector<HTMLElement>('.work-flex');
-
-          if (workSection && workFlex) {
-            const workMedia = gsap.matchMedia();
-
-            workMedia.add('(min-width: 801px)', () => {
-              const setupWorkScroll = () => {
-                const distance = Math.max(0, workFlex.scrollWidth - window.innerWidth);
-                if (distance === 0) return;
-
-                gsap.to(workFlex, {
-                  x: -distance,
-                  ease: 'none',
-                  scrollTrigger: {
-                    trigger: workSection,
-                    start: 'top top',
-                    end: () => `+=${Math.max(distance, window.innerHeight)}`,
-                    scrub: true,
-                    pin: true,
-                    anticipatePin: 1,
-                    invalidateOnRefresh: true,
-                    id: 'work-horizontal',
-                  },
-                });
-              };
-
-              setupWorkScroll();
-            });
-          }
+          /* Work gallery uses native horizontal scrolling.
+             Each repository is rendered once; native scrolling avoids
+             ScrollTrigger pin/transform duplication during refreshes. */
 
           gsap.to(
             '.hero-copy',
