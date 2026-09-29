@@ -1823,15 +1823,6 @@ function App() {
         </a>
 
         <a
-          href="https://pyatrick666.itch.io/chessmate"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="itch.io"
-        >
-          <Gamepad2 size={14} />
-        </a>
-
-        <a
           href="https://www.instagram.com/pyatrick666/"
           target="_blank"
           rel="noopener noreferrer"
