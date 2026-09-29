@@ -46,7 +46,7 @@ document.querySelectorAll('[data-fallback-target]').forEach(function(link){
 
   let THREE;
   try {
-    THREE = await import('./three.module.js');
+    THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js');
   } catch (error) {
     console.error('Three.js module load failed:', error);
     if (fallback) {
