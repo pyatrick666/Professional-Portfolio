@@ -1423,8 +1423,20 @@ function App() {
 
             workMedia.add('(min-width: 801px)', () => {
               const setupWorkScroll = () => {
-                const distance = Math.max(0, workFlex.scrollWidth - window.innerWidth);
+                const distance = Math.max(
+                  0,
+                  workFlex.scrollWidth - window.innerWidth
+                );
+
                 if (distance === 0) return;
+
+                // Use the exact horizontal travel for the cards, then keep a short
+                // vertical release zone so the page can naturally continue to the
+                // Tech Stack section after the final repository.
+                const releaseZone = Math.min(
+                  window.innerHeight * 0.55,
+                  420
+                );
 
                 gsap.to(workFlex, {
                   x: -distance,
@@ -1432,9 +1444,11 @@ function App() {
                   scrollTrigger: {
                     trigger: workSection,
                     start: 'top top',
-                    end: () => `+=${Math.max(distance, window.innerHeight)}`,
+                    end: () =>
+                      `+=${distance + releaseZone}`,
                     scrub: true,
                     pin: true,
+                    pinSpacing: true,
                     anticipatePin: 1,
                     invalidateOnRefresh: true,
                     id: 'work-horizontal',
@@ -1443,6 +1457,12 @@ function App() {
               };
 
               setupWorkScroll();
+
+              // The cards use responsive widths, so recalculate the pin distance
+              // after the browser has finished laying out the section.
+              requestAnimationFrame(() => {
+                ScrollTrigger.refresh();
+              });
             });
           }
 
