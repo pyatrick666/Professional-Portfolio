@@ -17,7 +17,11 @@
     "react-dom": "latest",
     "three": "latest",
     "typescript": "latest",
-    "vite": "latest"
+    "vite": "latest",
+    "@react-three/fiber": "latest",
+    "@react-three/drei": "latest",
+    "@react-three/rapier": "latest",
+    "@react-three/postprocessing": "latest"
   },
   "devDependencies": {
     "@types/react": "latest",
