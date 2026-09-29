@@ -11,9 +11,9 @@ window.__portfolioBootTimer=setTimeout(function(){
   if(!document.body)return;
   document.body.classList.add('no-webgl');
   var f=document.getElementById('webgl-fallback'),l=document.getElementById('loader');
-  if(f){var p=f.querySelector('p');if(p)p.textContent='The interactive scene is taking too long to start. The portfolio content is still available.';f.style.display='grid';}
+  if(f){var p=f.querySelector('p');if(p)p.textContent='The interactive scene is taking longer than expected. The portfolio content is still available.';f.style.display='grid';}
   if(l)l.classList.add('loaded');
-},2500);
+},8000);
 </script>
 </head>
 <body>
