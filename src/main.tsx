@@ -2137,33 +2137,6 @@ function App() {
 
                 <a
                   className="social-link"
-                  href="https://pyatrick666.itch.io/chessmate"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="social-mark">
-                    <Gamepad2
-                      size={18}
-                    />
-                  </span>
-
-                  <span>
-                    <b>
-                      itch.io
-                    </b>
-
-                    <small>
-                      ChessMate
-                    </small>
-                  </span>
-
-                  <ArrowUpRight
-                    size={16}
-                  />
-                </a>
-
-                <a
-                  className="social-link"
                   href="https://www.instagram.com/pyatrick666/"
                   target="_blank"
                   rel="noopener noreferrer"
