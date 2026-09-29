@@ -1,56 +1,91 @@
 import './styles/Career.css';
 
+const milestones = [
+  {
+    number: '01',
+    period: '2025 — PRESENT',
+    title: 'BSc (Hons) Information Technology',
+    subtitle: 'Computer Systems Engineering',
+    place: 'ISMT College · University of Sunderland',
+    text: 'Building a strong foundation across software development, computer systems, networking and modern IT practice as part of my undergraduate degree.',
+    tags: ['OOP', 'Web Development', 'Databases', 'Computer Systems'],
+  },
+  {
+    number: '02',
+    period: '2026',
+    title: 'Enterprise Project',
+    subtitle: 'Team Leadership & Delivery',
+    place: 'CET 257 · ISMT College',
+    text: 'Developing practical project experience through an enterprise team environment, contributing as Deputy Project Manager alongside planning, communication and technical delivery.',
+    tags: ['Project Management', 'Teamwork', 'Client Communication'],
+  },
+  {
+    number: '03',
+    period: '2026 — PRESENT',
+    title: 'Building Real Projects',
+    subtitle: 'Software · Web · Mobile',
+    place: 'Independent & Coursework Projects',
+    text: 'Turning coursework into working software through projects including full-stack websites, C# applications, embedded experiments and ChessMate, a Flutter mobile application.',
+    tags: ['C#', 'Flutter', 'JavaScript', 'Firebase'],
+  },
+  {
+    number: '04',
+    period: 'CURRENT FOCUS',
+    title: 'Preparing for Industry',
+    subtitle: 'Software & Networking',
+    place: 'Professional Development',
+    text: 'Expanding practical experience in full-stack development, mobile development, Linux, networking, UI/UX and portfolio-quality product work while preparing for internship opportunities.',
+    tags: ['Full Stack', 'Networking', 'UI/UX', 'Linux'],
+  },
+];
+
 const Career = () => {
   return (
-    <section className="career-section section-container">
+    <section className="career-section section-container" id="career">
       <div className="career-container">
-        <h2>
-          My career <span>&amp;</span>
-          <br /> experience
-        </h2>
-        <div className="career-info">
-          <div className="career-timeline" aria-hidden="true">
-            <div className="career-dot" />
+        <div className="career-intro">
+          <div>
+            <span className="career-kicker">MY JOURNEY</span>
+            <h2>
+              Learning <span>&amp;</span>
+              <br />
+              experience
+            </h2>
           </div>
+          <p className="career-summary">
+            From university coursework to real software projects, I&apos;m building
+            practical experience one project at a time.
+          </p>
+        </div>
 
-          <article className="career-info-box">
-            <div className="career-info-in">
-              <div className="career-role">
-                <h4>Web Development Foundations</h4>
-                <h5>Self-directed learning &amp; coursework</h5>
+        <div className="career-list">
+          {milestones.map((item) => (
+            <article className="career-item" key={item.number}>
+              <div className="career-marker">
+                <span>{item.number}</span>
               </div>
-              <h3>2019–2021</h3>
-            </div>
-            <p>
-              Built my foundation in HTML, CSS, JavaScript and PHP through practical web projects and coursework, developing an early interest in creating interactive digital experiences.
-            </p>
-          </article>
 
-          <article className="career-info-box">
-            <div className="career-info-in">
-              <div className="career-role">
-                <h4>BSc (Hons) Information Technology</h4>
-                <h5>ISMT College · University of Sunderland</h5>
-              </div>
-              <h3>2025–NOW</h3>
-            </div>
-            <p>
-              Studying Computer Systems Engineering with a focus on software development, databases, web technologies, enterprise projects, computer systems and networking.
-            </p>
-          </article>
+              <div className="career-period">{item.period}</div>
 
-          <article className="career-info-box">
-            <div className="career-info-in">
-              <div className="career-role">
-                <h4>Software Engineering &amp; Networking</h4>
-                <h5>Current development</h5>
+              <div className="career-content">
+                <div className="career-title-row">
+                  <div>
+                    <h3>{item.title}</h3>
+                    <h4>{item.subtitle}</h4>
+                  </div>
+                  <span className="career-place">{item.place}</span>
+                </div>
+
+                <p>{item.text}</p>
+
+                <div className="career-tags">
+                  {item.tags.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </div>
               </div>
-              <h3>NOW</h3>
-            </div>
-            <p>
-              Continuing to build practical experience across full-stack and mobile development, Linux, networking, UI/UX and interactive applications while developing projects for my professional portfolio.
-            </p>
-          </article>
+            </article>
+          ))}
         </div>
       </div>
     </section>
