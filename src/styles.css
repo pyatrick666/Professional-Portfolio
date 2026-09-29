@@ -666,7 +666,7 @@ section {
 }
 
 .swap span br {
-  display: none;
+  display: block;
 }
 
 .swap span {
