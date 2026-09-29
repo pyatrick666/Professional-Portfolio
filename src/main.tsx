@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { createRoot } from 'react-dom/client';
 import { ArrowUpRight, Gamepad2, Menu, X } from 'lucide-react';
 import { gsap } from 'gsap';
 import Lenis from 'lenis';
@@ -544,7 +545,7 @@ function App() {
     if (!element) return;
 
     if (lenis.current) {
-      lenis.current.scrollTo(element);
+      lenis.current.scrollTo(element as HTMLElement);
     } else {
       element.scrollIntoView({
         behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
@@ -561,7 +562,7 @@ function App() {
         <a className="logo" href="#home" onClick={(event) => go(event, '#home')}>pratik.dev</a>
         <a className="mid" href={'mailto:' + EMAIL}>{EMAIL}</a>
 
-        <nav className={open ? 'nav open' : 'nav'} aria-label="Primary">
+        <nav id="primary-navigation" className={open ? 'nav open' : 'nav'} aria-label="Primary">
           <a href="#about" onClick={(event) => go(event, '#about')}>About</a>
           <a href="#work" onClick={(event) => go(event, '#work')}>Work</a>
           <a href="#contact" onClick={(event) => go(event, '#contact')}>Contact</a>
