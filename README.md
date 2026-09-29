@@ -1,6 +1,6 @@
 # Pratik Poudel — Professional Portfolio
 
-> An interactive cinematic portfolio built around a dirt-bike trail, created to present my software development work, technical capabilities, and professional direction.
+> An interactive cinematic portfolio built around a dirt-bike trail, created to present my technical capabilities, development interests, and professional direction.
 
 **Portfolio:** https://pyatrick666.github.io/Professional-Portfolio/  
 **GitHub:** https://github.com/pyatrick666  
@@ -9,64 +9,33 @@
 
 ## About
 
-This is my professional portfolio, separate from my academic ePortfolio.
+This repository contains my professional portfolio, separate from my academic ePortfolio.
 
-I am Pratik Poudel, a BSc (Hons) Information Technology — Computer Systems Engineering student. My interests include software development, full-stack web development, mobile applications, networking, Linux, and computer systems.
+I am Pratik Poudel, a BSc (Hons) Information Technology — Computer Systems Engineering student with interests across software development, full-stack web development, mobile applications, networking, Linux, and computer systems.
 
-The portfolio uses an interactive dirt-bike journey as its visual metaphor. Visitors can explore my background, capabilities, selected work, and contact information through a cinematic digital trail.
+The portfolio presents my professional profile through an interactive digital trail rather than a conventional static portfolio.
 
-## Featured Work
+## Experience & Interaction
 
-### ChessMate
-A Flutter/Dart mobile chess project with gameplay, polished UI, and production-oriented deployment.
+The portfolio combines a professional information interface with a real-time 3D environment featuring:
 
-- **Role:** Independent Developer
-- **Stack:** Flutter, Dart, AdMob
-- **Project:** https://pyatrick666.itch.io/chessmate
-- **Source:** https://github.com/pyatrick666/ChessMate
-
-### ePortfolio
-A frontend web project exploring responsive design, JavaScript interaction, and practical web presentation.
-
-- **Stack:** HTML, CSS, JavaScript
-- **Live site:** https://pyatrick666.github.io/ePortfolio/
-
-More development work is available through my GitHub profile.
-
-## Capabilities
-
-- Software Development
-- Full-Stack Web Development
-- Flutter / Dart
-- JavaScript
-- Python
-- C / C# / Java
-- Databases
-- Networking & Computer Systems
-- Linux
-- Git / GitHub
-- Figma
-- Canva
-
-## Interactive Experience
-
-- Three.js-powered 3D environment
-- Procedural dirt-bike model
+- Three.js-powered 3D rendering
+- Procedurally generated dirt-bike model
 - Dynamic terrain and ramps
 - Rain, fog, and atmospheric lighting
 - Interactive riding
-- WASD / arrow-key controls
+- WASD and arrow-key controls
 - Touch-oriented mobile interaction
 - Jump and landing physics
 - Suspension movement
-- Tire tracks and puddle splashes
+- Tire tracks and puddle splash effects
 - Dirt particles and skid effects
 - Interactive trail checkpoints
 - Cinematic ride introduction
 - Responsive layouts
 - Graceful WebGL fallback
 
-The bike and environment are generated with Three.js primitives and custom JavaScript rather than relying on a third-party proprietary 3D asset.
+The bike and environment are generated using Three.js primitives and custom JavaScript rather than relying on a proprietary third-party 3D asset.
 
 ## Technology Stack
 
@@ -100,11 +69,15 @@ The project uses JavaScript modules, so serve it through a local web server rath
 python3 -m http.server 8000
 ```
 
-Then visit `http://localhost:8000`.
+Then visit:
+
+```
+http://localhost:8000
+```
 
 ### VS Code
 
-Alternatively, use a local development server such as Live Server.
+You can alternatively use a local development server such as Live Server.
 
 ## Controls
 
@@ -120,32 +93,40 @@ Alternatively, use a local development server such as Live Server.
 
 ### Mobile
 
-The experience provides touch-oriented controls and responsive layouts for smaller screens.
+The portfolio includes touch-oriented interaction and responsive layouts for smaller screens.
 
 ## Performance & Compatibility
 
-The experience is intended for modern browsers with WebGL support.
+The experience is designed for modern browsers with WebGL support.
 
-Rendering performance is protected with a capped device pixel ratio and high-performance WebGL preference. If WebGL cannot be initialized, the portfolio switches to a content-first fallback so visitors can still access the main sections.
+Rendering performance is managed with a capped device pixel ratio and a high-performance WebGL preference. If WebGL cannot be initialized, the portfolio provides a content-first fallback so visitors can still access the main information.
 
 ## Design Direction
 
-The visual identity combines dark cinematic environments, rain and fog, minimal HUD elements, motocross-inspired styling, high-contrast typography, neon-accented interaction, and motion-driven storytelling.
+The visual identity combines:
 
-The goal is to make the interaction itself part of the portfolio rather than simply placing a 3D background behind a conventional website.
+- Dark cinematic environments
+- Rain and fog
+- Minimal HUD elements
+- Motocross-inspired visual language
+- High-contrast typography
+- Neon-accented interaction
+- Motion-driven storytelling
+
+The interactive environment is intended to be part of the portfolio's identity rather than simply a decorative 3D background.
 
 ## Professional Links
 
+- **Portfolio:** https://pyatrick666.github.io/Professional-Portfolio/
 - **GitHub:** https://github.com/pyatrick666
 - **LinkedIn:** https://www.linkedin.com/in/pratik-poudel-b3264a263/
 - **Email:** pyatrick666@gmail.com
-- **ChessMate:** https://pyatrick666.itch.io/chessmate
 
 ## Development Notes
 
-The project is intentionally lightweight and asset-independent. The environment and bike are generated with Three.js primitives and custom JavaScript logic, making the experience easier to maintain and avoiding dependence on proprietary 3D assets.
+The project is intentionally lightweight and asset-independent. The environment and bike are generated with Three.js primitives and custom JavaScript logic, which keeps the experience maintainable and avoids dependence on proprietary 3D assets.
 
-Professional content remains accessible when the interactive 3D layer is unavailable.
+Professional portfolio content is kept inside the website itself so the repository README remains focused on the project, its implementation, and how to run it.
 
 ## License
 
