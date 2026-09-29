@@ -1423,9 +1423,21 @@ function App() {
 
             workMedia.add('(min-width: 801px)', () => {
               const setupWorkScroll = () => {
+                // Calculate only from the repository cards. The timeline
+                // border pseudo-elements are intentionally huge and can inflate
+                // scrollWidth, which makes the pinned section last far too long.
+                const cards = Array.from(
+                  workFlex.querySelectorAll<HTMLElement>('.work-box')
+                );
+
+                const contentWidth = cards.reduce(
+                  (total, card) => total + card.getBoundingClientRect().width,
+                  0
+                );
+
                 const distance = Math.max(
                   0,
-                  workFlex.scrollWidth - window.innerWidth
+                  contentWidth + workFlex.clientLeft + parseFloat(getComputedStyle(workFlex).paddingRight || '0') - window.innerWidth
                 );
 
                 if (distance === 0) return;
