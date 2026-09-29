@@ -60,3 +60,8 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 /* Drive-state feedback */
 #ride-hud{min-width:110px}
 .ride-started #ride-hud b{ text-shadow:0 0 16px rgba(215,255,63,.28) }
+
+.location-card{cursor:pointer;transition:transform .25s ease,background .25s ease,border-color .25s ease}
+.location-card:hover,.location-card:focus-visible{transform:translateY(-3px);border-color:rgba(215,255,63,.55);outline:none}
+.location-transition #scene{filter:brightness(1.35) saturate(.75);transition:filter .26s ease}
+.location-transition .vignette{opacity:.95}
