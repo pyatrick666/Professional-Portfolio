@@ -915,7 +915,7 @@ section {
 .stack-grid {
   position: relative;
   z-index: 2;
-  width: min(72rem, 100%);
+  width: min(76rem, 100%);
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
