@@ -43,6 +43,7 @@ import { EffectComposer, N8AO } from '@react-three/postprocessing';
 import { BallCollider, Physics, RigidBody, RapierRigidBody } from '@react-three/rapier';
 import './styles.css';
 import Career from './Career';
+import Contact from "./Contact";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -1809,6 +1810,7 @@ function App() {
         </section>
 
         <Career />
+      <Contact />
 
         <section
           id="work"
