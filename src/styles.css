@@ -664,9 +664,9 @@ section {
 
 .row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(8rem, 0.35fr) minmax(0, 1fr);
   align-items: center;
-  gap: clamp(2rem, 6vw, 6rem);
+  gap: clamp(1.5rem, 4vw, 4rem);
   padding: 2.5rem 0;
 }
 
@@ -679,7 +679,8 @@ section {
   display: inline-flex;
   align-items: center;
   width: fit-content;
-  margin-top: 0.15rem;
+  justify-self: center;
+  margin-top: 0;
   padding: 0.28rem 0.7rem;
   border: 1px solid rgba(125, 255, 0, 0.35);
   border-radius: 999px;
