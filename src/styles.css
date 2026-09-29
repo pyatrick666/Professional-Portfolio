@@ -1313,83 +1313,43 @@ section {
   justify-content: center;
   padding: clamp(6rem, 10vh, 9rem) var(--gut);
   overflow: hidden;
-  background:
-    radial-gradient(circle at 70% 35%, rgba(125,255,0,.035), transparent 32%),
-    var(--bg);
+  background: var(--bg);
 }
 
 .tech::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, transparent 49.9%, rgba(125,255,0,.035) 50%, transparent 50.1%),
-    linear-gradient(0deg, transparent 49.9%, rgba(125,255,0,.025) 50%, transparent 50.1%);
-  background-size: 8rem 8rem;
-  mask-image: radial-gradient(circle at 70% 45%, black, transparent 72%);
+  inset: 12% 0 auto;
+  height: 65%;
+  background: radial-gradient(circle at 50% 50%, rgba(125,255,0,.055), transparent 42%);
   pointer-events: none;
 }
 
-.tech-heading {
-  position: relative;
-  z-index: 4;
-  width: min(78rem, 100%);
-  margin: 0 auto 1.5rem;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 2rem;
-}
-
-.tech-heading > div {
-  flex: 1;
-}
-
-.tech-kicker {
-  display: block;
-  margin-bottom: .65rem;
-  color: var(--pu);
-  font-size: .62rem;
-  font-weight: 700;
-  letter-spacing: .24em;
-}
-
 .tech h2 {
-  margin: 0;
-  font: 300 clamp(3rem, 7vw, 6.5rem) / .85 var(--display);
-  letter-spacing: -.06em;
-}
-
-.tech h2 em {
-  color: var(--pu);
-  font-style: normal;
-}
-
-.tech-heading > p {
-  max-width: 25rem;
-  margin: 0 0 .15rem;
-  color: var(--mute);
-  font-size: .76rem;
-  line-height: 1.6;
+  position: relative;
+  z-index: 3;
+  margin: 0 0 1rem;
+  font: 300 var(--h2)/1 var(--display);
+  text-align: center;
+  letter-spacing: -.04em;
 }
 
 .skills-physics {
   position: relative;
   width: min(78rem, 100%);
-  height: min(66vh, 44rem);
+  height: min(68vh, 46rem);
   min-height: 30rem;
   margin: 0 auto;
-  border: 1px solid rgba(125,255,0,.18);
-  border-radius: 1.75rem;
+  border: 1px solid rgba(125,255,0,.13);
+  border-radius: 1.5rem;
   overflow: hidden;
   isolation: isolate;
   background:
-    radial-gradient(circle at 68% 48%, rgba(125,255,0,.07), transparent 24%),
-    radial-gradient(circle at 25% 75%, rgba(166,124,255,.055), transparent 28%),
-    rgba(8,8,10,.72);
+    radial-gradient(circle at 50% 50%, rgba(125,255,0,.045), transparent 42%),
+    linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,.004));
   box-shadow:
-    inset 0 0 100px rgba(125,255,0,.025),
-    0 35px 100px rgba(0,0,0,.3);
+    inset 0 0 80px rgba(125,255,0,.025),
+    0 30px 90px rgba(0,0,0,.22);
 }
 
 .skills-physics::before {
@@ -1398,44 +1358,19 @@ section {
   inset: 0;
   z-index: 0;
   background:
-    linear-gradient(rgba(125,255,0,.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(125,255,0,.045) 1px, transparent 1px);
-  background-size: 3.5rem 3.5rem;
-  mask-image: radial-gradient(circle at 68% 48%, black 8%, transparent 68%);
-  pointer-events: none;
-}
-
-.skills-physics::after {
-  content: '';
-  position: absolute;
-  inset: 1rem;
-  z-index: 3;
-  border: 1px solid rgba(255,255,255,.045);
-  border-radius: 1.15rem;
-  pointer-events: none;
-}
-
-.skills-physics__topline {
-  position: absolute;
-  top: 1.5rem;
-  left: 1.7rem;
-  right: 1.7rem;
-  z-index: 5;
-  display: flex;
-  justify-content: space-between;
-  color: rgba(255,255,255,.42);
-  font-size: .58rem;
-  font-weight: 700;
-  letter-spacing: .18em;
+    linear-gradient(rgba(125,255,0,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(125,255,0,.035) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  mask-image: radial-gradient(circle at center, black 15%, transparent 78%);
   pointer-events: none;
 }
 
 .skills-physics__copy {
   position: absolute;
   left: 2rem;
-  bottom: 2rem;
-  z-index: 5;
-  max-width: 18rem;
+  top: 2rem;
+  z-index: 3;
+  max-width: 17rem;
   pointer-events: none;
 }
 
@@ -1447,37 +1382,15 @@ section {
 }
 
 .skills-physics__copy p {
-  margin: .7rem 0 0;
+  margin-top: .7rem;
   color: var(--mute);
-  font-size: .72rem;
-  line-height: 1.55;
+  font-size: .75rem;
+  line-height: 1.5;
 }
 
+.skills-physics__topline,
 .skills-physics__status {
-  position: absolute;
-  right: 2rem;
-  bottom: 2rem;
-  z-index: 5;
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  color: rgba(255,255,255,.45);
-  font-size: .58rem;
-  letter-spacing: .15em;
-}
-
-.skills-physics__status i {
-  width: .42rem;
-  height: .42rem;
-  border-radius: 50%;
-  background: var(--pu);
-  box-shadow: 0 0 12px var(--pu);
-  animation: techPulse 1.8s ease-in-out infinite;
-}
-
-@keyframes techPulse {
-  0%, 100% { opacity: .35; transform: scale(.8); }
-  50% { opacity: 1; transform: scale(1.15); }
+  display: none;
 }
 
 .tech-canvas {
@@ -1488,156 +1401,30 @@ section {
   height: 100% !important;
 }
 
-.skills-index {
-  position: relative;
-  z-index: 4;
-  width: min(78rem, 100%);
-  margin: 1.5rem auto 0;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,.09);
-  border-radius: 1.4rem;
-  background: rgba(255,255,255,.08);
-}
-
-.skills-group {
-  position: relative;
-  min-width: 0;
-  padding: clamp(1.25rem, 2.2vw, 1.8rem);
-  background: rgba(9,9,11,.92);
-  transition: background .35s ease, transform .35s ease;
-}
-
-.skills-group:hover {
-  z-index: 2;
-  background: rgba(125,255,0,.035);
-}
-
-.skills-group__top {
-  display: flex;
-  align-items: center;
-  gap: .7rem;
-  margin-bottom: 1.1rem;
-}
-
-.skills-group__number {
-  color: var(--pu);
-  font-size: .62rem;
-  font-weight: 700;
-  letter-spacing: .15em;
-}
-
-.skills-group__line {
-  height: 1px;
-  flex: 1;
-  background: rgba(255,255,255,.09);
-}
-
-.skills-group__count {
-  color: rgba(255,255,255,.3);
-  font-size: .58rem;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-.skills-group h3 {
-  margin: 0;
-  color: var(--fg);
-  font-size: clamp(1rem, 1.8vw, 1.3rem);
-  font-weight: 500;
-  letter-spacing: -.025em;
-}
-
-.skills-group p {
-  max-width: 34rem;
-  margin: .55rem 0 1rem;
-  color: var(--mute);
-  font-size: .7rem;
-  line-height: 1.55;
-}
-
-.skills-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .42rem;
-}
-
-.skills-tags span {
-  display: inline-flex;
-  align-items: center;
-  min-height: 1.8rem;
-  padding: .28rem .62rem;
-  border: 1px solid rgba(255,255,255,.09);
-  border-radius: 999px;
-  color: var(--soft);
-  background: rgba(255,255,255,.018);
-  font-size: .64rem;
-  transition: border-color .25s ease, color .25s ease, background .25s ease, transform .25s ease;
-}
-
-.skills-tags span:hover {
-  border-color: rgba(125,255,0,.5);
-  color: var(--pu);
-  background: rgba(125,255,0,.055);
-  transform: translateY(-2px);
-}
-
 @media (max-width: 800px) {
   .tech {
     padding: 5rem var(--gut);
   }
 
-  .tech-heading {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .tech-heading > p {
-    max-width: 30rem;
-  }
-
   .tech h2 {
-    font-size: clamp(3.2rem, 15vw, 5.5rem);
+    text-align: left;
+    margin-bottom: 1rem;
   }
 
   .skills-physics {
-    height: 62vh;
+    height: 65vh;
     min-height: 28rem;
-    border-radius: 1.1rem;
-  }
-
-  .skills-physics::after {
-    inset: .65rem;
-    border-radius: .8rem;
-  }
-
-  .skills-physics__topline {
-    top: 1.1rem;
-    left: 1.1rem;
-    right: 1.1rem;
+    border-radius: 1rem;
   }
 
   .skills-physics__copy {
     left: 1.2rem;
-    bottom: 1.2rem;
+    top: 1.2rem;
     max-width: 13rem;
   }
 
-  .skills-physics__status {
-    right: 1.2rem;
-    bottom: 1.2rem;
-  }
-
-  .skills-index {
-    grid-template-columns: 1fr;
-    border-radius: 1rem;
-  }
-
-  .skills-group {
-    padding: 1.25rem;
+  .skills-physics__copy p {
+    font-size: .68rem;
   }
 }
 
