@@ -31,6 +31,8 @@ const SKIN = 0xc98b6b;
 const HAIR = 0x14101c;
 const HOODIE = 0x2b2733;
 const ACCENT = 0xa67cff;
+const CAP = 0x09080d;
+const CAP_EDGE = 0x20172e;
 
 const pose = { x: 0, y: -1.1, s: 1.25, ry: 0, o: 1 };
 
@@ -72,6 +74,42 @@ function buildAvatar() {
     [0, 0.02, 0]
   );
   hair.scale.set(1, 1.05, 0.95);
+
+  // Structured cap: low-profile crown + curved brim, with a restrained purple detail.
+  const cap = new THREE.Group();
+  cap.position.set(0, 0.66, 0.02);
+  head.add(cap);
+
+  const crown = new THREE.Mesh(
+    new THREE.SphereGeometry(0.9, 48, 24, 0, Math.PI * 2, 0, Math.PI * 0.54),
+    makeMaterial(CAP)
+  );
+  crown.scale.set(1.02, 0.78, 0.98);
+  cap.add(crown);
+
+  const band = new THREE.Mesh(
+    new THREE.TorusGeometry(0.79, 0.045, 10, 48),
+    makeMaterial(CAP_EDGE, 0.08)
+  );
+  band.scale.set(1, 1, 0.94);
+  cap.add(band);
+
+  const brim = new THREE.Mesh(
+    new THREE.SphereGeometry(0.62, 32, 16),
+    makeMaterial(CAP)
+  );
+  brim.scale.set(1.35, 0.09, 0.68);
+  brim.position.set(0, -0.02, 0.7);
+  brim.rotation.x = -0.08;
+  cap.add(brim);
+
+  const capMark = new THREE.Mesh(
+    new THREE.TorusGeometry(0.12, 0.022, 8, 24),
+    makeMaterial(ACCENT, 0.45)
+  );
+  capMark.position.set(0, 0.48, 0.42);
+  capMark.rotation.x = Math.PI * 0.5;
+  cap.add(capMark);
 
   [-1, 1].forEach((side) => {
     add(new THREE.SphereGeometry(0.22, 24, 24), makeMaterial(SKIN), [side * 1, -0.05, 0]).scale.set(0.6, 1, 1);
