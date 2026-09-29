@@ -26,7 +26,7 @@ const milestones = [
   {
     role: "Preparing for Industry",
     company: "Professional Development",
-    year: "CURRENT FOCUS",
+    year: "CURRENT\nFOCUS",
     description:
       "Expanding practical experience in full-stack development, mobile development, Linux, networking and UI/UX while preparing for internship opportunities.",
   },
