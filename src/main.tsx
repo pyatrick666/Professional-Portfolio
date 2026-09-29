@@ -1850,52 +1850,29 @@ function App() {
         </section>
 
         <section className="tl">
-          <h2 className="rv">My learning &amp;<br />experience</h2>
-          <div className="rows">
-            {journey.map((item) => (
-              <div className="row" key={item.t}>
-                <div>
-                  <h3>{item.t}</h3>
-                  <span>{item.s}</span>
+          <div className="tl-heading rv">
+            <span className="tl-kicker">02 / JOURNEY</span>
+            <h2>My learning &amp;<br /><em>experience</em></h2>
+          </div>
+
+          <div className="journey">
+            {journey.map((item, index) => (
+              <article className="journey-item rv" key={item.t}>
+                <div className="journey-marker">
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <i />
                 </div>
-                <p>{item.d}</p>
-              </div>
+                <div className="journey-content">
+                  <div className="journey-meta">{item.s}</div>
+                  <h3>{item.t}</h3>
+                  <p>{item.d}</p>
+                </div>
+              </article>
             ))}
           </div>
         </section>
 
-        <section className="tl">
-          <h2 className="rv">
-            My learning &amp;
-            <br />
-            experience
-          </h2>
-
-          <div className="rows">
-            {journey.map(
-              (item) => (
-                <div
-                  className="row"
-                  key={item.t}
-                >
-                  <div>
-                    <h3>
-                      {item.t}
-                    </h3>
-
-                    <div className="period">
-                      {item.s}
-                    </div>
-                  </div>
-
-                  <p>
-                    {item.d}
-                  </p>
-                </div>
-              )
-            )}
-          </div>
-        </section>
+        
 
         <section
           id="work"
