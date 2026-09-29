@@ -14,8 +14,7 @@ const EMAIL = 'pyatrick666@gmail.com';
 const projects = [
   { name: 'ChessMate', num: '01', type: 'Mobile / Game', tools: 'Flutter, Dart, Firebase, AdMob', href: 'https://pyatrick666.itch.io/chessmate' },
   { name: 'ePortfolio', num: '02', type: 'Web / Coursework', tools: 'HTML, CSS, JavaScript, Bootstrap', href: 'https://pyatrick666.github.io/ePortfolio/' },
-  { name: 'Cit-E Cycling', num: '03', type: 'Web Portal', tools: 'PHP, MySQL, public site, admin portal', href: 'https://github.com/pyatrick666/Cit-E-Cycling' },
-  { name: 'More on GitHub', num: '04', type: 'Open Source / Projects', tools: 'Explore my remaining repositories and builds', href: 'https://github.com/pyatrick666?tab=repositories' }
+  { name: 'GitHub Projects', num: '03', type: 'More Projects', tools: 'Explore my remaining public repositories and builds', href: 'https://github.com/pyatrick666?tab=repositories' }
 ];
 
 const stack = ['React', 'TypeScript', 'JavaScript', 'Flutter', 'Dart', 'Firebase', 'Node', 'Express', 'PHP', 'MySQL', 'Python', 'Java', 'C#', 'Linux', 'Cisco', 'Figma', 'Git'];
