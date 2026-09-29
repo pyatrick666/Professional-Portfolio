@@ -310,10 +310,12 @@ function makeLabel(number, title) {
   return sprite;
 }
 
-let bike, rearWheel, frontWheel, headLight;
+let bike, rearWheel, frontWheel, headLight, bikeVisual, suspensionL, suspensionR;
 
 function createBike() {
   bike = new THREE.Group();
+  bikeVisual = new THREE.Group();
+  bike.add(bikeVisual);
   scene.add(bike);
 
   const frameMat = new THREE.MeshStandardMaterial({ color: 0x9fbd2c, metalness: 0.5, roughness: 0.3 });
@@ -344,67 +346,68 @@ function createBike() {
 
   rearWheel = wheel(0.82);
   frontWheel = wheel(-0.82);
-  bike.add(rearWheel, frontWheel);
+  bikeVisual.add(rearWheel, frontWheel);
 
   const frame = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.15, 1.28), frameMat);
   frame.position.set(0, 1.18, 0.02);
   frame.rotation.x = -0.08;
-  bike.add(frame);
+  bikeVisual.add(frame);
 
   const engine = new THREE.Mesh(new THREE.BoxGeometry(0.48, 0.5, 0.5), metalMat);
   engine.position.set(0, 0.98, 0.02);
-  bike.add(engine);
+  bikeVisual.add(engine);
 
   const tank = new THREE.Mesh(new THREE.SphereGeometry(0.38, 18, 12), frameMat);
   tank.scale.set(0.9, 0.62, 1.25);
   tank.position.set(0, 1.46, -0.1);
-  bike.add(tank);
+  bikeVisual.add(tank);
 
   const seat = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.12, 0.92), darkMat);
   seat.position.set(0.08, 1.48, 0.28);
   seat.rotation.x = -0.08;
-  bike.add(seat);
+  bikeVisual.add(seat);
 
   const sidePanel = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.35, 0.44), frameMat);
   sidePanel.position.set(0, 1.27, 0.46);
   sidePanel.rotation.x = 0.18;
-  bike.add(sidePanel);
+  bikeVisual.add(sidePanel);
 
   const exhaust = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.1, 0.9, 12), metalMat);
   exhaust.rotation.x = Math.PI / 2;
   exhaust.position.set(0.25, 1.27, 0.35);
-  bike.add(exhaust);
+  bikeVisual.add(exhaust);
 
   const forkL = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.055, 1.05, 10), metalMat);
   const forkR = forkL.clone();
   forkL.position.set(-0.13, 1.16, -0.73);
   forkR.position.set(0.13, 1.16, -0.73);
   forkL.rotation.x = forkR.rotation.x = -0.16;
-  bike.add(forkL, forkR);
+  suspensionL=forkL; suspensionR=forkR;
+  bikeVisual.add(forkL, forkR);
 
   const handlebar = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.82, 12), darkMat);
   handlebar.rotation.z = Math.PI / 2;
   handlebar.position.set(0, 1.76, -0.83);
-  bike.add(handlebar);
+  bikeVisual.add(handlebar);
 
   const fender = new THREE.Mesh(new THREE.BoxGeometry(0.58, 0.08, 0.72), frameMat);
   fender.position.set(0, 1.42, -0.74);
   fender.rotation.x = -0.18;
-  bike.add(fender);
+  bikeVisual.add(fender);
 
   headLight = new THREE.SpotLight(0xe7ffff, 48, 28, 0.32, 0.45, 1.3);
   headLight.position.set(0, 1.62, -0.9);
   headLight.target.position.set(0, 1.1, -8);
-  bike.add(headLight, headLight.target);
+  bikeVisual.add(headLight, headLight.target);
 
   const lamp = new THREE.Mesh(
     new THREE.SphereGeometry(0.18, 16, 12),
     new THREE.MeshStandardMaterial({ color: 0xeaffff, emissive: 0xdfffff, emissiveIntensity: 5 })
   );
   lamp.position.set(0, 1.62, -0.9);
-  bike.add(lamp);
+  bikeVisual.add(lamp);
 
-  bike.scale.setScalar(1.08);
+  bikeVisual.scale.setScalar(1.08);
   const startZ = 5.5;
   bike.position.set(trackX(startZ), terrainY(trackX(startZ), startZ) + 0.03, startZ);
   bike.rotation.y = trackHeading(startZ);
@@ -573,10 +576,12 @@ function updateBike(dt) {
   }
 
   const ground = terrainY(bike.position.x, bike.position.z) + 0.03;
-  const jump = Math.abs(bike.position.z + 21) < 1.7 || Math.abs(bike.position.z + 55) < 1.7;
+  const slope = trackHeading(bike.position.z);
+  const jump = Math.abs(bike.position.z + 21) < 2.0 || Math.abs(bike.position.z + 55) < 2.0;
+  const jumpImpulse = Math.abs(bike.position.z + 21) < 2.0 ? 5.0 : 4.6;
 
   if (state.started && jump && Math.abs(state.speed) > 4.2 && !state.airborne) {
-    state.verticalVelocity = 4.2;
+    state.verticalVelocity = jumpImpulse;
     state.airborne = true;
   }
 
@@ -594,8 +599,13 @@ function updateBike(dt) {
   }
 
   bike.rotation.y = state.heading;
-  bike.rotation.z = THREE.MathUtils.lerp(bike.rotation.z, -state.steer * 0.12, Math.min(1, dt * 8));
-  bike.rotation.x = THREE.MathUtils.lerp(bike.rotation.x, state.airborne ? -0.08 : 0, Math.min(1, dt * 5));
+  const leanTarget = -state.steer * THREE.MathUtils.clamp(Math.abs(state.speed) * 0.035, 0, 0.22);
+  bikeVisual.rotation.z = THREE.MathUtils.lerp(bikeVisual.rotation.z, leanTarget, Math.min(1, dt * 7));
+  bikeVisual.rotation.x = THREE.MathUtils.lerp(bikeVisual.rotation.x, state.airborne ? -0.13 : -slope * 0.45, Math.min(1, dt * 6));
+  const compression = state.airborne ? 0 : THREE.MathUtils.clamp(Math.abs(state.speed) * 0.012, 0, 0.12);
+  bikeVisual.position.y = THREE.MathUtils.lerp(bikeVisual.position.y, -compression, Math.min(1, dt * 10));
+  if(suspensionL && suspensionR){ suspensionL.scale.y=1-compression*1.8; suspensionR.scale.y=1-compression*1.8; }
+  bike.rotation.z = THREE.MathUtils.lerp(bike.rotation.z, state.airborne ? 0 : -state.steer * 0.035, Math.min(1, dt * 6));
 
   const wheelSpin = state.speed * dt * 1.6;
   frontWheel.rotation.x -= wheelSpin;
@@ -619,8 +629,8 @@ function updateCamera(dt, time) {
 
   camera.position.lerp(target, Math.min(1, dt * (state.started ? 5.5 : 2.5)));
 
-  const look = bike.position.clone().addScaledVector(forward, mobile ? 3.2 : 4.2);
-  look.y += mobile ? 0.8 : 1.05;
+  const look = bike.position.clone().addScaledVector(forward, mobile ? 3.8 : 5.2);
+  look.y += mobile ? 0.72 : 0.92;
   camera.lookAt(look);
 
   if (headLight) {
