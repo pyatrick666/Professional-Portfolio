@@ -646,7 +646,7 @@ section {
 .rows::after {
   content: '';
   position: absolute;
-  left: calc(100% - 8.5rem);
+  left: 50%;
   top: 0;
   bottom: 0;
   width: 2px;
@@ -666,37 +666,29 @@ section {
 
 .row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(13rem, 0.34fr);
-  align-items: start;
-  gap: clamp(2rem, 5vw, 5rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 6rem);
   padding: 2.5rem 0;
-  position: relative;
-}
-
-.row-content {
-  max-width: 46rem;
-  padding-right: clamp(1rem, 3vw, 3rem);
 }
 
 .row h3 {
   font-size: clamp(1.1rem, 2vw, 1.6rem);
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.4rem;
 }
 
 .period {
   display: inline-flex;
-  justify-self: start;
   align-items: center;
   width: fit-content;
-  max-width: 100%;
-  margin-top: 0.1rem;
+  margin-top: 0.15rem;
   padding: 0.28rem 0.7rem;
   border: 1px solid rgba(125, 255, 0, 0.35);
   border-radius: 999px;
   color: var(--pu);
   font-size: 0.78rem;
   letter-spacing: 0.08em;
-  line-height: 1.35;
+  line-height: 1.2;
   text-transform: uppercase;
   background: rgba(125, 255, 0, 0.035);
   box-shadow: 0 0 18px rgba(125, 255, 0, 0.05);
@@ -704,7 +696,6 @@ section {
 
 .row p {
   color: var(--mute);
-  max-width: 42rem;
 }
 
 /* =========================================================
@@ -1103,10 +1094,6 @@ section {
     grid-template-columns: 1fr;
     gap: 0.7rem;
     padding: 1.8rem 0 2.2rem;
-  }
-
-  .row-content {
-    padding-right: 0;
   }
 
   .period {
