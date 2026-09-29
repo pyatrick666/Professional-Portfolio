@@ -1786,10 +1786,10 @@ function App() {
               </small>
 
               <div className="swap">
-                <span>
-                  SOFTWARE
-                  <br />
-                  ENGINEER
+                <span className="role-static">SOFTWARE</span>
+                <span className="role-changing">
+                  <span>ENGINEER</span>
+                  <span>DEVELOPER</span>
                 </span>
               </div>
             </div>
