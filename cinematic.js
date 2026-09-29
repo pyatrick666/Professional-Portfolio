@@ -5,10 +5,10 @@ const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(
 scene.add(new THREE.HemisphereLight(0x8aa2bd,0x020306,1.1));const moon=new THREE.DirectionalLight(0xaac4ff,2.4);moon.position.set(-8,12,4);moon.castShadow=true;scene.add(moon);
 const headLight=new THREE.SpotLight(0xdfffff,55,38,.28,.45,1.2);headLight.position.set(0,2.2,1.2);scene.add(headLight);
 function terrainHeight(x,z){return .12*Math.sin(z*.16)+.08*Math.sin(x*.55+z*.07)+.05*Math.sin(z*.47)+.12*Math.exp(-Math.pow((z+21)/3,2))+ .18*Math.exp(-Math.pow((z+56)/3,2))}
-function deformTerrain(geometry){const p=geometry.attributes.position;for(let i=0;i<p.count;i++){const x=p.getX(i),z=p.getY(i);p.setZ(i,terrainHeight(x,z));}geometry.computeVertexNormals();return geometry}
+function deformTerrain(geometry){const p=geometry.attributes.position;for(let i=0;i<p.count;i++){const x=p.getX(i),z=p.getY(i);p.setZ(i,-terrainHeight(x,z));}geometry.computeVertexNormals();return geometry}
 const groundGeo=new THREE.PlaneGeometry(300,300,80,80);const ground=new THREE.Mesh(deformTerrain(groundGeo),new THREE.MeshStandardMaterial({color:0x0a0e12,roughness:.78,metalness:.12}));ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;scene.add(ground);
 const roadMat=new THREE.MeshStandardMaterial({color:0x151a1e,roughness:.88});
-for(let i=-2;i<=2;i++){const g=new THREE.PlaneGeometry(3.8,300,8,80);const p=g.attributes.position;for(let j=0;j<p.count;j++){const x=p.getX(j)+i*4.7,z=p.getY(j);p.setX(j,x);p.setZ(j,terrainHeight(x,z)+.018)}g.computeVertexNormals();const r=new THREE.Mesh(g,roadMat);r.rotation.x=-Math.PI/2;r.position.y=0;scene.add(r)}
+for(let i=-2;i<=2;i++){const g=new THREE.PlaneGeometry(3.8,300,8,80);const p=g.attributes.position;for(let j=0;j<p.count;j++){const x=p.getX(j)+i*4.7,z=p.getY(j);p.setX(j,x);p.setZ(j,-terrainHeight(x,z)-.018)}g.computeVertexNormals();const r=new THREE.Mesh(g,roadMat);r.rotation.x=-Math.PI/2;r.position.y=0;scene.add(r)}
 const puddleMat=new THREE.MeshStandardMaterial({color:0x111c25,roughness:.08,metalness:.8});for(const p of [[-5,-18,2.4],[6,-42,3.1],[-4,-61,2.2]]){const q=new THREE.Mesh(new THREE.CircleGeometry(p[2],32),puddleMat);q.rotation.x=-Math.PI/2;q.position.set(p[0],.018,p[1]);scene.add(q)}
 const world=new THREE.Group();scene.add(world);
 const propMat=new THREE.MeshStandardMaterial({color:0x20272c,roughness:.8}),trunkMat=new THREE.MeshStandardMaterial({color:0x16110e,roughness:1}),leafMat=new THREE.MeshStandardMaterial({color:0x17231d,roughness:.95});
