@@ -7,7 +7,7 @@ import {
   Instagram,
   Linkedin,
   Menu,
-  X
+  X,
 } from 'lucide-react';
 import { gsap } from 'gsap';
 import Lenis from 'lenis';
@@ -25,22 +25,22 @@ const projects = [
     num: '01',
     type: 'Mobile / Game',
     tools: 'Flutter, Dart, Firebase, AdMob',
-    href: 'https://pyatrick666.itch.io/chessmate'
+    href: 'https://pyatrick666.itch.io/chessmate',
   },
   {
     name: 'ePortfolio',
     num: '02',
     type: 'Web / Coursework',
     tools: 'HTML, CSS, JavaScript, Bootstrap',
-    href: 'https://pyatrick666.github.io/ePortfolio/'
+    href: 'https://pyatrick666.github.io/ePortfolio/',
   },
   {
     name: 'GitHub Projects',
     num: '03',
     type: 'More Projects',
     tools: 'Explore my remaining public repositories and builds',
-    href: 'https://github.com/pyatrick666?tab=repositories'
-  }
+    href: 'https://github.com/pyatrick666?tab=repositories',
+  },
 ];
 
 const stack = [
@@ -60,28 +60,30 @@ const stack = [
   'Linux',
   'Cisco',
   'Figma',
-  'Git'
+  'Git',
 ];
 
 const journey = [
   {
     t: 'Web foundations',
     s: '2019–2021 · HTML · CSS · JavaScript · PHP',
-    d: 'Built a foundation in web development, from semantic front ends to PHP-backed websites and practical coursework.'
+    d: 'Built a foundation in web development, from semantic front ends to PHP-backed websites and practical coursework.',
   },
   {
     t: 'Modern stack',
     s: '2021–2023 · React · TypeScript · Flutter',
-    d: 'Moved into component-driven applications, mobile development, APIs and interactive front-end experiences.'
+    d: 'Moved into component-driven applications, mobile development, APIs and interactive front-end experiences.',
   },
   {
     t: 'Networking',
     s: '2023–Now · Computer Systems · Networking · Linux',
-    d: 'Developing deeper systems and networking skills alongside my BSc (Hons) IT studies at ISMT College.'
-  }
+    d: 'Developing deeper systems and networking skills alongside my BSc (Hons) IT studies at ISMT College.',
+  },
 ];
 
-/* ---------- Original Three.js 3D avatar ---------- */
+/* =========================================================
+   THREE.JS ORIGINAL 3D AVATAR
+   ========================================================= */
 
 const SKIN = 0xc98b6b;
 const HAIR = 0x14101c;
@@ -95,16 +97,19 @@ const pose = {
   y: -1.1,
   s: 1.25,
   ry: 0,
-  o: 1
+  o: 1,
 };
 
-function makeMaterial(color: number, emissiveIntensity = 0) {
+function makeMaterial(
+  color: number,
+  emissiveIntensity = 0
+) {
   return new THREE.MeshStandardMaterial({
     color,
     roughness: 0.55,
     metalness: 0.05,
     emissive: color,
-    emissiveIntensity
+    emissiveIntensity,
   });
 }
 
@@ -122,17 +127,24 @@ function buildAvatar() {
     position: [number, number, number],
     parent: THREE.Object3D = head
   ) => {
-    const mesh = new THREE.Mesh(geometry, material);
+    const mesh = new THREE.Mesh(
+      geometry,
+      material
+    );
+
     mesh.position.set(...position);
     parent.add(mesh);
+
     return mesh;
   };
 
-  add(
+  const face = add(
     new THREE.SphereGeometry(1, 48, 48),
     makeMaterial(SKIN),
     [0, 0, 0]
-  ).scale.set(1, 1.05, 0.95);
+  );
+
+  face.scale.set(1, 1.05, 0.95);
 
   const hair = add(
     new THREE.SphereGeometry(
@@ -172,7 +184,12 @@ function buildAvatar() {
   cap.add(crown);
 
   const band = new THREE.Mesh(
-    new THREE.TorusGeometry(0.79, 0.045, 10, 48),
+    new THREE.TorusGeometry(
+      0.79,
+      0.045,
+      10,
+      48
+    ),
     makeMaterial(CAP_EDGE, 0.08)
   );
 
@@ -180,7 +197,11 @@ function buildAvatar() {
   cap.add(band);
 
   const brim = new THREE.Mesh(
-    new THREE.SphereGeometry(0.62, 32, 16),
+    new THREE.SphereGeometry(
+      0.62,
+      32,
+      16
+    ),
     makeMaterial(CAP)
   );
 
@@ -190,136 +211,239 @@ function buildAvatar() {
   cap.add(brim);
 
   const capMark = new THREE.Mesh(
-    new THREE.TorusGeometry(0.12, 0.022, 8, 24),
+    new THREE.TorusGeometry(
+      0.12,
+      0.022,
+      8,
+      24
+    ),
     makeMaterial(ACCENT, 0.45)
   );
 
-  capMark.position.set(0, 0.48, 0.42);
-  capMark.rotation.x = Math.PI * 0.5;
+  capMark.position.set(
+    0,
+    0.48,
+    0.42
+  );
+
+  capMark.rotation.x =
+    Math.PI * 0.5;
+
   cap.add(capMark);
 
   [-1, 1].forEach((side) => {
     add(
-      new THREE.SphereGeometry(0.22, 24, 24),
+      new THREE.SphereGeometry(
+        0.22,
+        24,
+        24
+      ),
       makeMaterial(SKIN),
       [side * 1, -0.05, 0]
-    ).scale.set(0.6, 1, 1);
+    ).scale.set(
+      0.6,
+      1,
+      1
+    );
 
-    const eye = new THREE.Group();
+    const eye =
+      new THREE.Group();
 
-    eye.position.set(side * 0.36, 0.1, 0.86);
+    eye.position.set(
+      side * 0.36,
+      0.1,
+      0.86
+    );
+
     head.add(eye);
     eyes.push(eye);
 
     add(
-      new THREE.SphereGeometry(0.17, 24, 24),
+      new THREE.SphereGeometry(
+        0.17,
+        24,
+        24
+      ),
       makeMaterial(0xffffff),
       [0, 0, 0],
       eye
     );
 
     add(
-      new THREE.SphereGeometry(0.09, 16, 16),
+      new THREE.SphereGeometry(
+        0.09,
+        16,
+        16
+      ),
       makeMaterial(0x120c24),
       [0, 0, 0.13],
       eye
     );
 
     const brow = add(
-      new THREE.BoxGeometry(0.4, 0.07, 0.08),
+      new THREE.BoxGeometry(
+        0.4,
+        0.07,
+        0.08
+      ),
       makeMaterial(HAIR),
-      [side * 0.36, 0.4, 0.84]
+      [
+        side * 0.36,
+        0.4,
+        0.84,
+      ]
     );
 
-    brow.rotation.z = -side * 0.15;
+    brow.rotation.z =
+      -side * 0.15;
 
     const earring = add(
-      new THREE.CylinderGeometry(0.3, 0.3, 0.18, 32),
-      makeMaterial(ACCENT, 0.25),
-      [side * 1.12, -0.05, 0]
+      new THREE.CylinderGeometry(
+        0.3,
+        0.3,
+        0.18,
+        32
+      ),
+      makeMaterial(
+        ACCENT,
+        0.25
+      ),
+      [
+        side * 1.12,
+        -0.05,
+        0,
+      ]
     );
 
-    earring.rotation.z = Math.PI / 2;
+    earring.rotation.z =
+      Math.PI / 2;
   });
 
   add(
-    new THREE.SphereGeometry(0.11, 16, 16),
+    new THREE.SphereGeometry(
+      0.11,
+      16,
+      16
+    ),
     makeMaterial(SKIN),
     [0, -0.1, 0.96]
   );
 
   const mouth = add(
-    new THREE.TorusGeometry(0.3, 0.035, 12, 32, Math.PI),
+    new THREE.TorusGeometry(
+      0.3,
+      0.035,
+      12,
+      32,
+      Math.PI
+    ),
     makeMaterial(0x3a1a1a),
     [0, -0.32, 0.84]
   );
 
-  mouth.rotation.z = Math.PI;
+  mouth.rotation.z =
+    Math.PI;
 
   add(
-    new THREE.TorusGeometry(1.12, 0.06, 16, 48, Math.PI),
-    makeMaterial(ACCENT, 0.25),
+    new THREE.TorusGeometry(
+      1.12,
+      0.06,
+      16,
+      48,
+      Math.PI
+    ),
+    makeMaterial(
+      ACCENT,
+      0.25
+    ),
     [0, -0.05, 0]
   );
 
   add(
-    new THREE.CylinderGeometry(0.3, 0.34, 0.4, 24),
+    new THREE.CylinderGeometry(
+      0.3,
+      0.34,
+      0.4,
+      24
+    ),
     makeMaterial(SKIN),
     [0, 0.6, 0],
     group
   );
 
-  add(
-    new THREE.SphereGeometry(1.5, 48, 32),
+  const hoodie = add(
+    new THREE.SphereGeometry(
+      1.5,
+      48,
+      32
+    ),
     makeMaterial(HOODIE),
     [0, -0.25, 0],
     group
-  ).scale.set(1, 0.75, 0.7);
+  );
+
+  hoodie.scale.set(
+    1,
+    0.75,
+    0.7
+  );
 
   return {
     group,
     head,
-    eyes
+    eyes,
   };
 }
 
 function Stage() {
-  const box = useRef<HTMLDivElement>(null);
-  const glow = useRef<HTMLDivElement>(null);
+  const box =
+    useRef<HTMLDivElement>(null);
+
+  const glow =
+    useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = box.current;
 
     if (!el) return;
 
-    const renderer = new THREE.WebGLRenderer({
-      alpha: true,
-      antialias: true
-    });
+    const renderer =
+      new THREE.WebGLRenderer({
+        alpha: true,
+        antialias: true,
+      });
 
     renderer.setPixelRatio(
-      Math.min(window.devicePixelRatio || 1, 2)
+      Math.min(
+        window.devicePixelRatio || 1,
+        2
+      )
     );
 
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.outputColorSpace =
+      THREE.SRGBColorSpace;
 
-    el.appendChild(renderer.domElement);
-
-    const scene = new THREE.Scene();
-
-    const camera = new THREE.PerspectiveCamera(
-      40,
-      1,
-      0.1,
-      50
+    el.appendChild(
+      renderer.domElement
     );
+
+    const scene =
+      new THREE.Scene();
+
+    const camera =
+      new THREE.PerspectiveCamera(
+        40,
+        1,
+        0.1,
+        50
+      );
 
     camera.position.z = 6;
 
     const {
       group,
       head,
-      eyes
+      eyes,
     } = buildAvatar();
 
     scene.add(group);
@@ -338,13 +462,17 @@ function Stage() {
       i += 3
     ) {
       particlePositions[i] =
-        (Math.random() - 0.5) * 8;
+        (Math.random() - 0.5) *
+        8;
 
       particlePositions[i + 1] =
-        (Math.random() - 0.5) * 5;
+        (Math.random() - 0.5) *
+        5;
 
       particlePositions[i + 2] =
-        (Math.random() - 0.5) * 3 - 1;
+        (Math.random() - 0.5) *
+          3 -
+        1;
     }
 
     particleGeometry.setAttribute(
@@ -361,7 +489,7 @@ function Stage() {
         size: 0.018,
         transparent: true,
         opacity: 0.5,
-        depthWrite: false
+        depthWrite: false,
       });
 
     const particles =
@@ -385,7 +513,12 @@ function Stage() {
         2.4
       );
 
-    key.position.set(-3, 3, 5);
+    key.position.set(
+      -3,
+      3,
+      5
+    );
+
     scene.add(key);
 
     const rim =
@@ -394,33 +527,40 @@ function Stage() {
         5
       );
 
-    rim.position.set(3, 2, -3);
+    rim.position.set(
+      3,
+      2,
+      -3
+    );
+
     scene.add(rim);
 
     const look = {
       x: 0,
       y: 0,
       tx: 0,
-      ty: 0
+      ty: 0,
     };
 
-    const onMouseMove = (
-      event: MouseEvent
-    ) => {
-      look.tx =
-        event.clientX /
-          window.innerWidth -
-        0.5;
+    const onMouseMove =
+      (event: MouseEvent) => {
+        look.tx =
+          event.clientX /
+            window.innerWidth -
+          0.5;
 
-      look.ty =
-        event.clientY /
-          window.innerHeight -
-        0.5;
-    };
+        look.ty =
+          event.clientY /
+            window.innerHeight -
+          0.5;
+      };
 
     const fit = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
+      const width =
+        window.innerWidth;
+
+      const height =
+        window.innerHeight;
 
       renderer.setSize(
         width,
@@ -430,7 +570,10 @@ function Stage() {
 
       camera.aspect =
         width /
-        Math.max(height, 1);
+        Math.max(
+          height,
+          1
+        );
 
       camera.updateProjectionMatrix();
     };
@@ -439,7 +582,7 @@ function Stage() {
       'mousemove',
       onMouseMove,
       {
-        passive: true
+        passive: true,
       }
     );
 
@@ -453,7 +596,8 @@ function Stage() {
     let frame = 0;
 
     let nextBlink =
-      2 + Math.random() * 2;
+      2 +
+      Math.random() * 2;
 
     const clock =
       new THREE.Clock();
@@ -464,23 +608,30 @@ function Stage() {
 
       const halfWidth =
         Math.tan(
-          THREE.MathUtils.degToRad(20)
+          THREE.MathUtils.degToRad(
+            20
+          )
         ) *
         camera.position.z *
         camera.aspect;
 
       look.x +=
-        (look.tx - look.x) *
+        (look.tx -
+          look.x) *
         0.06;
 
       look.y +=
-        (look.ty - look.y) *
+        (look.ty -
+          look.y) *
         0.06;
 
       group.position.set(
-        pose.x * halfWidth,
+        pose.x *
+          halfWidth,
         pose.y +
-          Math.sin(time * 1.2) *
+          Math.sin(
+            time * 1.2
+          ) *
             0.04,
         0
       );
@@ -503,7 +654,9 @@ function Stage() {
         time * 0.018;
 
       particles.rotation.x =
-        Math.sin(time * 0.25) *
+        Math.sin(
+          time * 0.25
+        ) *
         0.04;
 
       const blinking =
@@ -521,10 +674,14 @@ function Stage() {
           Math.random() * 3;
       }
 
-      eyes.forEach((eye) => {
-        eye.scale.y =
-          blinking ? 0.1 : 1;
-      });
+      eyes.forEach(
+        (eye) => {
+          eye.scale.y =
+            blinking
+              ? 0.1
+              : 1;
+        }
+      );
 
       renderer.domElement.style.opacity =
         String(pose.o);
@@ -553,7 +710,9 @@ function Stage() {
     loop();
 
     return () => {
-      cancelAnimationFrame(frame);
+      cancelAnimationFrame(
+        frame
+      );
 
       window.removeEventListener(
         'mousemove',
@@ -595,8 +754,10 @@ function Stage() {
       renderer.dispose();
 
       if (
-        renderer.domElement
-          .parentNode === el
+        renderer
+          .domElement
+          .parentNode ===
+        el
       ) {
         el.removeChild(
           renderer.domElement
@@ -619,7 +780,9 @@ function Stage() {
   );
 }
 
-/* ---------- Interactive Tech Stack ---------- */
+/* =========================================================
+   TECH STACK BUBBLES
+   ========================================================= */
 
 function Bubbles() {
   const canvasRef =
@@ -642,7 +805,7 @@ function Bubbles() {
 
     const pointer = {
       x: -9999,
-      y: -9999
+      y: -9999,
     };
 
     let hovering = false;
@@ -653,36 +816,38 @@ function Bubbles() {
       '#b7ff66',
       '#9cff33',
       '#e8ffd1',
-      '#66cc00'
+      '#66cc00',
     ];
 
-    const bubbles = stack.map(
-      (label, index) => ({
-        label,
-        radius:
-          26 +
-          Math.random() * 12,
-        x: 0,
-        y: 0,
-        vx: 0,
-        vy: 0,
-        tx: 0,
-        ty: 0,
-        angle:
-          (index /
-            stack.length) *
-          Math.PI *
-          2,
-        orbit:
-          90 +
-          (index % 4) * 24,
-        color:
-          colors[
-            index %
-              colors.length
-          ]
-      })
-    );
+    const bubbles =
+      stack.map(
+        (label, index) => ({
+          label,
+          radius:
+            26 +
+            Math.random() * 12,
+          x: 0,
+          y: 0,
+          vx: 0,
+          vy: 0,
+          tx: 0,
+          ty: 0,
+          angle:
+            (index /
+              stack.length) *
+            Math.PI *
+            2,
+          orbit:
+            100 +
+            (index % 4) *
+              25,
+          color:
+            colors[
+              index %
+                colors.length
+            ],
+        })
+      );
 
     const resize = () => {
       const rect =
@@ -763,7 +928,9 @@ function Bubbles() {
       };
 
     const onPointerMove =
-      (event: PointerEvent) => {
+      (
+        event: PointerEvent
+      ) => {
         const rect =
           canvas.getBoundingClientRect();
 
@@ -813,7 +980,7 @@ function Bubbles() {
             const cursorInfluence =
               Math.min(
                 1,
-                260 /
+                300 /
                   distance
               );
 
@@ -861,23 +1028,23 @@ function Bubbles() {
               cursorDistance >
                 0 &&
               cursorDistance <
-                180
+                190
             ) {
               const force =
-                (180 -
+                (190 -
                   cursorDistance) /
-                180;
+                190;
 
               bubble.tx +=
                 (cursorDx /
                   cursorDistance) *
-                90 *
+                100 *
                 force;
 
               bubble.ty +=
                 (cursorDy /
                   cursorDistance) *
-                90 *
+                100 *
                 force;
             }
           } else {
@@ -1005,14 +1172,16 @@ function Bubbles() {
       'pointermove',
       onPointerMove,
       {
-        passive: true
+        passive: true,
       }
     );
 
     loop();
 
     return () => {
-      cancelAnimationFrame(frame);
+      cancelAnimationFrame(
+        frame
+      );
 
       window.removeEventListener(
         'resize',
@@ -1045,7 +1214,9 @@ function Bubbles() {
   );
 }
 
-/* ---------- Main App ---------- */
+/* =========================================================
+   APP
+   ========================================================= */
 
 function App() {
   const [open, setOpen] =
@@ -1073,7 +1244,7 @@ function App() {
     if (!reducedMotion) {
       const instance =
         new Lenis({
-          lerp: 0.09
+          lerp: 0.09,
         });
 
       lenis.current =
@@ -1128,8 +1299,8 @@ function App() {
                     ? false
                     : 0.8,
                 invalidateOnRefresh:
-                  true
-              }
+                  true,
+              },
             });
           };
 
@@ -1146,7 +1317,7 @@ function App() {
               o: () =>
                 isNarrow()
                   ? 0.3
-                  : 1
+                  : 1,
             }
           );
 
@@ -1163,7 +1334,7 @@ function App() {
               o: () =>
                 isNarrow()
                   ? 0.3
-                  : 1
+                  : 1,
             }
           );
 
@@ -1174,7 +1345,7 @@ function App() {
               y: -2.4,
               s: 0.9,
               ry: 0,
-              o: 0
+              o: 0,
             }
           );
 
@@ -1188,7 +1359,7 @@ function App() {
                   element,
                   {
                     y: 50,
-                    opacity: 0
+                    opacity: 0,
                   },
                   {
                     y: 0,
@@ -1199,8 +1370,8 @@ function App() {
                       trigger:
                         element,
                       start:
-                        'top 88%'
-                    }
+                        'top 88%',
+                    },
                   }
                 );
               }
@@ -1216,7 +1387,7 @@ function App() {
                   element,
                   {
                     opacity: 0.2,
-                    x: -20
+                    x: -20,
                   },
                   {
                     opacity: 1,
@@ -1228,37 +1399,18 @@ function App() {
                         'top 80%',
                       end:
                         'top 50%',
-                      scrub: true
-                    }
+                      scrub: true,
+                    },
                   }
                 );
               }
             );
 
           gsap.fromTo(
-            '.rows',
-            {
-              '--fill': '0%'
-            },
-            {
-              '--fill': '100%',
-              ease: 'none',
-              scrollTrigger: {
-                trigger: '.rows',
-                start:
-                  'top 70%',
-                end:
-                  'bottom 60%',
-                scrub: true
-              }
-            }
-          );
-
-          gsap.fromTo(
             '.hi,.role',
             {
               opacity: 0,
-              y: 40
+              y: 40,
             },
             {
               opacity: 1,
@@ -1266,7 +1418,7 @@ function App() {
               duration: 1.4,
               stagger: 0.15,
               ease: 'power3.out',
-              delay: 0.2
+              delay: 0.2,
             }
           );
 
@@ -1278,12 +1430,10 @@ function App() {
               ease: 'none',
               scrollTrigger: {
                 trigger: '#home',
-                start:
-                  'top top',
-                end:
-                  'bottom 30%',
-                scrub: true
-              }
+                start: 'top top',
+                end: 'bottom 30%',
+                scrub: true,
+              },
             }
           );
 
@@ -1319,35 +1469,9 @@ function App() {
                   pin: true,
                   scrub: 1,
                   invalidateOnRefresh:
-                    true
-                }
+                    true,
+                },
               });
-
-              gsap.utils
-                .toArray<HTMLElement>(
-                  '.pj .shot'
-                )
-                .forEach(
-                  (element) => {
-                    gsap.to(
-                      element,
-                      {
-                        yPercent:
-                          -12,
-                        ease: 'none',
-                        scrollTrigger: {
-                          trigger:
-                            '.work',
-                          start:
-                            'top top',
-                          end:
-                            '+=2000',
-                          scrub: true
-                        }
-                      }
-                    );
-                  }
-                );
             }
           );
         },
@@ -1374,7 +1498,7 @@ function App() {
           orb,
           'x',
           {
-            duration: 0.5
+            duration: 0.5,
           }
         );
 
@@ -1383,7 +1507,7 @@ function App() {
           orb,
           'y',
           {
-            duration: 0.5
+            duration: 0.5,
           }
         );
 
@@ -1402,7 +1526,7 @@ function App() {
         'mousemove',
         onMouseMove,
         {
-          passive: true
+          passive: true,
         }
       );
 
@@ -1483,7 +1607,7 @@ function App() {
             '(prefers-reduced-motion: reduce)'
           ).matches
             ? 'auto'
-            : 'smooth'
+            : 'smooth',
       });
     }
   };
@@ -1505,7 +1629,10 @@ function App() {
           className="logo"
           href="#home"
           onClick={(event) =>
-            go(event, '#home')
+            go(
+              event,
+              '#home'
+            )
           }
         >
           patrick
@@ -1514,7 +1641,8 @@ function App() {
         <a
           className="mid"
           href={
-            'mailto:' + EMAIL
+            'mailto:' +
+            EMAIL
           }
         >
           {EMAIL}
@@ -1651,10 +1779,7 @@ function App() {
                 A Software Engineer
               </small>
 
-              <div
-                className="swap"
-                aria-label="Software Engineer and Developer"
-              >
+              <div className="swap">
                 <span>
                   SOFTWARE
                   ENGINEER
