@@ -655,7 +655,7 @@ function Stage() {
       renderer.domElement.style.opacity = String(pose.o);
 
       if (glow.current) {
-        glow.current.style.left = \`\${50 + pose.x * 50}%\`;
+        glow.current.style.left = `${50 + pose.x * 50}%`;
         glow.current.style.opacity = String(pose.o);
       }
 
