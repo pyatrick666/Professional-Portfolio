@@ -37,7 +37,6 @@ import { gsap } from 'gsap';
 import Lenis from 'lenis';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import * as THREE from 'three';
-import { DecalGeometry } from 'three/examples/jsm/geometries/DecalGeometry.js';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { EffectComposer, N8AO } from '@react-three/postprocessing';
 import { BallCollider, CylinderCollider, Physics, RigidBody, RapierRigidBody } from '@react-three/rapier';
@@ -696,140 +695,86 @@ function TechStack() {
     []
   );
 
-  // Transparent logo textures: the artwork itself is projected into the sphere.
-  // There is deliberately NO circular badge/background, so the logo reads as
-  // printed into the ball rather than as an object attached to its surface.
+  // The logo is baked into the same bitmap used by the sphere itself.
+  // No decal, badge, plane or floating logo mesh is used.
   const createLogoTexture = (label: string) => {
     const canvas = document.createElement("canvas");
-    canvas.width = 512;
+    canvas.width = 1024;
     canvas.height = 512;
-
     const context = canvas.getContext("2d");
     if (!context) return new THREE.Texture();
 
-    context.clearRect(0, 0, 512, 512);
-
-    // Small soft glow behind the mark. It is transparent outside the glow,
-    // allowing the white physical sphere to remain visible everywhere else.
-    const glow = context.createRadialGradient(256, 236, 24, 256, 236, 190);
-    glow.addColorStop(0, "rgba(255,255,255,0.18)");
-    glow.addColorStop(0.55, "rgba(57,255,136,0.10)");
-    glow.addColorStop(1, "rgba(57,255,136,0)");
-    context.fillStyle = glow;
-    context.fillRect(56, 36, 400, 400);
-
-    const initials = label
-      .replace(/[^a-zA-Z0-9#+.]/g, " ")
-      .trim()
-      .split(/\\s+/)
-      .filter(Boolean)
-      .slice(0, 3)
-      .map((part) => part[0]?.toUpperCase())
-      .join("");
-
-    // Fallback artwork remains readable if the external icon cannot load.
-    context.shadowColor = "rgba(57,255,136,0.95)";
-    context.shadowBlur = 22;
     context.fillStyle = "#ffffff";
+    context.fillRect(0, 0, 1024, 512);
+
+    const initials = label.replace(/[^a-zA-Z0-9#+.]/g, " ").trim().split(/\\s+/).filter(Boolean).slice(0, 3).map((part) => part[0]?.toUpperCase()).join("");
     context.textAlign = "center";
     context.textBaseline = "middle";
-    context.font = `900 ${initials.length > 2 ? 104 : 132}px Inter, Arial, sans-serif`;
-    context.fillText(initials || label.slice(0, 2).toUpperCase(), 256, 235);
-    context.shadowBlur = 0;
-
-    context.font = "800 26px Inter, Arial, sans-serif";
-    context.fillStyle = "rgba(255,255,255,0.95)";
-    const shortLabel = label.length > 18 ? `${label.slice(0, 16)}…` : label;
-    context.fillText(shortLabel, 256, 370);
+    context.fillStyle = "#111518";
+    context.font = `900 ${initials.length > 2 ? 112 : 142}px Inter, Arial, sans-serif`;
+    context.fillText(initials || label.slice(0, 2).toUpperCase(), 512, 215);
+    context.font = "800 28px Inter, Arial, sans-serif";
+    context.fillText(label.length > 20 ? `${label.slice(0, 18)}…` : label, 512, 335);
 
     const texture = new THREE.CanvasTexture(canvas);
     texture.colorSpace = THREE.SRGBColorSpace;
-    texture.needsUpdate = true;
+    texture.wrapS = THREE.ClampToEdgeWrapping;
+    texture.wrapT = THREE.ClampToEdgeWrapping;
     return texture;
   };
 
-  const textures = useMemo(() => {
-    return techs.map((name) => {
-      const texture = createLogoTexture(name);
-      const slug = techSkinSlugs[name];
+  const textures = useMemo(() => techs.map((name) => {
+    const texture = createLogoTexture(name);
+    const slug = techSkinSlugs[name];
+    if (!slug) return texture;
 
-      if (!slug) return texture;
+    const image = new Image();
+    image.crossOrigin = "anonymous";
+    image.onload = () => {
+      const canvas = texture.image as HTMLCanvasElement;
+      const context = canvas.getContext("2d");
+      if (!context) return;
 
-      const image = new Image();
-      image.crossOrigin = "anonymous";
+      context.fillStyle = "#ffffff";
+      context.fillRect(0, 0, 1024, 512);
 
-      image.onload = () => {
-        const canvas = texture.image as HTMLCanvasElement;
-        const context = canvas.getContext("2d");
-        if (!context) return;
+      const maxWidth = 330;
+      const maxHeight = 245;
+      const ratio = Math.min(maxWidth / image.naturalWidth, maxHeight / image.naturalHeight);
+      const width = image.naturalWidth * ratio;
+      const height = image.naturalHeight * ratio;
 
-        // Start completely transparent. Only the real logo and its subtle
-        // glow are drawn; there is no plate, border or badge to sit on top
-        // of the sphere.
-        context.clearRect(0, 0, 512, 512);
+      context.save();
+      context.shadowColor = "rgba(57,255,136,0.75)";
+      context.shadowBlur = 18;
+      context.drawImage(image, 512 - width / 2, 205 - height / 2, width, height);
+      context.restore();
 
-        const glow = context.createRadialGradient(256, 236, 18, 256, 236, 190);
-        glow.addColorStop(0, "rgba(255,255,255,0.16)");
-        glow.addColorStop(0.55, "rgba(57,255,136,0.08)");
-        glow.addColorStop(1, "rgba(57,255,136,0)");
-        context.fillStyle = glow;
-        context.fillRect(56, 36, 400, 400);
-
-        const maxSize = 300;
-        const ratio = Math.min(maxSize / image.naturalWidth, maxSize / image.naturalHeight);
-        const width = image.naturalWidth * ratio;
-        const height = image.naturalHeight * ratio;
-
-        context.save();
-        context.shadowColor = "rgba(57,255,136,0.9)";
-        context.shadowBlur = 20;
-        context.drawImage(
-          image,
-          256 - width / 2,
-          226 - height / 2,
-          width,
-          height
-        );
-        context.restore();
-
-        context.textAlign = "center";
-        context.textBaseline = "middle";
-        context.font = "800 24px Inter, Arial, sans-serif";
-        context.fillStyle = "rgba(255,255,255,0.96)";
-        const shortLabel = name.length > 18 ? `${name.slice(0, 16)}…` : name;
-        context.fillText(shortLabel, 256, 390);
-
-        texture.needsUpdate = true;
-      };
-
-      image.onerror = () => {
-        // Transparent fallback artwork remains visible.
-      };
-
-      // Simple Icons returns the actual brand mark without a background.
-      image.src = `https://cdn.simpleicons.org/${slug}/ffffff?viewbox=auto`;
-      return texture;
-    });
-  }, [techs]);
+      context.textAlign = "center";
+      context.textBaseline = "middle";
+      context.fillStyle = "#111518";
+      context.font = "800 28px Inter, Arial, sans-serif";
+      context.fillText(name.length > 20 ? `${name.slice(0, 18)}…` : name, 512, 335);
+      texture.needsUpdate = true;
+    };
+    image.onerror = () => {};
+    image.src = `https://cdn.simpleicons.org/${slug}?viewbox=auto`;
+    return texture;
+  }), [techs]);
 
   const materials = useMemo(
-    () =>
-      textures.map(
-        (texture) =>
-          new THREE.MeshPhysicalMaterial({
-            map: texture,
-            emissive: 0x39ff88,
-            emissiveMap: texture,
-            emissiveIntensity: 0.22,
-            metalness: 0.05,
-            roughness: 0.55,
-            transparent: true,
-            depthTest: true,
-            depthWrite: false,
-            alphaTest: 0.01,
-            side: THREE.FrontSide,
-          })
-      ),
+    () => textures.map(
+      (texture) => new THREE.MeshPhysicalMaterial({
+        map: texture,
+        metalness: 0.08,
+        roughness: 0.42,
+        clearcoat: 0.5,
+        clearcoatRoughness: 0.18,
+        emissive: 0x39ff88,
+        emissiveMap: texture,
+        emissiveIntensity: 0.035,
+      })
+    ),
     [textures]
   );
 
@@ -919,29 +864,14 @@ type TechSphereProps = {
 function TechSphere({ scale, material, isActive, seed }: TechSphereProps) {
   const api = useRef<RapierRigidBody | null>(null);
   const vec = useMemo(() => new THREE.Vector3(), []);
-  const whiteBallMaterial = useMemo(
-    () =>
-      new THREE.MeshPhysicalMaterial({
-        color: 0xffffff,
-        roughness: 0.38,
-        metalness: 0.08,
-        clearcoat: 0.45,
-        clearcoatRoughness: 0.2,
-        emissive: 0x39ff88,
-        emissiveIntensity: 0.06,
-      }),
-    []
-  );
 
   useFrame((_state, delta) => {
     if (!isActive || !api.current) return;
-
     const position = api.current.translation();
     const impulse = vec
       .set(position.x, position.y, position.z)
       .normalize()
       .multiplyScalar(-Math.min(0.1, delta) * scale * (42 + seed % 5));
-
     api.current.applyImpulse(impulse, true);
     api.current.applyTorqueImpulse(
       { x: 0.025 * scale, y: -0.018 * scale, z: 0.014 * scale },
@@ -952,26 +882,6 @@ function TechSphere({ scale, material, isActive, seed }: TechSphereProps) {
   const x = ((seed * 17.37) % 40) - 20;
   const y = ((seed * 11.21) % 40) - 20;
   const z = ((seed * 7.13) % 20) - 10;
-
-  // Build the logo as a real decal projected onto the sphere. This makes the
-  // artwork follow the curvature of the ball instead of floating in front of it.
-  const decalGeometry = useMemo(
-    () =>
-      new DecalGeometry(
-        new THREE.Mesh(techSphereGeometry, whiteBallMaterial),
-        new THREE.Vector3(0, 0, scale * 0.96),
-        new THREE.Euler(0, 0, 0),
-        new THREE.Vector3(scale * 0.92, scale * 0.92, scale * 0.92)
-      ),
-    [scale, whiteBallMaterial]
-  );
-
-  useEffect(
-    () => () => {
-      decalGeometry.dispose();
-    },
-    [decalGeometry]
-  );
 
   return (
     <RigidBody
@@ -984,30 +894,8 @@ function TechSphere({ scale, material, isActive, seed }: TechSphereProps) {
       colliders={false}
     >
       <BallCollider args={[scale]} />
-      <CylinderCollider
-        rotation={[Math.PI / 2, 0, 0]}
-        position={[0, 0, 1.2 * scale]}
-        args={[0.15 * scale, 0.275 * scale]}
-      />
-
-      {/* The logo is now physically projected onto the ball surface, so it
-          cannot hang in front of the sphere like a separate badge. */}
-      <mesh
-        castShadow
-        receiveShadow
-        scale={scale}
-        geometry={techSphereGeometry}
-        material={whiteBallMaterial}
-      />
-
-      <mesh
-        geometry={decalGeometry}
-        material={material}
-        renderOrder={2}
-        polygonOffset
-        polygonOffsetFactor={-1}
-        polygonOffsetUnits={-1}
-      />
+      <CylinderCollider rotation={[Math.PI / 2, 0, 0]} position={[0, 0, 1.2 * scale]} args={[0.15 * scale, 0.275 * scale]} />
+      <mesh castShadow receiveShadow scale={scale} geometry={techSphereGeometry} material={material} />
     </RigidBody>
   );
 }
