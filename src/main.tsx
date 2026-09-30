@@ -37,6 +37,7 @@ import { gsap } from 'gsap';
 import Lenis from 'lenis';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import * as THREE from 'three';
+import { DecalGeometry } from 'three/examples/jsm/geometries/DecalGeometry.js';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { EffectComposer, N8AO } from '@react-three/postprocessing';
 import { BallCollider, CylinderCollider, Physics, RigidBody, RapierRigidBody } from '@react-three/rapier';
@@ -949,7 +950,6 @@ type TechSphereProps = {
 
 function TechSphere({ scale, material, isActive, seed }: TechSphereProps) {
   const api = useRef<RapierRigidBody | null>(null);
-  const logoRef = useRef<THREE.Mesh | null>(null);
   const vec = useMemo(() => new THREE.Vector3(), []);
   const whiteBallMaterial = useMemo(
     () =>
@@ -979,17 +979,31 @@ function TechSphere({ scale, material, isActive, seed }: TechSphereProps) {
       { x: 0.025 * scale, y: -0.018 * scale, z: 0.014 * scale },
       true
     );
-
-    // Keep the logo face readable while the physical ball tumbles.
-    if (logoRef.current) {
-      logoRef.current.lookAt(_state.camera.position);
-      logoRef.current.position.z = scale * 1.015;
-    }
   });
 
   const x = ((seed * 17.37) % 40) - 20;
   const y = ((seed * 11.21) % 40) - 20;
   const z = ((seed * 7.13) % 20) - 10;
+
+  // Build the logo as a real decal projected onto the sphere. This makes the
+  // artwork follow the curvature of the ball instead of floating in front of it.
+  const decalGeometry = useMemo(
+    () =>
+      new DecalGeometry(
+        new THREE.Mesh(techSphereGeometry, whiteBallMaterial),
+        new THREE.Vector3(0, 0, scale * 0.92),
+        new THREE.Euler(0, 0, 0),
+        new THREE.Vector3(scale * 1.42, scale * 1.42, scale * 1.42)
+      ),
+    [scale, whiteBallMaterial]
+  );
+
+  useEffect(
+    () => () => {
+      decalGeometry.dispose();
+    },
+    [decalGeometry]
+  );
 
   return (
     <RigidBody
@@ -1008,9 +1022,8 @@ function TechSphere({ scale, material, isActive, seed }: TechSphereProps) {
         args={[0.15 * scale, 0.275 * scale]}
       />
 
-      {/* The entire physical ball is now a bright, clean white/neon-green skin.
-          The logo is a separate large front-facing badge, so it can never
-          disappear around the sphere's UV seam or look like half a texture. */}
+      {/* The logo is now physically projected onto the ball surface, so it
+          cannot hang in front of the sphere like a separate badge. */}
       <mesh
         castShadow
         receiveShadow
@@ -1020,11 +1033,11 @@ function TechSphere({ scale, material, isActive, seed }: TechSphereProps) {
       />
 
       <mesh
-        ref={logoRef}
-        scale={scale * 0.82}
-        position={[0, 0, scale * 1.015]}
-        geometry={new THREE.CircleGeometry(0.86, 48)}
+        geometry={decalGeometry}
         material={material}
+        polygonOffset
+        polygonOffsetFactor={-4}
+        polygonOffsetUnits={-4}
       />
     </RigidBody>
   );
