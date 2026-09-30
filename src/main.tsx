@@ -776,7 +776,7 @@ function TechStackGrid() {
       window.removeEventListener('pointerup', release);
       window.removeEventListener('pointercancel', release);
     };
-  }, [active]);
+  }, []);
 
   return (
     <div className="tech-playground-wrap">
