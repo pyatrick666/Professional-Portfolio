@@ -2491,3 +2491,191 @@ section {
     transition: none;
   }
 }
+
+/* =========================================================
+   PHYSICS TECH STACK
+   ========================================================= */
+.techstack {
+  position: relative;
+  min-height: 100vh;
+  padding: clamp(5rem, 9vw, 8rem) 0 4rem;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(166,124,255,.13), transparent 34%),
+    #08070b;
+  color: var(--fg);
+}
+
+.techstack-heading {
+  position: relative;
+  z-index: 3;
+  width: min(86rem, calc(100% - 3rem));
+  margin: 0 auto;
+  text-align: center;
+}
+
+.techstack-heading > span {
+  display: block;
+  margin-bottom: .8rem;
+  color: var(--pu);
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .2em;
+}
+
+.techstack-heading h2 {
+  margin: 0;
+  font: 400 clamp(3.5rem, 8vw, 7.5rem)/.88 var(--display);
+  letter-spacing: -.06em;
+  text-transform: uppercase;
+}
+
+.techstack-heading p {
+  max-width: 30rem;
+  margin: 1.2rem auto 0;
+  color: var(--mute);
+  font-size: .78rem;
+  line-height: 1.6;
+}
+
+.techstack-stage {
+  position: relative;
+  width: min(100%, 110rem);
+  height: min(72vh, 50rem);
+  min-height: 30rem;
+  margin: -1rem auto 0;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.techstack-stage::before {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  border: 1px solid rgba(166,124,255,.1);
+  border-radius: 50%;
+  box-shadow:
+    0 0 8rem rgba(166,124,255,.08),
+    inset 0 0 5rem rgba(166,124,255,.035);
+  pointer-events: none;
+}
+
+.techstack-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(255,255,255,.014) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.014) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  mask-image: radial-gradient(circle, #000 0%, transparent 72%);
+  pointer-events: none;
+}
+
+.techstack-stage canvas {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.techstack-overlay {
+  position: absolute;
+  left: 50%;
+  bottom: 1.5rem;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  transform: translateX(-50%);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.techstack-overlay span {
+  color: var(--pu);
+  font-size: .58rem;
+  letter-spacing: .18em;
+}
+
+.techstack-overlay strong {
+  padding: .45rem .7rem;
+  border: 1px solid rgba(166,124,255,.2);
+  border-radius: 999px;
+  background: rgba(8,7,11,.65);
+  color: var(--soft);
+  font-size: .58rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+  backdrop-filter: blur(8px);
+}
+
+.techstack-list {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .5rem;
+  width: min(62rem, calc(100% - 2rem));
+  margin: -1rem auto 0;
+}
+
+.techstack-list span {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  padding: .42rem .65rem;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 999px;
+  background: rgba(255,255,255,.025);
+  color: var(--soft);
+  font-size: .62rem;
+}
+
+.techstack-list i {
+  color: var(--pu);
+  font-size: .5rem;
+  font-style: normal;
+}
+
+@media (max-width: 800px) {
+  .techstack {
+    min-height: 100svh;
+    padding-top: 5rem;
+  }
+
+  .techstack-heading {
+    width: calc(100% - 2rem);
+  }
+
+  .techstack-heading h2 {
+    font-size: clamp(3rem, 15vw, 5.5rem);
+  }
+
+  .techstack-stage {
+    height: 60svh;
+    min-height: 27rem;
+    margin-top: 0;
+  }
+
+  .techstack-stage::before {
+    inset: 14% 5%;
+  }
+
+  .techstack-overlay {
+    bottom: 1rem;
+    flex-direction: column;
+    gap: .45rem;
+  }
+
+  .techstack-list {
+    margin-top: .5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .techstack-stage {
+    touch-action: auto;
+  }
+}
