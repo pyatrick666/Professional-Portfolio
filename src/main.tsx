@@ -705,6 +705,24 @@ function TechStack() {
 
     context.clearRect(0, 0, 512, 512);
 
+    // High-contrast skin: a bright white/neon-green badge behind the mark
+    // keeps every technology recognizable against the dark 3D scene.
+    const gradient = context.createRadialGradient(256, 256, 18, 256, 256, 238);
+    gradient.addColorStop(0, "#ffffff");
+    gradient.addColorStop(0.72, "#f5fff9");
+    gradient.addColorStop(0.9, "#39ff88");
+    gradient.addColorStop(1, "#10d96b");
+    context.beginPath();
+    context.arc(256, 256, 210, 0, Math.PI * 2);
+    context.fillStyle = gradient;
+    context.fill();
+    context.lineWidth = 18;
+    context.strokeStyle = "#39ff88";
+    context.shadowColor = "#39ff88";
+    context.shadowBlur = 28;
+    context.stroke();
+    context.shadowBlur = 0;
+
     const initials = label
       .replace(/[^a-zA-Z0-9#+.]/g, " ")
       .trim()
@@ -716,10 +734,10 @@ function TechStack() {
 
     context.beginPath();
     context.arc(256, 256, 142, 0, Math.PI * 2);
-    context.fillStyle = "#17121f";
+    context.fillStyle = "rgba(10, 12, 16, 0.92)";
     context.fill();
-    context.lineWidth = 16;
-    context.strokeStyle = "#a67cff";
+    context.lineWidth = 8;
+    context.strokeStyle = "#39ff88";
     context.stroke();
 
     context.fillStyle = "#ffffff";
