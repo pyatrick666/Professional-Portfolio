@@ -1574,91 +1574,324 @@ section {
   }
 }
 /* =========================================================
-   TECH STACK
+   TECH STACK — INTERACTIVE PLAYGROUND
    ========================================================= */
 
 .tech {
-  width: 100%;
   position: relative;
+  width: 100%;
   min-height: 100vh;
-  margin: 0 auto;
-  padding: 50px 0 0;
-  margin-bottom: -100px;
+  margin: 0;
+  padding: 7rem 0 5rem;
   overflow: hidden;
-  background: #0b080c;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(166,124,255,.13), transparent 26rem),
+    #0b080c;
   color: #eae5ec;
   font-family: "Geist", var(--display), sans-serif;
 }
 
 .tech h2 {
-  position: absolute;
+  position: relative;
   z-index: 4;
-  top: 120px;
-  left: 0;
-  width: 100%;
   margin: 0;
   color: #eae5ec;
   font-family: "Geist", var(--display), sans-serif;
-  font-size: 80px;
+  font-size: clamp(3.4rem, 8vw, 7rem);
   font-weight: 400;
-  line-height: 1;
+  line-height: .92;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: -.045em;
+  letter-spacing: -.055em;
   pointer-events: none;
 }
 
-.skills-physics {
+.tech-playground-wrap {
+  position: relative;
+  width: min(92rem, 100%);
+  margin: 0 auto;
+}
+
+.tech-playground-intro {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2rem;
+  width: min(78rem, calc(100% - 3rem));
+  margin: 2rem auto 0;
+  pointer-events: none;
+}
+
+.tech-playground-intro span,
+.tech-selected span {
+  color: #a67cff;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+}
+
+.tech-playground-intro p {
+  max-width: 25rem;
+  margin: 0;
+  color: rgba(234,229,236,.58);
+  font-size: .76rem;
+  line-height: 1.6;
+  text-align: right;
+}
+
+.tech-playground {
   position: relative;
   width: 100%;
-  height: 100vh;
-  min-height: 36rem;
-  margin: 0;
+  height: min(70vh, 48rem);
+  min-height: 34rem;
+  margin-top: -1rem;
   overflow: hidden;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
+  touch-action: none;
+  cursor: crosshair;
 }
 
-.skills-physics::before,
-.skills-physics::after {
-  display: none;
+.tech-playground::before {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border: 1px solid rgba(166,124,255,.1);
+  border-radius: 50%;
+  box-shadow:
+    0 0 7rem rgba(166,124,255,.06),
+    inset 0 0 7rem rgba(166,124,255,.035);
 }
 
-.skills-physics__copy,
-.skills-physics__topline,
-.skills-physics__status {
-  display: none;
-}
-
-.tech-canvas {
-  position: absolute !important;
+.tech-playground::after {
+  content: "";
+  position: absolute;
   inset: 0;
-  z-index: 1;
-  width: 100% !important;
-  height: 100% !important;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  mask-image: radial-gradient(circle at center, black 0%, transparent 72%);
 }
 
-@media screen and (min-width: 768px) {
-  .tech {
-    padding-top: 50px;
-  }
+.tech-playground-orbit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border: 1px solid rgba(166,124,255,.12);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.orbit-one {
+  width: 58%;
+  height: 58%;
+  animation: tech-orbit 18s linear infinite;
+}
+
+.orbit-two {
+  width: 80%;
+  height: 38%;
+  transform: translate(-50%, -50%) rotate(-18deg);
+  animation: tech-orbit 24s linear infinite reverse;
+}
+
+.tech-playground-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  width: 10rem;
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: .25rem;
+  border: 1px solid rgba(166,124,255,.24);
+  border-radius: 50%;
+  background: rgba(11,8,12,.74);
+  box-shadow:
+    0 0 3rem rgba(166,124,255,.12),
+    inset 0 0 2rem rgba(166,124,255,.05);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  backdrop-filter: blur(8px);
+}
+
+.tech-playground-center span {
+  color: rgba(234,229,236,.45);
+  font-size: .6rem;
+  letter-spacing: .22em;
+}
+
+.tech-playground-center strong {
+  color: #eae5ec;
+  font-size: .88rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+}
+
+.tech-playground-center small {
+  color: rgba(234,229,236,.4);
+  font-size: .58rem;
+}
+
+.tech-play-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: clamp(7rem, 10vw, 9rem);
+  min-height: 3.4rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: .55rem;
+  padding: .62rem .72rem;
+  border: 1px solid rgba(166,124,255,.22);
+  border-radius: .75rem;
+  background: rgba(17,13,22,.84);
+  color: #eae5ec;
+  text-align: left;
+  box-shadow:
+    0 .6rem 1.8rem rgba(0,0,0,.2),
+    inset 0 0 1.5rem rgba(166,124,255,.025);
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  will-change: transform;
+  backdrop-filter: blur(9px);
+  transition:
+    border-color .25s ease,
+    background .25s ease,
+    box-shadow .25s ease,
+    scale .25s ease;
+}
+
+.tech-play-card:hover,
+.tech-play-card:focus-visible,
+.tech-play-card.is-active {
+  border-color: rgba(166,124,255,.7);
+  background: rgba(27,19,37,.92);
+  box-shadow:
+    0 .9rem 2.6rem rgba(0,0,0,.32),
+    0 0 1.8rem rgba(166,124,255,.13);
+  scale: 1.06;
+  outline: none;
+}
+
+.tech-play-card.is-dragging {
+  cursor: grabbing;
+  border-color: #a67cff;
+  box-shadow:
+    0 1.2rem 3rem rgba(0,0,0,.4),
+    0 0 2.5rem rgba(166,124,255,.2);
+  scale: 1.09;
+}
+
+.tech-play-index {
+  color: rgba(166,124,255,.62);
+  font-size: .55rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.tech-play-name {
+  overflow: hidden;
+  color: #eae5ec;
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: .01em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tech-play-dot {
+  width: .42rem;
+  height: .42rem;
+  border: 1px solid rgba(166,124,255,.65);
+  border-radius: 50%;
+  box-shadow: 0 0 .65rem rgba(166,124,255,.5);
+}
+
+.tech-selected {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: .8rem;
+  min-height: 2rem;
+  opacity: 0;
+  transform: translateY(.4rem);
+  transition: opacity .25s ease, transform .25s ease;
+  pointer-events: none;
+}
+
+.tech-selected.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tech-selected strong {
+  color: #eae5ec;
+  font-size: .8rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+}
+
+@keyframes tech-orbit {
+  from { rotate: 0deg; }
+  to { rotate: 360deg; }
 }
 
 @media screen and (max-width: 900px) {
   .tech {
-    padding-top: 40px;
-    margin-bottom: -60px;
+    min-height: 100svh;
+    padding-top: 5rem;
   }
 
-  .tech h2 {
-    top: 90px;
-    font-size: 40px;
+  .tech-playground-intro {
+    width: calc(100% - 2rem);
+    align-items: flex-start;
+    flex-direction: column;
+    gap: .7rem;
   }
 
-  .skills-physics {
+  .tech-playground-intro p {
+    max-width: 21rem;
+    text-align: left;
+  }
+
+  .tech-playground {
+    height: 68svh;
     min-height: 30rem;
+  }
+
+  .tech-playground-center {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  .tech-play-card {
+    width: 7.2rem;
+    min-height: 3.15rem;
+  }
+
+  .tech-play-name {
+    font-size: .62rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-one,
+  .orbit-two {
+    animation: none;
+  }
+
+  .tech-playground {
+    cursor: default;
   }
 }
 
