@@ -949,7 +949,21 @@ type TechSphereProps = {
 
 function TechSphere({ scale, material, isActive, seed }: TechSphereProps) {
   const api = useRef<RapierRigidBody | null>(null);
+  const logoRef = useRef<THREE.Mesh | null>(null);
   const vec = useMemo(() => new THREE.Vector3(), []);
+  const whiteBallMaterial = useMemo(
+    () =>
+      new THREE.MeshPhysicalMaterial({
+        color: 0xffffff,
+        roughness: 0.38,
+        metalness: 0.08,
+        clearcoat: 0.45,
+        clearcoatRoughness: 0.2,
+        emissive: 0x39ff88,
+        emissiveIntensity: 0.06,
+      }),
+    []
+  );
 
   useFrame((_state, delta) => {
     if (!isActive || !api.current) return;
@@ -965,6 +979,12 @@ function TechSphere({ scale, material, isActive, seed }: TechSphereProps) {
       { x: 0.025 * scale, y: -0.018 * scale, z: 0.014 * scale },
       true
     );
+
+    // Keep the logo face readable while the physical ball tumbles.
+    if (logoRef.current) {
+      logoRef.current.quaternion.copy(_state.camera.quaternion);
+      logoRef.current.position.z = scale * 1.015;
+    }
   });
 
   const x = ((seed * 17.37) % 40) - 20;
@@ -987,13 +1007,24 @@ function TechSphere({ scale, material, isActive, seed }: TechSphereProps) {
         position={[0, 0, 1.2 * scale]}
         args={[0.15 * scale, 0.275 * scale]}
       />
+
+      {/* The entire physical ball is now a bright, clean white/neon-green skin.
+          The logo is a separate large front-facing badge, so it can never
+          disappear around the sphere's UV seam or look like half a texture. */}
       <mesh
         castShadow
         receiveShadow
         scale={scale}
         geometry={techSphereGeometry}
+        material={whiteBallMaterial}
+      />
+
+      <mesh
+        ref={logoRef}
+        scale={scale * 0.82}
+        position={[0, 0, scale * 1.015]}
+        geometry={new THREE.CircleGeometry(0.86, 48)}
         material={material}
-        rotation={[0.3, 1, 1]}
       />
     </RigidBody>
   );
