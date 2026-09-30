@@ -37,10 +37,6 @@ import { gsap } from 'gsap';
 import Lenis from 'lenis';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import * as THREE from 'three';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Environment } from '@react-three/drei';
-import { EffectComposer, N8AO } from '@react-three/postprocessing';
-import { BallCollider, Physics, RigidBody, RapierRigidBody } from '@react-three/rapier';
 import './styles.css';
 import Career from './Career';
 import Contact from "./Contact";
@@ -508,10 +504,11 @@ function Stage() {
         antialias: true,
       });
 
+    const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
     renderer.setPixelRatio(
       Math.min(
         window.devicePixelRatio || 1,
-        2
+        isCoarsePointer ? 1 : 1.5
       )
     );
 
@@ -915,77 +912,17 @@ function Stage() {
    TECH STACK BUBBLES
    ========================================================= */
 
-function TechSphere({ position, scale, material, isActive }: { position: [number, number, number]; scale: number; material: THREE.MeshPhysicalMaterial; isActive: boolean }) {
-  const body = useRef<RapierRigidBody | null>(null);
-  const vec = useMemo(() => new THREE.Vector3(), []);
-  useFrame((_state, delta) => {
-    if (!isActive || !body.current) return;
-    const impulse = vec.copy(body.current.translation()).normalize().multiplyScalar(-42 * Math.min(delta, 0.1) * scale);
-    body.current.applyImpulse(impulse, true);
-  });
-  return <RigidBody ref={body} position={position} linearDamping={0.72} angularDamping={0.18} friction={0.2} colliders={false}>
-    <BallCollider args={[scale]} />
-    <mesh castShadow receiveShadow geometry={techSphereGeometry} material={material} scale={scale} rotation={[0.3, 1, 1]} />
-  </RigidBody>;
+function TechStackGrid() {
+  return (
+    <div className="tech-grid" aria-label="Technology stack">
+      {stack.map((item) => (
+        <span className="tech-chip" key={item}>
+          {item}
+        </span>
+      ))}
+    </div>
+  );
 }
-
-function TechPointer({ isActive }: { isActive: boolean }) {
-  const ref = useRef<RapierRigidBody | null>(null);
-  const target = useMemo(() => new THREE.Vector3(), []);
-  useFrame(({ pointer, viewport }) => {
-    if (!isActive || !ref.current) return;
-    target.lerp(new THREE.Vector3((pointer.x * viewport.width) / 2, (pointer.y * viewport.height) / 2, 0), 0.18);
-    ref.current.setNextKinematicTranslation(target);
-  });
-  return <RigidBody ref={ref} type="kinematicPosition" position={[100, 100, 100]} colliders={false}><BallCollider args={[2]} /></RigidBody>;
-}
-
-const techSphereGeometry = new THREE.SphereGeometry(1, 28, 28);
-const techTexturePaths = ['react2.svg', 'next2.svg', 'node2.svg', 'express.svg', 'mongo.svg', 'mysql.svg', 'typescript.svg', 'javascript.svg'];
-
-function Bubbles() {
-  const [isActive, setIsActive] = useState(false);
-  const sectionRef = useRef<HTMLDivElement | null>(null);
-  const spheres = useMemo(() => Array.from({ length: 30 }, (_, index) => ({
-    scale: [0.7, 1, 0.8, 1, 1][index % 5],
-    position: [THREE.MathUtils.randFloatSpread(9), THREE.MathUtils.randFloatSpread(7) - 0.5, THREE.MathUtils.randFloatSpread(5) - 1] as [number, number, number],
-    textureIndex: index % techTexturePaths.length,
-  })), []);
-  const textures = useMemo(() => {
-    const loader = new THREE.TextureLoader();
-    return techTexturePaths.map((path) => {
-      const texture = loader.load('./images/' + path);
-      texture.colorSpace = THREE.SRGBColorSpace;
-      return texture;
-    });
-  }, []);
-  const materials = useMemo(() => textures.map((texture) => new THREE.MeshPhysicalMaterial({
-    map: texture, emissive: new THREE.Color('#ffffff'), emissiveMap: texture, emissiveIntensity: 0.3, metalness: 0.5, roughness: 0.72, clearcoat: 0.18,
-  })), [textures]);
-  useEffect(() => {
-    const node = sectionRef.current;
-    if (!node) return;
-    const observer = new IntersectionObserver(([entry]) => setIsActive(entry.isIntersecting), { threshold: 0.08 });
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
-  return <div ref={sectionRef} className="skills-physics" aria-label="Interactive technology stack">
-    <Canvas shadows dpr={[1, 1.5]} gl={{ alpha: true, stencil: false, depth: true, antialias: false }} camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }} onCreated={({ gl }) => { gl.toneMappingExposure = 1.5; }} className="tech-canvas">
-      <ambientLight intensity={1} />
-      <spotLight position={[20, 20, 25]} penumbra={1} angle={0.2} color="white" intensity={2} castShadow shadow-mapSize={[512, 512]} />
-      <directionalLight position={[0, 5, -4]} intensity={2} />
-      <Physics gravity={[0, 0, 0]}>
-        <TechPointer isActive={isActive} />
-        {spheres.map((sphere, index) => <TechSphere key={index} {...sphere} material={materials[sphere.textureIndex]} isActive={isActive} />)}
-      </Physics>
-      <Environment preset="city" environmentIntensity={0.5} />
-      <EffectComposer enableNormalPass={false}><N8AO color="#0f002c" aoRadius={2} intensity={1.15} /></EffectComposer>
-    </Canvas>
-  </div>;
-}
-/* =========================================================
-   APP
-   ========================================================= */
 
 function PortfolioLoader({ onComplete }: { onComplete: () => void }) {
   const [percent, setPercent] = useState(0);
@@ -1890,6 +1827,14 @@ function App() {
                 My <span>Work</span>
               </h2>
               <p>Scroll to explore the projects I have built across software, web, mobile and embedded development.</p>
+              <a
+                className="work-repositories-link"
+                href="https://github.com/pyatrick666?tab=repositories"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                VIEW ALL REPOSITORIES ↗
+              </a>
             </div>
 
             <div className="work-viewport">
@@ -1932,7 +1877,7 @@ function App() {
 
         <section className="tech">
           <h2>MY TECHSTACK</h2>
-          <Bubbles />
+          <TechStackGrid />
         </section>
 
         <section
