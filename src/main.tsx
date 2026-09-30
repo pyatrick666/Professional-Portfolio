@@ -757,31 +757,92 @@ function TechStack() {
     return texture;
   };
 
-  const textures = useMemo(() => {
-    const loader = new THREE.TextureLoader();
+  const drawBadgeBackground = (context: CanvasRenderingContext2D) => {
+    context.clearRect(0, 0, 512, 512);
 
+    // Strong white/neon-green physical badge so the logo remains readable
+    // even while the sphere is moving through the dark 3D scene.
+    const outer = context.createRadialGradient(256, 256, 40, 256, 256, 230);
+    outer.addColorStop(0, "#ffffff");
+    outer.addColorStop(0.68, "#ffffff");
+    outer.addColorStop(0.86, "#dffff0");
+    outer.addColorStop(0.95, "#39ff88");
+    outer.addColorStop(1, "#0eea73");
+
+    context.beginPath();
+    context.arc(256, 256, 218, 0, Math.PI * 2);
+    context.fillStyle = outer;
+    context.fill();
+
+    context.lineWidth = 14;
+    context.strokeStyle = "#39ff88";
+    context.shadowColor = "rgba(57,255,136,0.9)";
+    context.shadowBlur = 30;
+    context.stroke();
+    context.shadowBlur = 0;
+
+    // A clean white inner plate gives colored Simple Icons enough contrast.
+    context.beginPath();
+    context.arc(256, 256, 174, 0, Math.PI * 2);
+    context.fillStyle = "#ffffff";
+    context.fill();
+
+    context.lineWidth = 5;
+    context.strokeStyle = "rgba(10,20,16,0.12)";
+    context.stroke();
+  };
+
+  const addBadgeLabel = (context: CanvasRenderingContext2D, label: string) => {
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.font = "800 25px Inter, Arial, sans-serif";
+    context.fillStyle = "#101416";
+    const shortLabel = label.length > 19 ? `${label.slice(0, 17)}…` : label;
+    context.fillText(shortLabel, 256, 407);
+  };
+
+  const textures = useMemo(() => {
     return techs.map((name) => {
-      const fallback = createBadgeTexture(name);
+      const texture = createBadgeTexture(name);
       const slug = techSkinSlugs[name];
 
-      if (!slug) return fallback;
+      if (!slug) return texture;
 
-      const url = `https://cdn.simpleicons.org/${slug}?viewbox=auto`;
-      loader.load(
-        url,
-        (loaded) => {
-          loaded.colorSpace = THREE.SRGBColorSpace;
-          loaded.needsUpdate = true;
-          fallback.image = loaded.image;
-          fallback.needsUpdate = true;
-        },
-        undefined,
-        () => {
-          // Keep the custom badge if a brand icon is unavailable.
-        }
-      );
+      // Load the actual Simple Icons SVG, but composite it onto our badge
+      // instead of replacing the badge texture. This is the important fix:
+      // the real logo and the high-contrast background are always visible.
+      const image = new Image();
+      image.crossOrigin = "anonymous";
+      image.onload = () => {
+        const canvas = texture.image as HTMLCanvasElement;
+        const context = canvas.getContext("2d");
+        if (!context) return;
 
-      return fallback;
+        drawBadgeBackground(context);
+
+        const maxSize = 215;
+        const ratio = Math.min(maxSize / image.naturalWidth, maxSize / image.naturalHeight);
+        const width = image.naturalWidth * ratio;
+        const height = image.naturalHeight * ratio;
+
+        context.drawImage(
+          image,
+          256 - width / 2,
+          244 - height / 2,
+          width,
+          height
+        );
+
+        addBadgeLabel(context, name);
+        texture.needsUpdate = true;
+      };
+
+      image.onerror = () => {
+        // Keep the recognizable custom monogram if the CDN icon fails.
+      };
+
+      image.src = `https://cdn.simpleicons.org/${slug}?viewbox=auto`;
+      return texture;
     });
   }, [techs]);
 
