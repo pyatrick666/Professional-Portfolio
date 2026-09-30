@@ -1817,10 +1817,7 @@ function App() {
           </div>
         </section>
 
-        <section className="tech">
-          <h2>MY TECHSTACK</h2>
-          <TechStack />
-        </section>
+        <TechStack />
 
         <section
           id="contact"
