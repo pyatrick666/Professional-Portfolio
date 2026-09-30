@@ -682,7 +682,8 @@ function TechStack() {
     const update = () => {
       const target = work ?? section;
       const rect = target.getBoundingClientRect();
-      setIsActive(window.scrollY > window.scrollY + rect.top - window.innerHeight * 0.65);
+      const documentTop = rect.top + window.scrollY;
+      setIsActive(window.scrollY > documentTop - window.innerHeight * 0.45);
     };
 
     update();
@@ -769,6 +770,8 @@ function TechStack() {
   );
 }
 
+const techSphereGeometry = new THREE.SphereGeometry(1, 28, 28);
+
 type TechSphereProps = {
   scale: number;
   material: THREE.MeshPhysicalMaterial;
@@ -820,7 +823,7 @@ function TechSphere({ scale, material, isActive, seed }: TechSphereProps) {
         castShadow
         receiveShadow
         scale={scale}
-        geometry={sphereGeometry}
+        geometry={techSphereGeometry}
         material={material}
         rotation={[0.3, 1, 1]}
       />
