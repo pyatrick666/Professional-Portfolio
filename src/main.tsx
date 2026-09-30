@@ -820,7 +820,7 @@ function TechStack() {
 
         drawBadgeBackground(context);
 
-        const maxSize = 215;
+        const maxSize = 330;
         const ratio = Math.min(maxSize / image.naturalWidth, maxSize / image.naturalHeight);
         const width = image.naturalWidth * ratio;
         const height = image.naturalHeight * ratio;
@@ -982,7 +982,7 @@ function TechSphere({ scale, material, isActive, seed }: TechSphereProps) {
 
     // Keep the logo face readable while the physical ball tumbles.
     if (logoRef.current) {
-      logoRef.current.quaternion.copy(_state.camera.quaternion);
+      logoRef.current.lookAt(_state.camera.position);
       logoRef.current.position.z = scale * 1.015;
     }
   });
