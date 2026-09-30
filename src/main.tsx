@@ -696,7 +696,10 @@ function TechStack() {
     []
   );
 
-  const createBadgeTexture = (label: string) => {
+  // Transparent logo textures: the artwork itself is projected into the sphere.
+  // There is deliberately NO circular badge/background, so the logo reads as
+  // printed into the ball rather than as an object attached to its surface.
+  const createLogoTexture = (label: string) => {
     const canvas = document.createElement("canvas");
     canvas.width = 512;
     canvas.height = 512;
@@ -706,23 +709,14 @@ function TechStack() {
 
     context.clearRect(0, 0, 512, 512);
 
-    // High-contrast skin: a bright white/neon-green badge behind the mark
-    // keeps every technology recognizable against the dark 3D scene.
-    const gradient = context.createRadialGradient(256, 256, 18, 256, 256, 238);
-    gradient.addColorStop(0, "#ffffff");
-    gradient.addColorStop(0.72, "#f5fff9");
-    gradient.addColorStop(0.9, "#39ff88");
-    gradient.addColorStop(1, "#10d96b");
-    context.beginPath();
-    context.arc(256, 256, 210, 0, Math.PI * 2);
-    context.fillStyle = gradient;
-    context.fill();
-    context.lineWidth = 18;
-    context.strokeStyle = "#39ff88";
-    context.shadowColor = "#39ff88";
-    context.shadowBlur = 28;
-    context.stroke();
-    context.shadowBlur = 0;
+    // Small soft glow behind the mark. It is transparent outside the glow,
+    // allowing the white physical sphere to remain visible everywhere else.
+    const glow = context.createRadialGradient(256, 236, 24, 256, 236, 190);
+    glow.addColorStop(0, "rgba(255,255,255,0.18)");
+    glow.addColorStop(0.55, "rgba(57,255,136,0.10)");
+    glow.addColorStop(1, "rgba(57,255,136,0)");
+    context.fillStyle = glow;
+    context.fillRect(56, 36, 400, 400);
 
     const initials = label
       .replace(/[^a-zA-Z0-9#+.]/g, " ")
@@ -733,24 +727,20 @@ function TechStack() {
       .map((part) => part[0]?.toUpperCase())
       .join("");
 
-    context.beginPath();
-    context.arc(256, 256, 142, 0, Math.PI * 2);
-    context.fillStyle = "rgba(10, 12, 16, 0.92)";
-    context.fill();
-    context.lineWidth = 8;
-    context.strokeStyle = "#39ff88";
-    context.stroke();
-
+    // Fallback artwork remains readable if the external icon cannot load.
+    context.shadowColor = "rgba(57,255,136,0.95)";
+    context.shadowBlur = 22;
     context.fillStyle = "#ffffff";
     context.textAlign = "center";
     context.textBaseline = "middle";
-    context.font = `800 ${initials.length > 2 ? 70 : 94}px Inter, Arial, sans-serif`;
-    context.fillText(initials || label.slice(0, 2).toUpperCase(), 256, 244);
+    context.font = `900 ${initials.length > 2 ? 104 : 132}px Inter, Arial, sans-serif`;
+    context.fillText(initials || label.slice(0, 2).toUpperCase(), 256, 235);
+    context.shadowBlur = 0;
 
-    context.font = "700 28px Inter, Arial, sans-serif";
-    context.fillStyle = "#bca8df";
+    context.font = "800 26px Inter, Arial, sans-serif";
+    context.fillStyle = "rgba(255,255,255,0.95)";
     const shortLabel = label.length > 18 ? `${label.slice(0, 16)}…` : label;
-    context.fillText(shortLabel, 256, 326);
+    context.fillText(shortLabel, 256, 370);
 
     const texture = new THREE.CanvasTexture(canvas);
     texture.colorSpace = THREE.SRGBColorSpace;
@@ -758,91 +748,66 @@ function TechStack() {
     return texture;
   };
 
-  const drawBadgeBackground = (context: CanvasRenderingContext2D) => {
-    context.clearRect(0, 0, 512, 512);
-
-    // Strong white/neon-green physical badge so the logo remains readable
-    // even while the sphere is moving through the dark 3D scene.
-    const outer = context.createRadialGradient(256, 256, 40, 256, 256, 230);
-    outer.addColorStop(0, "#ffffff");
-    outer.addColorStop(0.68, "#ffffff");
-    outer.addColorStop(0.86, "#dffff0");
-    outer.addColorStop(0.95, "#39ff88");
-    outer.addColorStop(1, "#0eea73");
-
-    context.beginPath();
-    context.arc(256, 256, 218, 0, Math.PI * 2);
-    context.fillStyle = outer;
-    context.fill();
-
-    context.lineWidth = 14;
-    context.strokeStyle = "#39ff88";
-    context.shadowColor = "rgba(57,255,136,0.9)";
-    context.shadowBlur = 30;
-    context.stroke();
-    context.shadowBlur = 0;
-
-    // A clean white inner plate gives colored Simple Icons enough contrast.
-    context.beginPath();
-    context.arc(256, 256, 174, 0, Math.PI * 2);
-    context.fillStyle = "#ffffff";
-    context.fill();
-
-    context.lineWidth = 5;
-    context.strokeStyle = "rgba(10,20,16,0.12)";
-    context.stroke();
-  };
-
-  const addBadgeLabel = (context: CanvasRenderingContext2D, label: string) => {
-    context.textAlign = "center";
-    context.textBaseline = "middle";
-    context.font = "800 25px Inter, Arial, sans-serif";
-    context.fillStyle = "#101416";
-    const shortLabel = label.length > 19 ? `${label.slice(0, 17)}…` : label;
-    context.fillText(shortLabel, 256, 407);
-  };
-
   const textures = useMemo(() => {
     return techs.map((name) => {
-      const texture = createBadgeTexture(name);
+      const texture = createLogoTexture(name);
       const slug = techSkinSlugs[name];
 
       if (!slug) return texture;
 
-      // Load the actual Simple Icons SVG, but composite it onto our badge
-      // instead of replacing the badge texture. This is the important fix:
-      // the real logo and the high-contrast background are always visible.
       const image = new Image();
       image.crossOrigin = "anonymous";
+
       image.onload = () => {
         const canvas = texture.image as HTMLCanvasElement;
         const context = canvas.getContext("2d");
         if (!context) return;
 
-        drawBadgeBackground(context);
+        // Start completely transparent. Only the real logo and its subtle
+        // glow are drawn; there is no plate, border or badge to sit on top
+        // of the sphere.
+        context.clearRect(0, 0, 512, 512);
 
-        const maxSize = 330;
+        const glow = context.createRadialGradient(256, 236, 18, 256, 236, 190);
+        glow.addColorStop(0, "rgba(255,255,255,0.16)");
+        glow.addColorStop(0.55, "rgba(57,255,136,0.08)");
+        glow.addColorStop(1, "rgba(57,255,136,0)");
+        context.fillStyle = glow;
+        context.fillRect(56, 36, 400, 400);
+
+        const maxSize = 300;
         const ratio = Math.min(maxSize / image.naturalWidth, maxSize / image.naturalHeight);
         const width = image.naturalWidth * ratio;
         const height = image.naturalHeight * ratio;
 
+        context.save();
+        context.shadowColor = "rgba(57,255,136,0.9)";
+        context.shadowBlur = 20;
         context.drawImage(
           image,
           256 - width / 2,
-          244 - height / 2,
+          226 - height / 2,
           width,
           height
         );
+        context.restore();
 
-        addBadgeLabel(context, name);
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+        context.font = "800 24px Inter, Arial, sans-serif";
+        context.fillStyle = "rgba(255,255,255,0.96)";
+        const shortLabel = name.length > 18 ? `${name.slice(0, 16)}…` : name;
+        context.fillText(shortLabel, 256, 390);
+
         texture.needsUpdate = true;
       };
 
       image.onerror = () => {
-        // Keep the recognizable custom monogram if the CDN icon fails.
+        // Transparent fallback artwork remains visible.
       };
 
-      image.src = `https://cdn.simpleicons.org/${slug}?viewbox=auto`;
+      // Simple Icons returns the actual brand mark without a background.
+      image.src = `https://cdn.simpleicons.org/${slug}/ffffff?viewbox=auto`;
       return texture;
     });
   }, [techs]);
@@ -853,13 +818,16 @@ function TechStack() {
         (texture) =>
           new THREE.MeshPhysicalMaterial({
             map: texture,
-            emissive: 0xffffff,
+            emissive: 0x39ff88,
             emissiveMap: texture,
-            emissiveIntensity: 0.34,
-            metalness: 0.48,
-            roughness: 0.7,
-            clearcoat: 0.2,
+            emissiveIntensity: 0.22,
+            metalness: 0.05,
+            roughness: 0.55,
             transparent: true,
+            depthTest: true,
+            depthWrite: false,
+            alphaTest: 0.01,
+            side: THREE.FrontSide,
           })
       ),
     [textures]
@@ -991,9 +959,9 @@ function TechSphere({ scale, material, isActive, seed }: TechSphereProps) {
     () =>
       new DecalGeometry(
         new THREE.Mesh(techSphereGeometry, whiteBallMaterial),
-        new THREE.Vector3(0, 0, scale * 0.92),
+        new THREE.Vector3(0, 0, scale * 0.96),
         new THREE.Euler(0, 0, 0),
-        new THREE.Vector3(scale * 1.42, scale * 1.42, scale * 1.42)
+        new THREE.Vector3(scale * 0.92, scale * 0.92, scale * 0.92)
       ),
     [scale, whiteBallMaterial]
   );
@@ -1035,9 +1003,10 @@ function TechSphere({ scale, material, isActive, seed }: TechSphereProps) {
       <mesh
         geometry={decalGeometry}
         material={material}
+        renderOrder={2}
         polygonOffset
-        polygonOffsetFactor={-4}
-        polygonOffsetUnits={-4}
+        polygonOffsetFactor={-1}
+        polygonOffsetUnits={-1}
       />
     </RigidBody>
   );
