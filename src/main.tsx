@@ -646,67 +646,142 @@ function TechStack() {
   const [isActive, setIsActive] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const techs = useMemo(() => [
-    ["react2.svg", "React"], ["next2.svg", "Next.js"], ["node2.svg", "Node.js"],
-    ["express.svg", "Express"], ["mongo.svg", "MongoDB"], ["mysql.svg", "MySQL"],
-    ["typescript.svg", "TypeScript"], ["javascript.svg", "JavaScript"],
-    ...techCategories.flatMap((category) => category.items.map((name) => [null, name] as [null, string])),
-  ], []);
+  // Official brand skins are served from the Simple Icons SVG library.
+  // Concepts without a dedicated brand mark get a custom monogram skin so
+  // every technology still has its own visual identity.
+  const techSkinSlugs: Record<string, string> = {
+    "C#": "csharp",
+    "C++": "cplusplus",
+    "C": "c",
+    "Dart": "dart",
+    "JavaScript": "javascript",
+    "TypeScript": "typescript",
+    "PHP": "php",
+    "Python": "python",
+    "Flutter": "flutter",
+    "Android": "android",
+    "Provider": "flutter",
+    "Google Mobile Ads": "googleads",
+    "HTML5": "html5",
+    "CSS3": "css3",
+    "React": "react",
+    "Next.js": "nextdotjs",
+    "Node.js": "nodedotjs",
+    "Express.js": "express",
+    "Express": "express",
+    "Bootstrap": "bootstrap",
+    "Three.js": "threedotjs",
+    "GSAP": "gsap",
+    ".NET": "dotnet",
+    "MySQL": "mysql",
+    "MongoDB": "mongodb",
+    "GitHub Pages": "githubpages",
+    "Render": "render",
+    "Git": "git",
+    "GitHub": "github",
+    "GitHub Actions": "githubactions",
+    "npm": "npm",
+    "XAMPP": "xampp",
+    "VS Code": "visualstudiocode",
+    "Figma": "figma",
+    "Canva": "canva",
+    "Linux": "linux",
+    "Raspberry Pi Pico": "raspberrypi",
+    "Stockfish": "stockfish",
+  };
+
+  const techs = useMemo(
+    () => Array.from(new Set(techCategories.flatMap((category) => category.items))),
+    []
+  );
+
+  const createBadgeTexture = (label: string) => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 512;
+    canvas.height = 512;
+
+    const context = canvas.getContext("2d");
+    if (!context) return new THREE.Texture();
+
+    context.clearRect(0, 0, 512, 512);
+
+    const initials = label
+      .replace(/[^a-zA-Z0-9#+.]/g, " ")
+      .trim()
+      .split(/\\s+/)
+      .filter(Boolean)
+      .slice(0, 3)
+      .map((part) => part[0]?.toUpperCase())
+      .join("");
+
+    context.beginPath();
+    context.arc(256, 256, 142, 0, Math.PI * 2);
+    context.fillStyle = "#17121f";
+    context.fill();
+    context.lineWidth = 16;
+    context.strokeStyle = "#a67cff";
+    context.stroke();
+
+    context.fillStyle = "#ffffff";
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.font = `800 ${initials.length > 2 ? 70 : 94}px Inter, Arial, sans-serif`;
+    context.fillText(initials || label.slice(0, 2).toUpperCase(), 256, 244);
+
+    context.font = "700 28px Inter, Arial, sans-serif";
+    context.fillStyle = "#bca8df";
+    const shortLabel = label.length > 18 ? `${label.slice(0, 16)}…` : label;
+    context.fillText(shortLabel, 256, 326);
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.needsUpdate = true;
+    return texture;
+  };
 
   const textures = useMemo(() => {
     const loader = new THREE.TextureLoader();
 
-    const createLabelTexture = (label: string) => {
-      const canvas = document.createElement("canvas");
-      canvas.width = 512;
-      canvas.height = 512;
-      const context = canvas.getContext("2d");
-      if (!context) return new THREE.Texture();
+    return techs.map((name) => {
+      const fallback = createBadgeTexture(name);
+      const slug = techSkinSlugs[name];
 
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.fillStyle = "#ffffff";
-      context.font = `700 ${label.length > 14 ? 42 : label.length > 9 ? 52 : 64}px Inter, Arial, sans-serif`;
-      context.textAlign = "center";
-      context.textBaseline = "middle";
+      if (!slug) return fallback;
 
-      const words = label.split(" ");
-      if (words.length > 1 && label.length > 11) {
-        const midpoint = Math.ceil(words.length / 2);
-        const first = words.slice(0, midpoint).join(" ");
-        const second = words.slice(midpoint).join(" ");
-        context.fillText(first, 256, 228);
-        context.fillText(second, 256, 284);
-      } else {
-        context.fillText(label, 256, 256);
-      }
+      const url = `https://cdn.simpleicons.org/${slug}?viewbox=auto`;
+      loader.load(
+        url,
+        (loaded) => {
+          loaded.colorSpace = THREE.SRGBColorSpace;
+          loaded.needsUpdate = true;
+          fallback.image = loaded.image;
+          fallback.needsUpdate = true;
+        },
+        undefined,
+        () => {
+          // Keep the custom badge if a brand icon is unavailable.
+        }
+      );
 
-      const texture = new THREE.CanvasTexture(canvas);
-      texture.colorSpace = THREE.SRGBColorSpace;
-      texture.needsUpdate = true;
-      return texture;
-    };
-
-    return techs.map(([file, name]) => {
-      if (file) {
-        const texture = loader.load(`${import.meta.env.BASE_URL}images/${file}`);
-        texture.colorSpace = THREE.SRGBColorSpace;
-        return texture;
-      }
-      return createLabelTexture(name);
+      return fallback;
     });
   }, [techs]);
 
   const materials = useMemo(
-    () => textures.map((texture) => new THREE.MeshPhysicalMaterial({
-      map: texture,
-      emissive: 0xffffff,
-      emissiveMap: texture,
-      emissiveIntensity: 0.32,
-      metalness: 0.48,
-      roughness: 0.72,
-      clearcoat: 0.18,
-      transparent: true,
-    })),
+    () =>
+      textures.map(
+        (texture) =>
+          new THREE.MeshPhysicalMaterial({
+            map: texture,
+            emissive: 0xffffff,
+            emissiveMap: texture,
+            emissiveIntensity: 0.34,
+            metalness: 0.48,
+            roughness: 0.7,
+            clearcoat: 0.2,
+            transparent: true,
+          })
+      ),
     [textures]
   );
 
@@ -764,11 +839,11 @@ function TechStack() {
 
           <Physics gravity={[0, 0, 0]}>
             <TechPointer isActive={isActive} />
-            {Array.from({ length: 30 }, (_, index) => (
+            {techs.map((_, index) => (
               <TechSphere
-                key={index}
-                scale={[0.7, 1, 0.8, 1, 1][index % 5]}
-                material={materials[index % materials.length]}
+                key={techs[index]}
+                scale={[0.68, 0.82, 0.72, 0.88, 0.76][index % 5]}
+                material={materials[index]}
                 isActive={isActive}
                 seed={index}
               />
