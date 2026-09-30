@@ -630,23 +630,27 @@ function Stage() {
   );
 }
 
+const techCategories = [
+  { title: "🧠 Languages", items: ["C#", "C++", "Dart", "JavaScript", "TypeScript", "PHP", "Python", "Java"] },
+  { title: "📱 Mobile Development", items: ["Flutter", "Dart", "Android", "Provider", "Google Mobile Ads"] },
+  { title: "🌐 Frontend", items: ["HTML5", "CSS3", "React", "Next.js", "Bootstrap", "Three.js", "React Three Fiber", "GSAP", "Lenis"] },
+  { title: "⚙️ Backend", items: ["Node.js", "Express.js", "PHP", ".NET", "WebSockets"] },
+  { title: "🗄️ Databases & Cloud", items: ["MySQL", "MongoDB", "SQL", "Firebase", "GitHub Pages", "Render"] },
+  { title: "📊 Data Science & ML", items: ["Python", "Minimax", "Alpha-beta Pruning", "Piece-square Tables"] },
+  { title: "🛠️ Tools & DevOps", items: ["Git", "GitHub", "GitHub Actions", "npm", "XAMPP", "VS Code", "Thonny"] },
+  { title: "🎨 Design & Editing", items: ["Figma", "UI/UX Design", "Canva", "Graphic Design"] },
+  { title: "🌐 Systems & Networking", items: ["Linux", "Computer Systems", "Networking", "Raspberry Pi Pico", "GPIO", "Serial Communication", "WebSockets"] },
+] as const;
+
 function TechStack() {
   const [isActive, setIsActive] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const imageUrls = useMemo(
-    () => [
-      ["react2.svg", "React"],
-      ["next2.svg", "Next.js"],
-      ["node2.svg", "Node.js"],
-      ["express.svg", "Express"],
-      ["mongo.svg", "MongoDB"],
-      ["mysql.svg", "MySQL"],
-      ["typescript.svg", "TypeScript"],
-      ["javascript.svg", "JavaScript"],
-    ],
-    []
-  );
+  const imageUrls = useMemo(() => [
+    ["react2.svg", "React"], ["next2.svg", "Next.js"], ["node2.svg", "Node.js"],
+    ["express.svg", "Express"], ["mongo.svg", "MongoDB"], ["mysql.svg", "MySQL"],
+    ["typescript.svg", "TypeScript"], ["javascript.svg", "JavaScript"],
+  ], []);
 
   const textures = useMemo(() => {
     const loader = new THREE.TextureLoader();
@@ -657,27 +661,14 @@ function TechStack() {
     });
   }, [imageUrls]);
 
-  const materials = useMemo(
-    () =>
-      textures.map(
-        (texture) =>
-          new THREE.MeshPhysicalMaterial({
-            map: texture,
-            emissive: 0xffffff,
-            emissiveMap: texture,
-            emissiveIntensity: 0.32,
-            metalness: 0.48,
-            roughness: 0.72,
-            clearcoat: 0.18,
-          })
-      ),
-    [textures]
-  );
+  const materials = useMemo(() => textures.map((texture) => new THREE.MeshPhysicalMaterial({
+    map: texture, emissive: 0xffffff, emissiveMap: texture, emissiveIntensity: 0.32,
+    metalness: 0.48, roughness: 0.72, clearcoat: 0.18,
+  })), [textures]);
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-
     const work = document.getElementById("work");
     const update = () => {
       const target = work ?? section;
@@ -685,22 +676,18 @@ function TechStack() {
       const documentTop = rect.top + window.scrollY;
       setIsActive(window.scrollY > documentTop - window.innerHeight * 0.45);
     };
-
     update();
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
-
     return () => {
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
     };
   }, []);
 
-  useEffect(() => {
-    return () => {
-      materials.forEach((material) => material.dispose());
-      textures.forEach((texture) => texture.dispose());
-    };
+  useEffect(() => () => {
+    materials.forEach((material) => material.dispose());
+    textures.forEach((texture) => texture.dispose());
   }, [materials, textures]);
 
   return (
@@ -708,43 +695,23 @@ function TechStack() {
       <div className="techstack-heading">
         <span>08 / EXPERIMENTAL PLAYGROUND</span>
         <h2>MY TECHSTACK</h2>
-        <p>Interactive tools and technologies I use to build digital products.</p>
       </div>
 
       <div className="techstack-stage">
-        <Canvas
-          shadows
-          dpr={[1, 1.5]}
+        <Canvas shadows dpr={[1, 1.5]}
           gl={{ alpha: true, stencil: false, depth: true, antialias: false }}
           camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
-          onCreated={({ gl }) => {
-            gl.toneMapping = THREE.ACESFilmicToneMapping;
-            gl.toneMappingExposure = 1.35;
-          }}
-        >
+          onCreated={({ gl }) => { gl.toneMapping = THREE.ACESFilmicToneMapping; gl.toneMappingExposure = 1.35; }}>
           <ambientLight intensity={0.85} />
-          <spotLight
-            position={[18, 18, 24]}
-            penumbra={1}
-            angle={0.24}
-            intensity={4}
-            color="#ffffff"
-            castShadow
-            shadow-mapSize={[512, 512]}
-          />
+          <spotLight position={[18, 18, 24]} penumbra={1} angle={0.24} intensity={4} color="#ffffff" castShadow shadow-mapSize={[512, 512]} />
           <directionalLight position={[-8, 6, 4]} intensity={2.2} color="#ffffff" />
           <pointLight position={[0, -3, 8]} intensity={3.5} color="#a67cff" />
 
           <Physics gravity={[0, 0, 0]}>
             <TechPointer isActive={isActive} />
             {Array.from({ length: 30 }, (_, index) => (
-              <TechSphere
-                key={index}
-                scale={[0.7, 1, 0.8, 1, 1][index % 5]}
-                material={materials[index % materials.length]}
-                isActive={isActive}
-                seed={index}
-              />
+              <TechSphere key={index} scale={[0.7, 1, 0.8, 1, 1][index % 5]}
+                material={materials[index % materials.length]} isActive={isActive} seed={index} />
             ))}
           </Physics>
 
@@ -752,18 +719,16 @@ function TechStack() {
             <N8AO color="#16002f" aoRadius={2} intensity={1.05} />
           </EffectComposer>
         </Canvas>
-
-        <div className="techstack-overlay">
-          <span>DRAG / MOVE</span>
-          <strong>{isActive ? "PHYSICS ACTIVE" : "SCROLL TO ACTIVATE"}</strong>
-        </div>
       </div>
 
-      <div className="techstack-list" aria-label="Technologies">
-        {imageUrls.map(([, name], index) => (
-          <span key={name}>
-            <i>{String(index + 1).padStart(2, "0")}</i>{name}
-          </span>
+      <div className="techstack-categories">
+        {techCategories.map((category) => (
+          <article className="techstack-category" key={category.title}>
+            <h3>{category.title}</h3>
+            <div className="techstack-category-items">
+              {category.items.map((item) => <span key={item}>{item}</span>)}
+            </div>
+          </article>
         ))}
       </div>
     </div>
