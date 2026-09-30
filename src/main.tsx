@@ -542,15 +542,6 @@ function Stage() {
     const loop = () => {
       const time = clock.getElapsedTime();
 
-      look.x += (look.tx - look.x) * (coarse ? 0.045 : 0.07);
-      look.y += (look.ty - look.y) * (coarse ? 0.045 : 0.07);
-      reaction.value += (reaction.target - reaction.value) * 0.12;
-      reaction.target *= 0.91;
-      wave.value += (wave.target - wave.value) * 0.1;
-      wave.target *= 0.94;
-      scrollKick += (targetScrollKick - scrollKick) * 0.12;
-      targetScrollKick *= 0.88;
-
       const halfWidth =
         Math.tan(THREE.MathUtils.degToRad(20)) * camera.position.z * camera.aspect;
 
@@ -626,7 +617,9 @@ function Stage() {
         avatar.arms.rotation.z = Math.sin(waveTime * 2.2) * 0.055;
         avatar.arms.rotation.x = Math.sin(waveTime * 1.7) * 0.025;
         avatar.arms.children.forEach((child, index) => {
-          child.rotation.z += Math.sin(waveTime * 5 + index * 1.4) * 0.018;
+          const side = index % 2 === 0 ? -1 : 1;
+          const base = index < 2 ? side * -0.22 : 0;
+          child.rotation.z = base + Math.sin(waveTime * 5 + index * 1.4) * 0.018;
         });
       } else {
         avatar.arms.rotation.z = Math.sin(time * 1.6) * 0.008;
