@@ -37,6 +37,9 @@ import { gsap } from 'gsap';
 import Lenis from 'lenis';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import * as THREE from 'three';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { EffectComposer, N8AO } from '@react-three/postprocessing';
+import { BallCollider, CylinderCollider, Physics, RigidBody, RapierRigidBody } from '@react-three/rapier';
 import './styles.css';
 import Career from './Career';
 import Contact from "./Contact";
@@ -627,191 +630,236 @@ function Stage() {
   );
 }
 
-function TechStackGrid() {
-  const playgroundRef = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState<string | null>(null);
+function TechStack() {
+  const [isActive, setIsActive] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  const imageUrls = useMemo(
+    () => [
+      ["react2.svg", "React"],
+      ["next2.svg", "Next.js"],
+      ["node2.svg", "Node.js"],
+      ["express.svg", "Express"],
+      ["mongo.svg", "MongoDB"],
+      ["mysql.svg", "MySQL"],
+      ["typescript.svg", "TypeScript"],
+      ["javascript.svg", "JavaScript"],
+    ],
+    []
+  );
+
+  const textures = useMemo(() => {
+    const loader = new THREE.TextureLoader();
+    return imageUrls.map(([file]) => {
+      const texture = loader.load(`${import.meta.env.BASE_URL}images/${file}`);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      return texture;
+    });
+  }, [imageUrls]);
+
+  const materials = useMemo(
+    () =>
+      textures.map(
+        (texture) =>
+          new THREE.MeshPhysicalMaterial({
+            map: texture,
+            emissive: 0xffffff,
+            emissiveMap: texture,
+            emissiveIntensity: 0.32,
+            metalness: 0.48,
+            roughness: 0.72,
+            clearcoat: 0.18,
+          })
+      ),
+    [textures]
+  );
 
   useEffect(() => {
-    const playground = playgroundRef.current;
-    if (!playground) return;
+    const section = sectionRef.current;
+    if (!section) return;
 
-    const items = Array.from(
-      playground.querySelectorAll<HTMLElement>('.tech-play-card')
-    );
-
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const coarse = window.matchMedia('(pointer: coarse)').matches;
-
-    const states = items.map((el, index) => {
-      const angle = (index / Math.max(items.length, 1)) * Math.PI * 2;
-      const radius = coarse ? 26 : 31;
-      return {
-        el,
-        x: 50 + Math.cos(angle) * radius,
-        y: 50 + Math.sin(angle) * radius * 0.58,
-        vx: (Math.random() - 0.5) * 0.035,
-        vy: (Math.random() - 0.5) * 0.025,
-        seed: Math.random() * Math.PI * 2,
-        dragging: false,
-        pointerId: -1,
-        ox: 0,
-        oy: 0,
-      };
-    });
-
-    const pointer = { x: 50, y: 50, active: false };
-    let frame = 0;
-    let last = performance.now();
-
-    const render = (now: number) => {
-      const dt = Math.min(32, now - last);
-      last = now;
-      const seconds = now * 0.001;
-
-      states.forEach((state, index) => {
-        if (!state.dragging && !reducedMotion) {
-          state.vx += Math.cos(seconds * 0.55 + state.seed) * 0.0008 * dt;
-          state.vy += Math.sin(seconds * 0.7 + state.seed) * 0.0007 * dt;
-
-          if (pointer.active) {
-            const dx = state.x - pointer.x;
-            const dy = state.y - pointer.y;
-            const distance = Math.max(2, Math.hypot(dx, dy));
-            if (distance < 18) {
-              const force = (18 - distance) * 0.00075;
-              state.vx += (dx / distance) * force * dt;
-              state.vy += (dy / distance) * force * dt;
-            }
-          }
-
-          state.x += state.vx * dt;
-          state.y += state.vy * dt;
-          state.vx *= 0.992;
-          state.vy *= 0.992;
-
-          const marginX = 7.5;
-          const marginY = 9;
-          if (state.x < marginX || state.x > 100 - marginX) {
-            state.x = Math.max(marginX, Math.min(100 - marginX, state.x));
-            state.vx *= -0.86;
-          }
-          if (state.y < marginY || state.y > 100 - marginY) {
-            state.y = Math.max(marginY, Math.min(100 - marginY, state.y));
-            state.vy *= -0.86;
-          }
-        }
-
-        const bob = reducedMotion ? 0 : Math.sin(seconds * 1.1 + state.seed) * 0.65;
-        state.el.style.transform =
-          `translate3d(${state.x}%, ${state.y + bob}%, 0) translate(-50%, -50%) rotate(${state.vx * 160}deg)`;
-
-        state.el.style.zIndex = String(active === stack[index] ? 20 : 2);
-      });
-
-      frame = requestAnimationFrame(render);
+    const work = document.getElementById("work");
+    const update = () => {
+      const target = work ?? section;
+      const rect = target.getBoundingClientRect();
+      setIsActive(window.scrollY > window.scrollY + rect.top - window.innerHeight * 0.65);
     };
 
-    const onPointerMove = (event: PointerEvent) => {
-      const rect = playground.getBoundingClientRect();
-      pointer.x = ((event.clientX - rect.left) / rect.width) * 100;
-      pointer.y = ((event.clientY - rect.top) / rect.height) * 100;
-      pointer.active = true;
-    };
-
-    const onPointerLeave = () => {
-      pointer.active = false;
-    };
-
-    const onPointerDown = (event: PointerEvent) => {
-      const target = (event.target as HTMLElement).closest<HTMLElement>('.tech-play-card');
-      if (!target) return;
-      const state = states[items.indexOf(target)];
-      if (!state) return;
-
-      const rect = playground.getBoundingClientRect();
-      state.dragging = true;
-      state.pointerId = event.pointerId;
-      state.ox = (((event.clientX - rect.left) / rect.width) * 100) - state.x;
-      state.oy = (((event.clientY - rect.top) / rect.height) * 100) - state.y;
-      target.setPointerCapture(event.pointerId);
-      setActive(target.dataset.tech ?? null);
-      target.classList.add('is-dragging');
-    };
-
-    const onPointerMoveDrag = (event: PointerEvent) => {
-      const state = states.find((item) => item.pointerId === event.pointerId);
-      if (!state || !state.dragging) return;
-      const rect = playground.getBoundingClientRect();
-      state.x = Math.max(7, Math.min(93, ((event.clientX - rect.left) / rect.width) * 100 - state.ox));
-      state.y = Math.max(10, Math.min(90, ((event.clientY - rect.top) / rect.height) * 100 - state.oy));
-      state.vx = 0;
-      state.vy = 0;
-    };
-
-    const release = (event: PointerEvent) => {
-      const state = states.find((item) => item.pointerId === event.pointerId);
-      if (!state) return;
-      state.dragging = false;
-      state.pointerId = -1;
-      state.vx = (Math.random() - 0.5) * 0.045;
-      state.vy = (Math.random() - 0.5) * 0.035;
-      state.el.classList.remove('is-dragging');
-    };
-
-    playground.addEventListener('pointermove', onPointerMove);
-    playground.addEventListener('pointermove', onPointerMoveDrag);
-    playground.addEventListener('pointerleave', onPointerLeave);
-    playground.addEventListener('pointerdown', onPointerDown);
-    window.addEventListener('pointerup', release);
-    window.addEventListener('pointercancel', release);
-
-    frame = requestAnimationFrame(render);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
 
     return () => {
-      cancelAnimationFrame(frame);
-      playground.removeEventListener('pointermove', onPointerMove);
-      playground.removeEventListener('pointermove', onPointerMoveDrag);
-      playground.removeEventListener('pointerleave', onPointerLeave);
-      playground.removeEventListener('pointerdown', onPointerDown);
-      window.removeEventListener('pointerup', release);
-      window.removeEventListener('pointercancel', release);
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
     };
   }, []);
 
+  useEffect(() => {
+    return () => {
+      materials.forEach((material) => material.dispose());
+      textures.forEach((texture) => texture.dispose());
+    };
+  }, [materials, textures]);
+
   return (
-    <div className="tech-playground-wrap">
-      <div className="tech-playground-intro">
-        <span>INTERACTIVE STACK</span>
-        <p>Drag the technologies around. Move your cursor through the field and click a stack item to inspect it.</p>
+    <div className="techstack" ref={sectionRef}>
+      <div className="techstack-heading">
+        <span>08 / EXPERIMENTAL PLAYGROUND</span>
+        <h2>MY TECHSTACK</h2>
+        <p>Interactive tools and technologies I use to build digital products.</p>
       </div>
-      <div className="tech-playground" ref={playgroundRef}>
-        <div className="tech-playground-orbit orbit-one" />
-        <div className="tech-playground-orbit orbit-two" />
-        <div className="tech-playground-center">
-          <span>PRATIK</span>
-          <strong>TECH STACK</strong>
-          <small>{stack.length} technologies</small>
+
+      <div className="techstack-stage">
+        <Canvas
+          shadows
+          dpr={[1, 1.5]}
+          gl={{ alpha: true, stencil: false, depth: true, antialias: false }}
+          camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
+          onCreated={({ gl }) => {
+            gl.toneMapping = THREE.ACESFilmicToneMapping;
+            gl.toneMappingExposure = 1.35;
+          }}
+        >
+          <ambientLight intensity={0.85} />
+          <spotLight
+            position={[18, 18, 24]}
+            penumbra={1}
+            angle={0.24}
+            intensity={4}
+            color="#ffffff"
+            castShadow
+            shadow-mapSize={[512, 512]}
+          />
+          <directionalLight position={[-8, 6, 4]} intensity={2.2} color="#ffffff" />
+          <pointLight position={[0, -3, 8]} intensity={3.5} color="#a67cff" />
+
+          <Physics gravity={[0, 0, 0]}>
+            <TechPointer isActive={isActive} />
+            {Array.from({ length: 30 }, (_, index) => (
+              <TechSphere
+                key={index}
+                scale={[0.7, 1, 0.8, 1, 1][index % 5]}
+                material={materials[index % materials.length]}
+                isActive={isActive}
+                seed={index}
+              />
+            ))}
+          </Physics>
+
+          <EffectComposer enableNormalPass={false}>
+            <N8AO color="#16002f" aoRadius={2} intensity={1.05} />
+          </EffectComposer>
+        </Canvas>
+
+        <div className="techstack-overlay">
+          <span>DRAG / MOVE</span>
+          <strong>{isActive ? "PHYSICS ACTIVE" : "SCROLL TO ACTIVATE"}</strong>
         </div>
-        {stack.map((item, index) => (
-          <button
-            type="button"
-            className={`tech-play-card ${active === item ? 'is-active' : ''}`}
-            data-tech={item}
-            key={item}
-            onClick={() => setActive(active === item ? null : item)}
-            aria-label={`Select ${item}`}
-          >
-            <span className="tech-play-index">{String(index + 1).padStart(2, '0')}</span>
-            <span className="tech-play-name">{item}</span>
-            <span className="tech-play-dot" />
-          </button>
+      </div>
+
+      <div className="techstack-list" aria-label="Technologies">
+        {imageUrls.map(([, name], index) => (
+          <span key={name}>
+            <i>{String(index + 1).padStart(2, "0")}</i>{name}
+          </span>
         ))}
       </div>
-      <div className={`tech-selected ${active ? 'is-visible' : ''}`}>
-        <span>SELECTED</span>
-        <strong>{active ?? 'MOVE OR DRAG A TECHNOLOGY'}</strong>
-      </div>
     </div>
+  );
+}
+
+type TechSphereProps = {
+  scale: number;
+  material: THREE.MeshPhysicalMaterial;
+  isActive: boolean;
+  seed: number;
+};
+
+function TechSphere({ scale, material, isActive, seed }: TechSphereProps) {
+  const api = useRef<RapierRigidBody | null>(null);
+  const vec = useMemo(() => new THREE.Vector3(), []);
+
+  useFrame((_state, delta) => {
+    if (!isActive || !api.current) return;
+
+    const position = api.current.translation();
+    const impulse = vec
+      .set(position.x, position.y, position.z)
+      .normalize()
+      .multiplyScalar(-Math.min(0.1, delta) * scale * (42 + seed % 5));
+
+    api.current.applyImpulse(impulse, true);
+    api.current.applyTorqueImpulse(
+      { x: 0.025 * scale, y: -0.018 * scale, z: 0.014 * scale },
+      true
+    );
+  });
+
+  const x = ((seed * 17.37) % 40) - 20;
+  const y = ((seed * 11.21) % 40) - 20;
+  const z = ((seed * 7.13) % 20) - 10;
+
+  return (
+    <RigidBody
+      ref={api}
+      linearDamping={0.82}
+      angularDamping={0.18}
+      friction={0.18}
+      restitution={0.42}
+      position={[x, y - 25, z]}
+      colliders={false}
+    >
+      <BallCollider args={[scale]} />
+      <CylinderCollider
+        rotation={[Math.PI / 2, 0, 0]}
+        position={[0, 0, 1.2 * scale]}
+        args={[0.15 * scale, 0.275 * scale]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        scale={scale}
+        geometry={sphereGeometry}
+        material={material}
+        rotation={[0.3, 1, 1]}
+      />
+    </RigidBody>
+  );
+}
+
+type TechPointerProps = {
+  isActive: boolean;
+};
+
+function TechPointer({ isActive }: TechPointerProps) {
+  const ref = useRef<RapierRigidBody | null>(null);
+  const target = useMemo(() => new THREE.Vector3(), []);
+
+  useFrame(({ pointer, viewport }) => {
+    if (!isActive || !ref.current) return;
+
+    target.lerp(
+      new THREE.Vector3(
+        (pointer.x * viewport.width) / 2,
+        (pointer.y * viewport.height) / 2,
+        0
+      ),
+      0.18
+    );
+
+    ref.current.setNextKinematicTranslation(target);
+  });
+
+  return (
+    <RigidBody
+      position={[100, 100, 100]}
+      type="kinematicPosition"
+      colliders={false}
+      ref={ref}
+    >
+      <BallCollider args={[2.1]} />
+    </RigidBody>
   );
 }
 
@@ -1768,7 +1816,7 @@ function App() {
 
         <section className="tech">
           <h2>MY TECHSTACK</h2>
-          <TechStackGrid />
+          <TechStack />
         </section>
 
         <section
