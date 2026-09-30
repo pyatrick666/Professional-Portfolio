@@ -2495,6 +2495,25 @@ section {
 /* =========================================================
    PHYSICS TECH STACK
    ========================================================= */
+.techstack-categories {
+  position: relative; z-index: 5; display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px;
+  width: min(92rem, calc(100% - 3rem)); margin: 1rem auto 0;
+  border: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.07);
+}
+.techstack-category { min-height: 9rem; padding: 1.25rem; background: rgba(8,7,11,.88); }
+.techstack-category h3 { margin: 0 0 .85rem; color: var(--soft); font-size: .68rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+.techstack-category-items { display: flex; flex-wrap: wrap; gap: .42rem; }
+.techstack-category-items span {
+  padding: .38rem .55rem; border: 1px solid rgba(166,124,255,.14); border-radius: 999px;
+  background: rgba(166,124,255,.035); color: var(--mute); font-size: .59rem; line-height: 1;
+}
+@media (max-width: 900px) { .techstack-categories { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) {
+  .techstack-categories { grid-template-columns: 1fr; width: calc(100% - 1.25rem); }
+  .techstack-category { min-height: auto; }
+}
+
 .techstack {
   position: relative;
   min-height: 100vh;
@@ -2530,13 +2549,7 @@ section {
   text-transform: uppercase;
 }
 
-.techstack-heading p {
-  max-width: 30rem;
-  margin: 1.2rem auto 0;
-  color: var(--mute);
-  font-size: .78rem;
-  line-height: 1.6;
-}
+
 
 .techstack-stage {
   position: relative;
@@ -2579,65 +2592,7 @@ section {
   height: 100% !important;
 }
 
-.techstack-overlay {
-  position: absolute;
-  left: 50%;
-  bottom: 1.5rem;
-  z-index: 4;
-  display: flex;
-  align-items: center;
-  gap: .75rem;
-  transform: translateX(-50%);
-  pointer-events: none;
-  white-space: nowrap;
-}
 
-.techstack-overlay span {
-  color: var(--pu);
-  font-size: .58rem;
-  letter-spacing: .18em;
-}
-
-.techstack-overlay strong {
-  padding: .45rem .7rem;
-  border: 1px solid rgba(166,124,255,.2);
-  border-radius: 999px;
-  background: rgba(8,7,11,.65);
-  color: var(--soft);
-  font-size: .58rem;
-  font-weight: 500;
-  letter-spacing: .08em;
-  backdrop-filter: blur(8px);
-}
-
-.techstack-list {
-  position: relative;
-  z-index: 4;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: .5rem;
-  width: min(62rem, calc(100% - 2rem));
-  margin: -1rem auto 0;
-}
-
-.techstack-list span {
-  display: inline-flex;
-  align-items: center;
-  gap: .45rem;
-  padding: .42rem .65rem;
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 999px;
-  background: rgba(255,255,255,.025);
-  color: var(--soft);
-  font-size: .62rem;
-}
-
-.techstack-list i {
-  color: var(--pu);
-  font-size: .5rem;
-  font-style: normal;
-}
 
 @media (max-width: 800px) {
   .techstack {
