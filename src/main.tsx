@@ -202,7 +202,6 @@ function buildAvatar() {
   const eyes: THREE.Group[] = [];
   const pupils: THREE.Mesh[] = [];
   const brows: THREE.Mesh[] = [];
-  const headphoneGlows: THREE.Mesh[] = [];
   const mouth = new THREE.Mesh(
     new THREE.TorusGeometry(0.22, 0.028, 10, 28, Math.PI),
     makeMaterial(0x3a1a1a)
@@ -326,7 +325,6 @@ function buildAvatar() {
     headphoneGlow.position.set(side * 1.11, 0.12, 0.04);
     headphoneGlow.rotation.y = Math.PI / 2;
     headphones.add(headphoneGlow);
-    headphoneGlows.push(headphoneGlow);
   });
 
   add(new THREE.SphereGeometry(0.11, 14, 14), makeMaterial(SKIN), [0, -0.1, 0.96]);
@@ -368,7 +366,7 @@ function buildAvatar() {
     arms.add(hand);
   });
 
-  return { group, head, eyes, pupils, brows, mouth, arms, headphones, headphoneGlows };
+  return { group, head, eyes, pupils, brows, mouth, arms, headphones };
 }
 
 function Stage() {
@@ -457,57 +455,22 @@ function Stage() {
     scene.add(fill);
 
     const look = { x: 0, y: 0, tx: 0, ty: 0 };
-    const idleLook = { x: 0, y: 0, tx: 0, ty: 0 };
     const reaction = { value: 0, target: 0 };
     const wave = { value: 0, target: 0 };
-    const hover = { value: 0, target: 0 };
-    const glance = { value: 0, target: 0 };
     let scrollKick = 0;
     let targetScrollKick = 0;
     let lastScrollY = window.scrollY;
     let lastInteraction = performance.now();
-    let lastTap = 0;
-    let nextGlance = 3.5 + Math.random() * 4;
-    let glanceEnd = 0;
-    let waveStart = 0;
 
     const onPointerMove = (event: PointerEvent) => {
-      const rect = el.getBoundingClientRect();
-      const nx = event.clientX / window.innerWidth - 0.5;
-      const ny = event.clientY / window.innerHeight - 0.5;
-      look.tx = nx;
-      look.ty = ny;
-
-      const cx = rect.left + rect.width * 0.5;
-      const cy = rect.top + rect.height * 0.5;
-      const distance = Math.hypot(event.clientX - cx, event.clientY - cy);
-      hover.target = THREE.MathUtils.clamp(1 - distance / Math.max(rect.width, rect.height) * 2.1, 0, 1);
+      look.tx = event.clientX / window.innerWidth - 0.5;
+      look.ty = event.clientY / window.innerHeight - 0.5;
       lastInteraction = performance.now();
     };
 
-    const onPointerLeave = () => {
-      hover.target = 0;
-      look.tx = 0;
-      look.ty = 0;
-    };
-
     const onPointerDown = () => {
-      const now = performance.now();
       reaction.target = 1;
       wave.target = 1;
-      waveStart = now;
-      lastInteraction = now;
-      if (now - lastTap < 360) {
-        reaction.target = 1.35;
-        wave.target = 1.25;
-      }
-      lastTap = now;
-    };
-
-    const onTouchStart = () => {
-      reaction.target = 1;
-      wave.target = 1;
-      waveStart = performance.now();
       lastInteraction = performance.now();
     };
 
@@ -527,9 +490,7 @@ function Stage() {
     };
 
     window.addEventListener('pointermove', onPointerMove, { passive: true });
-    window.addEventListener('pointerleave', onPointerLeave, { passive: true });
     window.addEventListener('pointerdown', onPointerDown, { passive: true });
-    window.addEventListener('touchstart', onTouchStart, { passive: true });
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', fit);
     fit();
@@ -542,96 +503,58 @@ function Stage() {
     const loop = () => {
       const time = clock.getElapsedTime();
 
-      const halfWidth =
-        Math.tan(THREE.MathUtils.degToRad(20)) * camera.position.z * camera.aspect;
-
-      const now = performance.now();
-      const idle = Math.sin(time * 1.15);
-      const breathing = Math.sin(time * 1.35) * 0.018;
-      const attention = Math.min(
-        1,
-        (now - lastInteraction) < 1400 ? 1 : 0.22
-      );
-
-      if (time > nextGlance && glanceEnd === 0 && !reducedMotion) {
-        glanceEnd = time + 0.75;
-        glance.target = Math.random() > 0.5 ? 1 : -1;
-      }
-      if (glanceEnd > 0 && time >= glanceEnd) {
-        glanceEnd = 0;
-        glance.target = 0;
-        nextGlance = time + 4 + Math.random() * 5;
-      }
-
-      idleLook.tx = glance.target * 0.28;
-      idleLook.ty = Math.sin(time * 0.8) * 0.035;
-      const targetLookX = hover.value > 0.08 ? look.tx : idleLook.tx;
-      const targetLookY = hover.value > 0.08 ? look.ty : idleLook.ty;
-      look.x += (targetLookX - look.x) * (coarse ? 0.055 : 0.085);
-      look.y += (targetLookY - look.y) * (coarse ? 0.055 : 0.085);
-
-      hover.value += (hover.target - hover.value) * 0.1;
+      look.x += (look.tx - look.x) * (coarse ? 0.045 : 0.07);
+      look.y += (look.ty - look.y) * (coarse ? 0.045 : 0.07);
       reaction.value += (reaction.target - reaction.value) * 0.12;
       reaction.target *= 0.91;
       wave.value += (wave.target - wave.value) * 0.1;
-      wave.target *= 0.93;
+      wave.target *= 0.94;
       scrollKick += (targetScrollKick - scrollKick) * 0.12;
       targetScrollKick *= 0.88;
 
-      const hoverLift = hover.value * 0.018;
+      const halfWidth =
+        Math.tan(THREE.MathUtils.degToRad(20)) * camera.position.z * camera.aspect;
+
+      const idle = Math.sin(time * 1.15);
+      const attention = Math.min(
+        1,
+        (performance.now() - lastInteraction) < 1400 ? 1 : 0.25
+      );
+
       avatar.group.position.set(
         pose.x * halfWidth,
-        pose.y + idle * 0.035 + breathing + reaction.value * 0.035 + hoverLift,
+        pose.y + idle * 0.035 + reaction.value * 0.035,
         0
       );
 
-      avatar.group.scale.setScalar(pose.s * (1 + reaction.value * 0.012));
+      avatar.group.scale.setScalar(pose.s);
       avatar.group.rotation.y = pose.ry + look.x * 0.48 + scrollKick * 0.8;
       avatar.group.rotation.z = look.x * 0.025 + reaction.value * 0.025;
-      avatar.group.rotation.x = hover.value * -0.018;
 
-      avatar.head.rotation.y = look.x * 0.5 + glance.target * 0.08;
-      avatar.head.rotation.x = look.y * 0.28 + scrollKick * 0.4 - reaction.value * 0.025;
-      avatar.head.rotation.z = look.x * -0.035 + Math.sin(time * 0.7) * 0.008;
+      avatar.head.rotation.y = look.x * 0.5;
+      avatar.head.rotation.x = look.y * 0.28 + scrollKick * 0.4;
+      avatar.head.rotation.z = look.x * -0.035;
 
       avatar.pupils.forEach((pupil) => {
-        pupil.position.x = THREE.MathUtils.clamp(look.x * 0.065, -0.065, 0.065);
-        pupil.position.y = THREE.MathUtils.clamp(-look.y * 0.05, -0.05, 0.05);
-        pupil.scale.setScalar(1 + reaction.value * 0.05);
+        pupil.position.x = THREE.MathUtils.clamp(look.x * 0.055, -0.055, 0.055);
+        pupil.position.y = THREE.MathUtils.clamp(-look.y * 0.04, -0.04, 0.04);
       });
 
       avatar.brows.forEach((brow, index) => {
         const side = index === 0 ? -1 : 1;
-        brow.position.y = 0.4 + attention * 0.035 + reaction.value * 0.06;
-        brow.rotation.z = -side * (0.15 + reaction.value * 0.08 + hover.value * 0.025);
+        brow.position.y = 0.4 + attention * 0.035 + reaction.value * 0.045;
+        brow.rotation.z = -side * (0.15 + reaction.value * 0.05);
       });
 
-      const smile = THREE.MathUtils.clamp(reaction.value * 0.22 + hover.value * 0.035, 0, 0.28);
-      avatar.mouth.scale.set(1 + smile, 1 + smile * 0.45, 1);
-      avatar.mouth.rotation.z = Math.PI + reaction.value * 0.12;
+      avatar.mouth.scale.set(
+        1 + reaction.value * 0.16,
+        1 + reaction.value * 0.08,
+        1
+      );
 
       avatar.arms.position.y = Math.sin(time * 1.15) * 0.018;
-      const waveActive = wave.value > 0.03 && !reducedMotion;
-      if (waveActive) {
-        const waveTime = Math.max(0, now - waveStart) * 0.012;
-        avatar.arms.rotation.z = Math.sin(waveTime * 2.2) * 0.055;
-        avatar.arms.rotation.x = Math.sin(waveTime * 1.7) * 0.025;
-        avatar.arms.children.forEach((child, index) => {
-          const side = index % 2 === 0 ? -1 : 1;
-          const base = index < 2 ? side * -0.22 : 0;
-          child.rotation.z = base + Math.sin(waveTime * 5 + index * 1.4) * 0.018;
-        });
-      } else {
-        avatar.arms.rotation.z = Math.sin(time * 1.6) * 0.008;
-        avatar.arms.rotation.x = 0;
-      }
-
-      avatar.headphones.rotation.z = Math.sin(time * 1.2) * 0.008 + hover.value * 0.018;
-      avatar.headphoneGlows.forEach((glowMesh, index) => {
-        const material = glowMesh.material as THREE.MeshStandardMaterial;
-        material.emissiveIntensity = 0.7 + reaction.value * 1.8 + hover.value * 0.9;
-        glowMesh.scale.setScalar(1 + Math.sin(time * 4 + index) * 0.08 * (0.4 + reaction.value));
-      });
+      avatar.arms.rotation.z = Math.sin(time * 1.6) * 0.008 + wave.value * 0.08;
+      avatar.headphones.rotation.z = Math.sin(time * 1.2) * 0.008;
 
       ring.rotation.z = time * 0.08;
       ring.rotation.y = Math.sin(time * 0.35) * 0.16;
@@ -655,7 +578,7 @@ function Stage() {
       renderer.domElement.style.opacity = String(pose.o);
 
       if (glow.current) {
-        glow.current.style.left = `${50 + pose.x * 50}%`;
+        glow.current.style.left = \`\${50 + pose.x * 50}%\`;
         glow.current.style.opacity = String(pose.o);
       }
 
@@ -673,9 +596,7 @@ function Stage() {
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener('pointermove', onPointerMove);
-      window.removeEventListener('pointerleave', onPointerLeave);
       window.removeEventListener('pointerdown', onPointerDown);
-      window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', fit);
 
