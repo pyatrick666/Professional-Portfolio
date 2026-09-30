@@ -628,13 +628,189 @@ function Stage() {
 }
 
 function TechStackGrid() {
+  const playgroundRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState<string | null>(null);
+
+  useEffect(() => {
+    const playground = playgroundRef.current;
+    if (!playground) return;
+
+    const items = Array.from(
+      playground.querySelectorAll<HTMLElement>('.tech-play-card')
+    );
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
+
+    const states = items.map((el, index) => {
+      const angle = (index / Math.max(items.length, 1)) * Math.PI * 2;
+      const radius = coarse ? 26 : 31;
+      return {
+        el,
+        x: 50 + Math.cos(angle) * radius,
+        y: 50 + Math.sin(angle) * radius * 0.58,
+        vx: (Math.random() - 0.5) * 0.035,
+        vy: (Math.random() - 0.5) * 0.025,
+        seed: Math.random() * Math.PI * 2,
+        dragging: false,
+        pointerId: -1,
+        ox: 0,
+        oy: 0,
+      };
+    });
+
+    const pointer = { x: 50, y: 50, active: false };
+    let frame = 0;
+    let last = performance.now();
+
+    const render = (now: number) => {
+      const dt = Math.min(32, now - last);
+      last = now;
+      const seconds = now * 0.001;
+
+      states.forEach((state, index) => {
+        if (!state.dragging && !reducedMotion) {
+          state.vx += Math.cos(seconds * 0.55 + state.seed) * 0.0008 * dt;
+          state.vy += Math.sin(seconds * 0.7 + state.seed) * 0.0007 * dt;
+
+          if (pointer.active) {
+            const dx = state.x - pointer.x;
+            const dy = state.y - pointer.y;
+            const distance = Math.max(2, Math.hypot(dx, dy));
+            if (distance < 18) {
+              const force = (18 - distance) * 0.00075;
+              state.vx += (dx / distance) * force * dt;
+              state.vy += (dy / distance) * force * dt;
+            }
+          }
+
+          state.x += state.vx * dt;
+          state.y += state.vy * dt;
+          state.vx *= 0.992;
+          state.vy *= 0.992;
+
+          const marginX = 7.5;
+          const marginY = 9;
+          if (state.x < marginX || state.x > 100 - marginX) {
+            state.x = Math.max(marginX, Math.min(100 - marginX, state.x));
+            state.vx *= -0.86;
+          }
+          if (state.y < marginY || state.y > 100 - marginY) {
+            state.y = Math.max(marginY, Math.min(100 - marginY, state.y));
+            state.vy *= -0.86;
+          }
+        }
+
+        const bob = reducedMotion ? 0 : Math.sin(seconds * 1.1 + state.seed) * 0.65;
+        state.el.style.transform =
+          `translate3d(${state.x}%, ${state.y + bob}%, 0) translate(-50%, -50%) rotate(${state.vx * 160}deg)`;
+
+        state.el.style.zIndex = String(active === stack[index] ? 20 : 2);
+      });
+
+      frame = requestAnimationFrame(render);
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      const rect = playground.getBoundingClientRect();
+      pointer.x = ((event.clientX - rect.left) / rect.width) * 100;
+      pointer.y = ((event.clientY - rect.top) / rect.height) * 100;
+      pointer.active = true;
+    };
+
+    const onPointerLeave = () => {
+      pointer.active = false;
+    };
+
+    const onPointerDown = (event: PointerEvent) => {
+      const target = (event.target as HTMLElement).closest<HTMLElement>('.tech-play-card');
+      if (!target) return;
+      const state = states[items.indexOf(target)];
+      if (!state) return;
+
+      const rect = playground.getBoundingClientRect();
+      state.dragging = true;
+      state.pointerId = event.pointerId;
+      state.ox = (((event.clientX - rect.left) / rect.width) * 100) - state.x;
+      state.oy = (((event.clientY - rect.top) / rect.height) * 100) - state.y;
+      target.setPointerCapture(event.pointerId);
+      setActive(target.dataset.tech ?? null);
+      target.classList.add('is-dragging');
+    };
+
+    const onPointerMoveDrag = (event: PointerEvent) => {
+      const state = states.find((item) => item.pointerId === event.pointerId);
+      if (!state || !state.dragging) return;
+      const rect = playground.getBoundingClientRect();
+      state.x = Math.max(7, Math.min(93, ((event.clientX - rect.left) / rect.width) * 100 - state.ox));
+      state.y = Math.max(10, Math.min(90, ((event.clientY - rect.top) / rect.height) * 100 - state.oy));
+      state.vx = 0;
+      state.vy = 0;
+    };
+
+    const release = (event: PointerEvent) => {
+      const state = states.find((item) => item.pointerId === event.pointerId);
+      if (!state) return;
+      state.dragging = false;
+      state.pointerId = -1;
+      state.vx = (Math.random() - 0.5) * 0.045;
+      state.vy = (Math.random() - 0.5) * 0.035;
+      state.el.classList.remove('is-dragging');
+    };
+
+    playground.addEventListener('pointermove', onPointerMove);
+    playground.addEventListener('pointermove', onPointerMoveDrag);
+    playground.addEventListener('pointerleave', onPointerLeave);
+    playground.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('pointerup', release);
+    window.addEventListener('pointercancel', release);
+
+    frame = requestAnimationFrame(render);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      playground.removeEventListener('pointermove', onPointerMove);
+      playground.removeEventListener('pointermove', onPointerMoveDrag);
+      playground.removeEventListener('pointerleave', onPointerLeave);
+      playground.removeEventListener('pointerdown', onPointerDown);
+      window.removeEventListener('pointerup', release);
+      window.removeEventListener('pointercancel', release);
+    };
+  }, [active]);
+
   return (
-    <div className="tech-grid" aria-label="Technology stack">
-      {stack.map((item) => (
-        <span className="tech-chip" key={item}>
-          {item}
-        </span>
-      ))}
+    <div className="tech-playground-wrap">
+      <div className="tech-playground-intro">
+        <span>INTERACTIVE STACK</span>
+        <p>Drag the technologies around. Move your cursor through the field and click a stack item to inspect it.</p>
+      </div>
+      <div className="tech-playground" ref={playgroundRef}>
+        <div className="tech-playground-orbit orbit-one" />
+        <div className="tech-playground-orbit orbit-two" />
+        <div className="tech-playground-center">
+          <span>PRATIK</span>
+          <strong>TECH STACK</strong>
+          <small>{stack.length} technologies</small>
+        </div>
+        {stack.map((item, index) => (
+          <button
+            type="button"
+            className={`tech-play-card ${active === item ? 'is-active' : ''}`}
+            data-tech={item}
+            key={item}
+            onClick={() => setActive(active === item ? null : item)}
+            aria-label={`Select ${item}`}
+          >
+            <span className="tech-play-index">{String(index + 1).padStart(2, '0')}</span>
+            <span className="tech-play-name">{item}</span>
+            <span className="tech-play-dot" />
+          </button>
+        ))}
+      </div>
+      <div className={`tech-selected ${active ? 'is-visible' : ''}`}>
+        <span>SELECTED</span>
+        <strong>{active ?? 'MOVE OR DRAG A TECHNOLOGY'}</strong>
+      </div>
     </div>
   );
 }
