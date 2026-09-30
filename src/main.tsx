@@ -631,12 +631,12 @@ function Stage() {
 }
 
 const techCategories = [
-  { title: "🧠 Languages", items: ["C#", "C++", "Dart", "JavaScript", "TypeScript", "PHP", "Python", "Java"] },
+  { title: "🧠 Languages", items: ["C#", "C++", "C", "Dart", "JavaScript", "TypeScript", "PHP", "Python"] },
   { title: "📱 Mobile Development", items: ["Flutter", "Dart", "Android", "Provider", "Google Mobile Ads"] },
   { title: "🌐 Frontend", items: ["HTML5", "CSS3", "React", "Next.js", "Bootstrap", "Three.js", "React Three Fiber", "GSAP", "Lenis"] },
   { title: "⚙️ Backend", items: ["Node.js", "Express.js", "PHP", ".NET", "WebSockets"] },
-  { title: "🗄️ Databases & Cloud", items: ["MySQL", "MongoDB", "SQL", "Firebase", "GitHub Pages", "Render"] },
-  { title: "📊 Data Science & ML", items: ["Python", "Minimax", "Alpha-beta Pruning", "Piece-square Tables"] },
+  { title: "🗄️ Databases & Cloud", items: ["MySQL", "MongoDB", "SQL", "GitHub Pages", "Render"] },
+  { title: "📊 Data Science & ML", items: ["Python", "Stockfish", "Minimax", "Alpha-beta Pruning", "Piece-square Tables"] },
   { title: "🛠️ Tools & DevOps", items: ["Git", "GitHub", "GitHub Actions", "npm", "XAMPP", "VS Code", "Thonny"] },
   { title: "🎨 Design & Editing", items: ["Figma", "UI/UX Design", "Canva", "Graphic Design"] },
   { title: "🌐 Systems & Networking", items: ["Linux", "Computer Systems", "Networking", "Raspberry Pi Pico", "GPIO", "Serial Communication", "WebSockets"] },
