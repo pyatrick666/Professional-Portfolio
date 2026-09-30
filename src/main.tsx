@@ -102,14 +102,6 @@ const projects = [
     tools: ['Flutter', 'Dart', 'Firebase', 'AdMob'],
     href: 'https://github.com/pyatrick666/ChessMate',
   },
-  {
-    name: 'pyatrick666',
-    num: '08',
-    type: 'GitHub Profile',
-    description: 'My public developer profile featuring projects, experiments and open-source work.',
-    tools: ['GitHub', 'Open Source', 'Projects'],
-    href: 'https://github.com/pyatrick666/pyatrick666',
-  },
 ];
 
 const skillGroups = [
