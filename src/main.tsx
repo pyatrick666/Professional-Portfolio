@@ -200,9 +200,17 @@ function buildAvatar() {
   const group = new THREE.Group();
   const head = new THREE.Group();
   const eyes: THREE.Group[] = [];
+  const pupils: THREE.Mesh[] = [];
+  const brows: THREE.Mesh[] = [];
+  const mouth = new THREE.Mesh(
+    new THREE.TorusGeometry(0.22, 0.028, 10, 28, Math.PI),
+    makeMaterial(0x3a1a1a)
+  );
+  const shoulders = new THREE.Group();
+  const arms = new THREE.Group();
 
-  group.add(head);
-  head.position.y = 1.4;
+  group.add(shoulders, arms, head);
+  head.position.y = 1.42;
 
   const add = (
     geometry: THREE.BufferGeometry,
@@ -210,699 +218,414 @@ function buildAvatar() {
     position: [number, number, number],
     parent: THREE.Object3D = head
   ) => {
-    const mesh = new THREE.Mesh(
-      geometry,
-      material
-    );
-
+    const mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(...position);
     parent.add(mesh);
-
     return mesh;
   };
 
-  const face = add(
-    new THREE.SphereGeometry(1, 48, 48),
-    makeMaterial(SKIN),
-    [0, 0, 0]
-  );
-
+  const face = add(new THREE.SphereGeometry(1, 40, 32), makeMaterial(SKIN), [0, 0, 0]);
   face.scale.set(1, 1.05, 0.95);
 
   const hair = add(
-    new THREE.SphereGeometry(
-      1.04,
-      48,
-      32,
-      0,
-      Math.PI * 2,
-      0,
-      Math.PI * 0.42
-    ),
+    new THREE.SphereGeometry(1.04, 40, 28, 0, Math.PI * 2, 0, Math.PI * 0.44),
     makeMaterial(HAIR),
     [0, 0.02, 0]
   );
-
   hair.scale.set(1, 1.05, 0.95);
 
   const cap = new THREE.Group();
-
   cap.position.set(0, 0.66, 0.02);
   head.add(cap);
 
   const crown = new THREE.Mesh(
-    new THREE.SphereGeometry(
-      0.9,
-      48,
-      24,
-      0,
-      Math.PI * 2,
-      0,
-      Math.PI * 0.54
-    ),
+    new THREE.SphereGeometry(0.9, 40, 22, 0, Math.PI * 2, 0, Math.PI * 0.54),
     makeMaterial(CAP)
   );
-
   crown.scale.set(1.02, 0.78, 0.98);
   cap.add(crown);
 
   const band = new THREE.Mesh(
-    new THREE.TorusGeometry(
-      0.79,
-      0.045,
-      10,
-      48
-    ),
+    new THREE.TorusGeometry(0.79, 0.045, 10, 40),
     makeMaterial(CAP_EDGE, 0.08)
   );
-
   band.scale.set(1, 1, 0.94);
   cap.add(band);
 
-  const brim = new THREE.Mesh(
-    new THREE.SphereGeometry(
-      0.62,
-      32,
-      16
-    ),
-    makeMaterial(CAP)
-  );
-
+  const brim = new THREE.Mesh(new THREE.SphereGeometry(0.62, 28, 14), makeMaterial(CAP));
   brim.scale.set(1.35, 0.09, 0.68);
   brim.position.set(0, -0.02, 0.7);
   brim.rotation.x = -0.08;
   cap.add(brim);
 
   const capMark = new THREE.Mesh(
-    new THREE.TorusGeometry(
-      0.12,
-      0.022,
-      8,
-      24
-    ),
-    makeMaterial(ACCENT, 0.45)
+    new THREE.TorusGeometry(0.12, 0.022, 8, 20),
+    makeMaterial(ACCENT, 0.5)
   );
-
-  capMark.position.set(
-    0,
-    0.48,
-    0.42
-  );
-
-  capMark.rotation.x =
-    Math.PI * 0.5;
-
+  capMark.position.set(0, 0.48, 0.42);
+  capMark.rotation.x = Math.PI * 0.5;
   cap.add(capMark);
 
+  const headphones = new THREE.Group();
+  head.add(headphones);
+  const headphoneBand = new THREE.Mesh(
+    new THREE.TorusGeometry(1.02, 0.055, 10, 48, Math.PI),
+    makeMaterial(ACCENT, 0.28)
+  );
+  headphoneBand.position.set(0, 0.15, -0.03);
+  headphoneBand.rotation.x = Math.PI;
+  headphones.add(headphoneBand);
+
   [-1, 1].forEach((side) => {
-    add(
-      new THREE.SphereGeometry(
-        0.22,
-        24,
-        24
-      ),
-      makeMaterial(SKIN),
-      [side * 1, -0.05, 0]
-    ).scale.set(
-      0.6,
-      1,
-      1
-    );
+    const ear = add(new THREE.SphereGeometry(0.22, 20, 20), makeMaterial(SKIN), [side * 1, -0.05, 0]);
+    ear.scale.set(0.6, 1, 1);
 
-    const eye =
-      new THREE.Group();
-
-    eye.position.set(
-      side * 0.36,
-      0.1,
-      0.86
-    );
-
+    const eye = new THREE.Group();
+    eye.position.set(side * 0.36, 0.1, 0.86);
     head.add(eye);
     eyes.push(eye);
 
-    add(
-      new THREE.SphereGeometry(
-        0.17,
-        24,
-        24
-      ),
-      makeMaterial(0xffffff),
-      [0, 0, 0],
-      eye
-    );
+    add(new THREE.SphereGeometry(0.17, 20, 20), makeMaterial(0xffffff), [0, 0, 0], eye);
 
-    add(
-      new THREE.SphereGeometry(
-        0.09,
-        16,
-        16
-      ),
+    const pupil = add(
+      new THREE.SphereGeometry(0.085, 14, 14),
       makeMaterial(0x120c24),
       [0, 0, 0.13],
       eye
     );
+    pupils.push(pupil);
 
     const brow = add(
-      new THREE.BoxGeometry(
-        0.4,
-        0.07,
-        0.08
-      ),
+      new THREE.BoxGeometry(0.4, 0.065, 0.08),
       makeMaterial(HAIR),
-      [
-        side * 0.36,
-        0.4,
-        0.84,
-      ]
+      [side * 0.36, 0.4, 0.84]
     );
-
-    brow.rotation.z =
-      -side * 0.15;
+    brow.rotation.z = -side * 0.15;
+    brows.push(brow);
 
     const earring = add(
-      new THREE.CylinderGeometry(
-        0.3,
-        0.3,
-        0.18,
-        32
-      ),
-      makeMaterial(
-        ACCENT,
-        0.25
-      ),
-      [
-        side * 1.12,
-        -0.05,
-        0,
-      ]
+      new THREE.CylinderGeometry(0.3, 0.3, 0.18, 24),
+      makeMaterial(ACCENT, 0.3),
+      [side * 1.12, -0.05, 0]
     );
+    earring.rotation.z = Math.PI / 2;
 
-    earring.rotation.z =
-      Math.PI / 2;
+    const headphone = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.24, 0.24, 0.16, 24),
+      makeMaterial(CAP_EDGE, 0.08)
+    );
+    headphone.position.set(side * 1.02, 0.12, -0.05);
+    headphone.rotation.z = Math.PI / 2;
+    headphones.add(headphone);
+
+    const headphoneGlow = new THREE.Mesh(
+      new THREE.TorusGeometry(0.12, 0.018, 8, 20),
+      makeMaterial(ACCENT, 0.7)
+    );
+    headphoneGlow.position.set(side * 1.11, 0.12, 0.04);
+    headphoneGlow.rotation.y = Math.PI / 2;
+    headphones.add(headphoneGlow);
   });
 
-  add(
-    new THREE.SphereGeometry(
-      0.11,
-      16,
-      16
-    ),
-    makeMaterial(SKIN),
-    [0, -0.1, 0.96]
-  );
-
-  const mouth = add(
-    new THREE.TorusGeometry(
-      0.3,
-      0.035,
-      12,
-      32,
-      Math.PI
-    ),
-    makeMaterial(0x3a1a1a),
-    [0, -0.32, 0.84]
-  );
-
-  mouth.rotation.z =
-    Math.PI;
+  add(new THREE.SphereGeometry(0.11, 14, 14), makeMaterial(SKIN), [0, -0.1, 0.96]);
+  mouth.position.set(0, -0.32, 0.84);
+  mouth.rotation.z = Math.PI;
+  head.add(mouth);
 
   add(
-    new THREE.TorusGeometry(
-      1.12,
-      0.06,
-      16,
-      48,
-      Math.PI
-    ),
-    makeMaterial(
-      ACCENT,
-      0.25
-    ),
+    new THREE.TorusGeometry(1.12, 0.055, 12, 40, Math.PI),
+    makeMaterial(ACCENT, 0.3),
     [0, -0.05, 0]
   );
 
-  add(
-    new THREE.CylinderGeometry(
-      0.3,
-      0.34,
-      0.4,
-      24
-    ),
-    makeMaterial(SKIN),
-    [0, 0.6, 0],
-    group
-  );
+  add(new THREE.CylinderGeometry(0.3, 0.34, 0.4, 20), makeMaterial(SKIN), [0, 0.6, 0], group);
 
-  const hoodie = add(
-    new THREE.SphereGeometry(
-      1.5,
-      48,
-      32
-    ),
-    makeMaterial(HOODIE),
-    [0, -0.25, 0],
-    group
-  );
+  const hoodie = add(new THREE.SphereGeometry(1.5, 40, 28), makeMaterial(HOODIE), [0, -0.25, 0], group);
+  hoodie.scale.set(1, 0.75, 0.7);
 
-  hoodie.scale.set(
-    1,
-    0.75,
-    0.7
+  const shoulder = new THREE.Mesh(
+    new THREE.SphereGeometry(0.72, 24, 18),
+    makeMaterial(HOODIE)
   );
+  shoulder.scale.set(1.55, 0.58, 0.62);
+  shoulder.position.set(0, -0.15, 0.02);
+  shoulders.add(shoulder);
 
-  return {
-    group,
-    head,
-    eyes,
-  };
+  [-1, 1].forEach((side) => {
+    const arm = new THREE.Mesh(
+      new THREE.CapsuleGeometry(0.25, 0.75, 6, 12),
+      makeMaterial(HOODIE)
+    );
+    arm.position.set(side * 1.0, -0.55, 0.02);
+    arm.rotation.z = side * -0.22;
+    arms.add(arm);
+
+    const hand = new THREE.Mesh(new THREE.SphereGeometry(0.25, 16, 12), makeMaterial(SKIN));
+    hand.scale.set(0.9, 0.8, 0.8);
+    hand.position.set(side * 1.12, -0.98, 0.04);
+    arms.add(hand);
+  });
+
+  return { group, head, eyes, pupils, brows, mouth, arms, headphones };
 }
 
 function Stage() {
-  const box =
-    useRef<HTMLDivElement>(null);
-
-  const glow =
-    useRef<HTMLDivElement>(null);
+  const box = useRef<HTMLDivElement>(null);
+  const glow = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = box.current;
-
     if (!el) return;
 
-    const renderer =
-      new THREE.WebGLRenderer({
-        alpha: true,
-        antialias: true,
-      });
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
-    renderer.setPixelRatio(
-      Math.min(
-        window.devicePixelRatio || 1,
-        isCoarsePointer ? 1 : 1.5
-      )
-    );
+    const renderer = new THREE.WebGLRenderer({
+      alpha: true,
+      antialias: !coarse,
+      powerPreference: 'high-performance',
+    });
 
-    renderer.outputColorSpace =
-      THREE.SRGBColorSpace;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, coarse ? 1 : 1.5));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    el.appendChild(renderer.domElement);
 
-    el.appendChild(
-      renderer.domElement
-    );
-
-    const scene =
-      new THREE.Scene();
-
-    const camera =
-      new THREE.PerspectiveCamera(
-        40,
-        1,
-        0.1,
-        50
-      );
-
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 50);
     camera.position.z = 6.6;
 
-    const {
-      group,
-      head,
-      eyes,
-    } = buildAvatar();
+    const avatar = buildAvatar();
+    scene.add(avatar.group);
 
-    scene.add(group);
+    const ring = new THREE.Mesh(
+      new THREE.TorusGeometry(1.55, 0.012, 8, 96),
+      makeMaterial(ACCENT, 0.55)
+    );
+    ring.position.set(0, 0.75, -0.55);
+    ring.rotation.x = Math.PI * 0.08;
+    scene.add(ring);
 
-    /* Floating particles */
+    const innerRing = new THREE.Mesh(
+      new THREE.TorusGeometry(1.82, 0.006, 6, 96),
+      makeMaterial(ACCENT, 0.22)
+    );
+    innerRing.position.copy(ring.position);
+    innerRing.rotation.x = Math.PI * 0.08;
+    scene.add(innerRing);
 
-    const particleGeometry =
-      new THREE.BufferGeometry();
+    const particleCount = coarse ? 18 : 30;
+    const particleGeometry = new THREE.BufferGeometry();
+    const particlePositions = new Float32Array(particleCount * 3);
 
-    const particlePositions =
-      new Float32Array(90);
-
-    for (
-      let i = 0;
-      i < particlePositions.length;
-      i += 3
-    ) {
-      particlePositions[i] =
-        (Math.random() - 0.5) *
-        8;
-
-      particlePositions[i + 1] =
-        (Math.random() - 0.5) *
-        5;
-
-      particlePositions[i + 2] =
-        (Math.random() - 0.5) *
-          3 -
-        1;
+    for (let i = 0; i < particlePositions.length; i += 3) {
+      particlePositions[i] = (Math.random() - 0.5) * 7;
+      particlePositions[i + 1] = (Math.random() - 0.5) * 4.5;
+      particlePositions[i + 2] = (Math.random() - 0.5) * 2.5 - 1;
     }
 
     particleGeometry.setAttribute(
       'position',
-      new THREE.BufferAttribute(
-        particlePositions,
-        3
-      )
+      new THREE.BufferAttribute(particlePositions, 3)
     );
 
-    const particleMaterial =
+    const particles = new THREE.Points(
+      particleGeometry,
       new THREE.PointsMaterial({
         color: ACCENT,
-        size: 0.018,
+        size: coarse ? 0.014 : 0.018,
         transparent: true,
-        opacity: 0.5,
+        opacity: 0.45,
         depthWrite: false,
-      });
-
-    const particles =
-      new THREE.Points(
-        particleGeometry,
-        particleMaterial
-      );
-
+      })
+    );
     scene.add(particles);
 
-    scene.add(
-      new THREE.AmbientLight(
-        0x8a70d0,
-        1.1
-      )
-    );
+    scene.add(new THREE.AmbientLight(0x8a70d0, 1.1));
 
-    const key =
-      new THREE.DirectionalLight(
-        0xffffff,
-        2.4
-      );
-
-    key.position.set(
-      -3,
-      3,
-      5
-    );
-
+    const key = new THREE.DirectionalLight(0xffffff, 2.4);
+    key.position.set(-3, 3, 5);
     scene.add(key);
 
-    const rim =
-      new THREE.DirectionalLight(
-        ACCENT,
-        5
-      );
-
-    rim.position.set(
-      3,
-      2,
-      -3
-    );
-
+    const rim = new THREE.DirectionalLight(ACCENT, 5);
+    rim.position.set(3, 2, -3);
     scene.add(rim);
 
-    const look = {
-      x: 0,
-      y: 0,
-      tx: 0,
-      ty: 0,
-    };
+    const fill = new THREE.PointLight(ACCENT, 2.2, 8);
+    fill.position.set(0, 0.5, 3);
+    scene.add(fill);
 
+    const look = { x: 0, y: 0, tx: 0, ty: 0 };
+    const reaction = { value: 0, target: 0 };
+    const wave = { value: 0, target: 0 };
     let scrollKick = 0;
     let targetScrollKick = 0;
     let lastScrollY = window.scrollY;
+    let lastInteraction = performance.now();
+
+    const onPointerMove = (event: PointerEvent) => {
+      look.tx = event.clientX / window.innerWidth - 0.5;
+      look.ty = event.clientY / window.innerHeight - 0.5;
+      lastInteraction = performance.now();
+    };
+
+    const onPointerDown = () => {
+      reaction.target = 1;
+      wave.target = 1;
+      lastInteraction = performance.now();
+    };
 
     const onScroll = () => {
       const nextY = window.scrollY;
       const delta = nextY - lastScrollY;
       lastScrollY = nextY;
-      targetScrollKick = THREE.MathUtils.clamp(
-        delta * 0.012,
-        -0.16,
-        0.16
-      );
+      targetScrollKick = THREE.MathUtils.clamp(delta * 0.012, -0.16, 0.16);
     };
 
-    const onMouseMove =
-      (event: MouseEvent) => {
-        look.tx =
-          event.clientX /
-            window.innerWidth -
-          0.5;
-
-        look.ty =
-          event.clientY /
-            window.innerHeight -
-          0.5;
-      };
-
     const fit = () => {
-      const width =
-        window.innerWidth;
-
-      const height =
-        window.innerHeight;
-
-      renderer.setSize(
-        width,
-        height,
-        false
-      );
-
-      camera.aspect =
-        width /
-        Math.max(
-          height,
-          1
-        );
-
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      renderer.setSize(width, height, false);
+      camera.aspect = width / Math.max(height, 1);
       camera.updateProjectionMatrix();
     };
 
-    window.addEventListener(
-      'mousemove',
-      onMouseMove,
-      {
-        passive: true,
-      }
-    );
-
-    window.addEventListener(
-      'scroll',
-      onScroll,
-      {
-        passive: true,
-      }
-    );
-
-    window.addEventListener(
-      'resize',
-      fit
-    );
-
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('pointerdown', onPointerDown, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', fit);
     fit();
 
     let frame = 0;
-
-    let nextBlink =
-      2 +
-      Math.random() * 2;
-
-    const clock =
-      new THREE.Clock();
+    let nextBlink = 2 + Math.random() * 2.5;
+    let blinkEnd = 0;
+    const clock = new THREE.Clock();
 
     const loop = () => {
-      const time =
-        clock.getElapsedTime();
+      const time = clock.getElapsedTime();
 
-      const halfWidth =
-        Math.tan(
-          THREE.MathUtils.degToRad(
-            20
-          )
-        ) *
-        camera.position.z *
-        camera.aspect;
-
-      look.x +=
-        (look.tx -
-          look.x) *
-        0.06;
-
-      look.y +=
-        (look.ty -
-          look.y) *
-        0.06;
-
-      scrollKick +=
-        (targetScrollKick - scrollKick) *
-        0.12;
-
+      look.x += (look.tx - look.x) * (coarse ? 0.045 : 0.07);
+      look.y += (look.ty - look.y) * (coarse ? 0.045 : 0.07);
+      reaction.value += (reaction.target - reaction.value) * 0.12;
+      reaction.target *= 0.91;
+      wave.value += (wave.target - wave.value) * 0.1;
+      wave.target *= 0.94;
+      scrollKick += (targetScrollKick - scrollKick) * 0.12;
       targetScrollKick *= 0.88;
 
-      group.position.set(
-        pose.x *
-          halfWidth,
-        pose.y +
-          Math.sin(
-            time * 1.2
-          ) *
-            0.04,
+      const halfWidth =
+        Math.tan(THREE.MathUtils.degToRad(20)) * camera.position.z * camera.aspect;
+
+      const idle = Math.sin(time * 1.15);
+      const attention = Math.min(
+        1,
+        (performance.now() - lastInteraction) < 1400 ? 1 : 0.25
+      );
+
+      avatar.group.position.set(
+        pose.x * halfWidth,
+        pose.y + idle * 0.035 + reaction.value * 0.035,
         0
       );
 
-      group.scale.setScalar(
-        pose.s
+      avatar.group.scale.setScalar(pose.s);
+      avatar.group.rotation.y = pose.ry + look.x * 0.48 + scrollKick * 0.8;
+      avatar.group.rotation.z = look.x * 0.025 + reaction.value * 0.025;
+
+      avatar.head.rotation.y = look.x * 0.5;
+      avatar.head.rotation.x = look.y * 0.28 + scrollKick * 0.4;
+      avatar.head.rotation.z = look.x * -0.035;
+
+      avatar.pupils.forEach((pupil) => {
+        pupil.position.x = THREE.MathUtils.clamp(look.x * 0.055, -0.055, 0.055);
+        pupil.position.y = THREE.MathUtils.clamp(-look.y * 0.04, -0.04, 0.04);
+      });
+
+      avatar.brows.forEach((brow, index) => {
+        const side = index === 0 ? -1 : 1;
+        brow.position.y = 0.4 + attention * 0.035 + reaction.value * 0.045;
+        brow.rotation.z = -side * (0.15 + reaction.value * 0.05);
+      });
+
+      avatar.mouth.scale.set(
+        1 + reaction.value * 0.16,
+        1 + reaction.value * 0.08,
+        1
       );
 
-      group.rotation.y =
-        pose.ry +
-        look.x * 0.5 +
-        scrollKick * 0.8;
+      avatar.arms.position.y = Math.sin(time * 1.15) * 0.018;
+      avatar.arms.rotation.z = Math.sin(time * 1.6) * 0.008 + wave.value * 0.08;
+      avatar.headphones.rotation.z = Math.sin(time * 1.2) * 0.008;
 
-      head.rotation.y =
-        look.x * 0.5;
+      ring.rotation.z = time * 0.08;
+      ring.rotation.y = Math.sin(time * 0.35) * 0.16;
+      innerRing.rotation.z = -time * 0.055;
+      particles.rotation.y = time * 0.018;
+      particles.rotation.x = Math.sin(time * 0.25) * 0.04;
 
-      head.rotation.x =
-        look.y * 0.3 +
-        scrollKick * 0.45;
+      if (time > nextBlink && blinkEnd === 0) blinkEnd = time + 0.12;
 
-      particles.rotation.y =
-        time * 0.018;
+      const blinking = blinkEnd > 0;
+      avatar.eyes.forEach((eye) => {
+        eye.scale.y = blinking ? 0.08 : 1;
+      });
 
-      particles.rotation.x =
-        Math.sin(
-          time * 0.25
-        ) *
-        0.04;
-
-      const blinking =
-        time > nextBlink &&
-        time <
-          nextBlink + 0.14;
-
-      if (
-        time >
-        nextBlink + 0.14
-      ) {
-        nextBlink =
-          time +
-          2 +
-          Math.random() * 3;
+      if (blinkEnd > 0 && time >= blinkEnd) {
+        blinkEnd = 0;
+        nextBlink = time + 2.1 + Math.random() * 3.6;
+        if (Math.random() < 0.14) nextBlink += 0.18;
       }
 
-      eyes.forEach(
-        (eye) => {
-          eye.scale.y =
-            blinking
-              ? 0.1
-              : 1;
-        }
-      );
-
-      renderer.domElement.style.opacity =
-        String(pose.o);
+      renderer.domElement.style.opacity = String(pose.o);
 
       if (glow.current) {
-        glow.current.style.left =
-          50 +
-          pose.x * 50 +
-          '%';
-
-        glow.current.style.opacity =
-          String(pose.o);
+        glow.current.style.left = \`\${50 + pose.x * 50}%\`;
+        glow.current.style.opacity = String(pose.o);
       }
 
-      renderer.render(
-        scene,
-        camera
-      );
-
-      frame =
-        requestAnimationFrame(
-          loop
-        );
+      renderer.render(scene, camera);
+      frame = requestAnimationFrame(loop);
     };
+
+    if (reducedMotion) {
+      reaction.target = 0;
+      wave.target = 0;
+    }
 
     loop();
 
     return () => {
-      cancelAnimationFrame(
-        frame
-      );
+      cancelAnimationFrame(frame);
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerdown', onPointerDown);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', fit);
 
-      window.removeEventListener(
-        'mousemove',
-        onMouseMove
-      );
-
-      window.removeEventListener(
-        'scroll',
-        onScroll
-      );
-
-      window.removeEventListener(
-        'resize',
-        fit
-      );
-
-      scene.traverse(
-        (object) => {
-          if (
-            object instanceof
-            THREE.Mesh
-          ) {
-            object.geometry.dispose();
-
-            const material =
-              object.material;
-
-            if (
-              Array.isArray(
-                material
-              )
-            ) {
-              material.forEach(
-                (item) =>
-                  item.dispose()
-              );
-            } else {
-              material.dispose();
-            }
+      scene.traverse((object) => {
+        if (object instanceof THREE.Mesh) {
+          object.geometry.dispose();
+          const material = object.material;
+          if (Array.isArray(material)) {
+            material.forEach((item) => item.dispose());
+          } else {
+            material.dispose();
           }
         }
-      );
+      });
 
       renderer.dispose();
 
-      if (
-        renderer
-          .domElement
-          .parentNode ===
-        el
-      ) {
-        el.removeChild(
-          renderer.domElement
-        );
+      if (renderer.domElement.parentNode === el) {
+        el.removeChild(renderer.domElement);
       }
     };
   }, []);
 
   return (
-    <div
-      className="stage"
-      ref={box}
-      aria-hidden="true"
-    >
-      <div
-        className="halo"
-        ref={glow}
-      />
+    <div className="stage" ref={box} aria-hidden="true">
+      <div className="halo" ref={glow} />
     </div>
   );
 }
-
-/* =========================================================
-   TECH STACK BUBBLES
-   ========================================================= */
 
 function TechStackGrid() {
   return (
