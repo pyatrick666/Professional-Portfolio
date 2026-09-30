@@ -646,29 +646,74 @@ function TechStack() {
   const [isActive, setIsActive] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const imageUrls = useMemo(() => [
+  const techs = useMemo(() => [
     ["react2.svg", "React"], ["next2.svg", "Next.js"], ["node2.svg", "Node.js"],
     ["express.svg", "Express"], ["mongo.svg", "MongoDB"], ["mysql.svg", "MySQL"],
     ["typescript.svg", "TypeScript"], ["javascript.svg", "JavaScript"],
+    ...techCategories.flatMap((category) => category.items.map((name) => [null, name] as [null, string])),
   ], []);
 
   const textures = useMemo(() => {
     const loader = new THREE.TextureLoader();
-    return imageUrls.map(([file]) => {
-      const texture = loader.load(`${import.meta.env.BASE_URL}images/${file}`);
-      texture.colorSpace = THREE.SRGBColorSpace;
-      return texture;
-    });
-  }, [imageUrls]);
 
-  const materials = useMemo(() => textures.map((texture) => new THREE.MeshPhysicalMaterial({
-    map: texture, emissive: 0xffffff, emissiveMap: texture, emissiveIntensity: 0.32,
-    metalness: 0.48, roughness: 0.72, clearcoat: 0.18,
-  })), [textures]);
+    const createLabelTexture = (label: string) => {
+      const canvas = document.createElement("canvas");
+      canvas.width = 512;
+      canvas.height = 512;
+      const context = canvas.getContext("2d");
+      if (!context) return new THREE.Texture();
+
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = "#ffffff";
+      context.font = `700 ${label.length > 14 ? 42 : label.length > 9 ? 52 : 64}px Inter, Arial, sans-serif`;
+      context.textAlign = "center";
+      context.textBaseline = "middle";
+
+      const words = label.split(" ");
+      if (words.length > 1 && label.length > 11) {
+        const midpoint = Math.ceil(words.length / 2);
+        const first = words.slice(0, midpoint).join(" ");
+        const second = words.slice(midpoint).join(" ");
+        context.fillText(first, 256, 228);
+        context.fillText(second, 256, 284);
+      } else {
+        context.fillText(label, 256, 256);
+      }
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.needsUpdate = true;
+      return texture;
+    };
+
+    return techs.map(([file, name]) => {
+      if (file) {
+        const texture = loader.load(`${import.meta.env.BASE_URL}images/${file}`);
+        texture.colorSpace = THREE.SRGBColorSpace;
+        return texture;
+      }
+      return createLabelTexture(name);
+    });
+  }, [techs]);
+
+  const materials = useMemo(
+    () => textures.map((texture) => new THREE.MeshPhysicalMaterial({
+      map: texture,
+      emissive: 0xffffff,
+      emissiveMap: texture,
+      emissiveIntensity: 0.32,
+      metalness: 0.48,
+      roughness: 0.72,
+      clearcoat: 0.18,
+      transparent: true,
+    })),
+    [textures]
+  );
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
+
     const work = document.getElementById("work");
     const update = () => {
       const target = work ?? section;
@@ -676,18 +721,22 @@ function TechStack() {
       const documentTop = rect.top + window.scrollY;
       setIsActive(window.scrollY > documentTop - window.innerHeight * 0.45);
     };
+
     update();
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
+
     return () => {
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
     };
   }, []);
 
-  useEffect(() => () => {
-    materials.forEach((material) => material.dispose());
-    textures.forEach((texture) => texture.dispose());
+  useEffect(() => {
+    return () => {
+      materials.forEach((material) => material.dispose());
+      textures.forEach((texture) => texture.dispose());
+    };
   }, [materials, textures]);
 
   return (
@@ -698,10 +747,16 @@ function TechStack() {
       </div>
 
       <div className="techstack-stage">
-        <Canvas shadows dpr={[1, 1.5]}
+        <Canvas
+          shadows
+          dpr={[1, 1.5]}
           gl={{ alpha: true, stencil: false, depth: true, antialias: false }}
           camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
-          onCreated={({ gl }) => { gl.toneMapping = THREE.ACESFilmicToneMapping; gl.toneMappingExposure = 1.35; }}>
+          onCreated={({ gl }) => {
+            gl.toneMapping = THREE.ACESFilmicToneMapping;
+            gl.toneMappingExposure = 1.35;
+          }}
+        >
           <ambientLight intensity={0.85} />
           <spotLight position={[18, 18, 24]} penumbra={1} angle={0.24} intensity={4} color="#ffffff" castShadow shadow-mapSize={[512, 512]} />
           <directionalLight position={[-8, 6, 4]} intensity={2.2} color="#ffffff" />
@@ -710,8 +765,13 @@ function TechStack() {
           <Physics gravity={[0, 0, 0]}>
             <TechPointer isActive={isActive} />
             {Array.from({ length: 30 }, (_, index) => (
-              <TechSphere key={index} scale={[0.7, 1, 0.8, 1, 1][index % 5]}
-                material={materials[index % materials.length]} isActive={isActive} seed={index} />
+              <TechSphere
+                key={index}
+                scale={[0.7, 1, 0.8, 1, 1][index % 5]}
+                material={materials[index % materials.length]}
+                isActive={isActive}
+                seed={index}
+              />
             ))}
           </Physics>
 
@@ -719,17 +779,6 @@ function TechStack() {
             <N8AO color="#16002f" aoRadius={2} intensity={1.05} />
           </EffectComposer>
         </Canvas>
-      </div>
-
-      <div className="techstack-categories">
-        {techCategories.map((category) => (
-          <article className="techstack-category" key={category.title}>
-            <h3>{category.title}</h3>
-            <div className="techstack-category-items">
-              {category.items.map((item) => <span key={item}>{item}</span>)}
-            </div>
-          </article>
-        ))}
       </div>
     </div>
   );
