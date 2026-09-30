@@ -2197,3 +2197,64 @@ section {
 .header .mid:focus-visible {
   color: #39ff14 !important;
 }
+
+
+/* Production polish: lightweight tech stack and repository CTA */
+.tech-grid {
+  width: min(1100px, 92vw);
+  margin: 2rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.7rem;
+}
+
+.tech-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.035);
+  color: inherit;
+  text-align: center;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+
+.work-repositories-link {
+  display: inline-flex;
+  margin-top: 1rem;
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.work-repositories-link:hover,
+.work-repositories-link:focus-visible {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+@media (max-width: 640px) {
+  .tech-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(92vw, 520px);
+  }
+
+  .tech-chip {
+    min-height: 46px;
+    padding: 0.65rem 0.5rem;
+    font-size: 0.74rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-repositories-link {
+    transition: none;
+  }
+}
