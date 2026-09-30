@@ -2495,24 +2495,6 @@ section {
 /* =========================================================
    PHYSICS TECH STACK
    ========================================================= */
-.techstack-categories {
-  position: relative; z-index: 5; display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px;
-  width: min(92rem, calc(100% - 3rem)); margin: 1rem auto 0;
-  border: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.07);
-}
-.techstack-category { min-height: 9rem; padding: 1.25rem; background: rgba(8,7,11,.88); }
-.techstack-category h3 { margin: 0 0 .85rem; color: var(--soft); font-size: .68rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
-.techstack-category-items { display: flex; flex-wrap: wrap; gap: .42rem; }
-.techstack-category-items span {
-  padding: .38rem .55rem; border: 1px solid rgba(166,124,255,.14); border-radius: 999px;
-  background: rgba(166,124,255,.035); color: var(--mute); font-size: .59rem; line-height: 1;
-}
-@media (max-width: 900px) { .techstack-categories { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 560px) {
-  .techstack-categories { grid-template-columns: 1fr; width: calc(100% - 1.25rem); }
-  .techstack-category { min-height: auto; }
-}
 
 .techstack {
   position: relative;
