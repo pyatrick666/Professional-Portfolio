@@ -21,13 +21,13 @@ export const metadata: Metadata = {
     'pratik developer',
     'mern stack',
     'pratik poudel portfolio',
-    'vscode-portfolio',
+    'pratik poudel portfolio',
   ],
   openGraph: {
     title: "Pratik Poudel's Portfolio",
     description:
-      "An Information Technology student building practical software and technology projects.",
-    images: ['https://imgur.com/4zi5KkQ.png'],
+      "Software Engineering • Full-Stack Development • Networking • Mobile Development",
+    images: ['https://pyatrick666.github.io/ePortfolio/profile.jpg'],
     url: 'https://github.com/pyatrick666/Professional-Portfolio',
   },
   twitter: {
