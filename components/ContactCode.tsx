@@ -33,8 +33,8 @@ const contactItems = [
   },
   {
     social: 'youtube',
-    link: 'pratik-poudel-b3264a263',
-    href: 'https://youtube.io/pratik-poudel-b3264a263',
+    link: '@emevol666',
+    href: 'https://www.youtube.com/@emevol666',
   },
 ];
 
