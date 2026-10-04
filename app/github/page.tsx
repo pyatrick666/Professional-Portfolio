@@ -29,7 +29,24 @@ async function getGithubData() {
   if (!repoRes.ok) {
     throw new Error(`Failed to fetch repos: ${repoRes.status}`);
   }
-  const repos: Repo[] = await repoRes.json();
+  const allRepos: Repo[] = await repoRes.json();
+
+  const excludedRepos = new Set(['Professional-Portfolio', 'ePortfolio']);
+  const requestedRepos = ['RaspberryPi-PICO', 'CarRentalApp'];
+
+  const eligibleRepos = allRepos
+    .filter((repo) => !excludedRepos.has(repo.name))
+    .sort((a, b) => b.stargazers_count - a.stargazers_count);
+
+  const requested = requestedRepos
+    .map((name) => eligibleRepos.find((repo) => repo.name === name))
+    .filter((repo): repo is Repo => Boolean(repo));
+
+  const remaining = eligibleRepos
+    .filter((repo) => !requestedRepos.includes(repo.name))
+    .slice(0, 4);
+
+  const repos = [...requested, ...remaining].slice(0, 6);
 
   return { user, repos };
 }
