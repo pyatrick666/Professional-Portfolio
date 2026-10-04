@@ -35,37 +35,6 @@ I’m currently building practical projects while developing my skills for futur
 - Dark developer-focused visual design
 - GitHub Pages deployment through GitHub Actions
 
-## 🛠️ Tech Stack
-
-### Languages
-JavaScript · TypeScript · Java · Dart · SQL · C# · Python · PHP
-
-### Development
-React · Next.js · Flutter · Web Development · Mobile App Development
-
-### Design
-Figma · Canva · UI/UX Design
-
-### Tools
-Git · GitHub · Linux · VS Code
-
-## 🚀 Featured Projects
-
-### ChessMate
-A mobile chess application built with Flutter, focused on providing a clean and playable chess experience.
-
-**Tech:** Flutter · Dart
-
-### RaspberryPi-PICO Projects
-A collection of embedded-system projects using the Raspberry Pi Pico (RP2040), including sensor-based projects and hardware experiments.
-
-**Tech:** C/C++ · Raspberry Pi Pico · Embedded Systems
-
-### CarRentalApp
-A Windows desktop car-rental application designed to manage vehicles, rentals, and customer information through a dedicated interface.
-
-**Tech:** Desktop Development · C# / .NET
-
 ## 📁 Project Structure
 
 ```text
