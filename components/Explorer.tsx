@@ -41,6 +41,7 @@ const Explorer = () => {
               <Link href={item.path} key={item.name} title={item.name} aria-label={item.name}>
                 <div className={styles.file}>
                   <Image src={item.icon} alt="" height={18} width={18} />
+                  <span>{item.name}</span>
                 </div>
               </Link>
             ))}
