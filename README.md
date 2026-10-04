@@ -1,6 +1,6 @@
 # Pratik Poudel — Professional Portfolio
 
-Personal portfolio built with React, TypeScript, GSAP and a lightweight interactive visual layer.
+A clean React + TypeScript portfolio for Pratik Poudel.
 
 ## Focus
 - Software and full-stack development
@@ -12,12 +12,17 @@ Personal portfolio built with React, TypeScript, GSAP and a lightweight interact
 ## Links
 - GitHub: https://github.com/pyatrick666
 - LinkedIn: https://www.linkedin.com/in/pratik-poudel-b3264a263/
-- ePortfolio: https://pyatrick666.github.io/ePortfolio/
 - ChessMate: https://pyatrick666.itch.io/chessmate
 
-## Run locally
+## Local development
+```bash
 npm install
 npm run dev
+```
 
 ## Build
+```bash
 npm run build
+```
+
+GitHub Pages deployment is handled by the workflow in `.github/workflows/deploy-pages.yml`.
