@@ -32,7 +32,7 @@ jobs:
         run: npm install
 
       - name: Copy resume from ePortfolio
-        run: curl -L --fail --silent --show-error "https://pyatrick666.github.io/ePortfolio/resume.pdf" -o public/resume.pdf
+        run: curl -L --fail --silent --show-error "https://raw.githubusercontent.com/pyatrick666/ePortfolio/main/resume.pdf" -o public/resume.pdf
 
       - name: Build static Next.js site
         run: npm run build
