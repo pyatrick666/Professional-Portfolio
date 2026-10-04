@@ -43,7 +43,7 @@ const commands: Record<string, () => string[]> = {
   ],
   about: () => [
     'Pratik Poudel',
-    'Information Technology Student',
+    'Software Engineering • Full-Stack Development • Networking • Mobile Development',
     'Based in Nepal',
     '',
     'BSc (Hons) Information Technology student focused on',
@@ -144,7 +144,7 @@ const commands: Record<string, () => string[]> = {
   whoami: () => [
     'pyatrick666',
     'Pratik Poudel',
-    'Information Technology Student',
+    'Software Engineering • Full-Stack Development • Networking • Mobile Development',
   ],
   ls: () => ['about/', 'education/', 'projects/', 'skills/', 'contact/', 'README.md'],
   pwd: () => ['/home/pyatrick666/portfolio'],
