@@ -16,6 +16,7 @@ import {
   UserRound,
 } from 'lucide-react';
 import './styles.css';
+import SupportSection from './SupportSection';
 
 const profileImage = 'https://pyatrick666.github.io/ePortfolio/profile.jpg';
 
@@ -231,6 +232,8 @@ function App() {
             </div>
           </div>
         </section>
+
+        <SupportSection />
 
         <section id="contact" className="section contact">
           <div className="section-intro">
