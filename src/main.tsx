@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import SupportSection from './SupportSection';
 import { createRoot } from 'react-dom/client';
 import {
   ArrowUpRight,
@@ -1887,6 +1888,8 @@ function App() {
         </section>
 
         <TechStack />
+
+        <SupportSection />
 
         <section
           id="contact"
