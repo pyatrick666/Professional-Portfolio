@@ -1,8 +1,8 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { VscChevronRight } from 'react-icons/vsc';
 
+import { assetPath } from '@/lib/assets';
 import styles from '@/styles/Explorer.module.css';
 
 const explorerItems = [
@@ -20,27 +20,17 @@ const Explorer = () => {
     <div className={styles.explorer}>
       <p className={styles.title}>Explorer</p>
       <div>
-        <input
-          type="checkbox"
-          className={styles.checkbox}
-          id="portfolio-checkbox"
-          checked={portfolioOpen}
-          onChange={() => setPortfolioOpen(!portfolioOpen)}
-        />
+        <input type="checkbox" className={styles.checkbox} id="portfolio-checkbox" checked={portfolioOpen} onChange={() => setPortfolioOpen(!portfolioOpen)} />
         <label htmlFor="portfolio-checkbox" className={styles.heading}>
-          <VscChevronRight
-            className={styles.chevron}
-            style={portfolioOpen ? { transform: 'rotate(90deg)' } : {}}
-          />
+          <VscChevronRight className={styles.chevron} style={portfolioOpen ? { transform: 'rotate(90deg)' } : {}} />
           Portfolio
         </label>
-
         {portfolioOpen && (
           <div className={styles.files} aria-label="Portfolio files">
             {explorerItems.map(item => (
               <Link href={item.path} key={item.name} title={item.name} aria-label={item.name}>
                 <div className={styles.file}>
-                  <Image src={item.icon} alt="" height={18} width={18} />
+                  <img src={assetPath(item.icon)} alt="" width="18" height="18" />
                   <span>{item.name}</span>
                 </div>
               </Link>
