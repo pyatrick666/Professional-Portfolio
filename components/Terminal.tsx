@@ -13,6 +13,8 @@ interface TerminalLine {
 
 const commands: Record<string, () => string[]> = {
   help: () => [
+    'Pratik Poudel (pyatrick666) — Interactive Terminal',
+    '',
     'Available commands:',
     '  help      - Show this help message',
     '  about     - About me',
@@ -23,7 +25,7 @@ const commands: Record<string, () => string[]> = {
     '  themes    - List available themes',
     '  clear     - Clear terminal',
     '  date      - Show current date',
-    '  whoami    - Who am I?',
+    '  whoami    - Show my username',
     '  ls        - List directory contents',
     '  pwd       - Print working directory',
     '  echo      - Echo text (usage: echo <text>)',
@@ -53,10 +55,11 @@ const commands: Record<string, () => string[]> = {
   ],
   contact: () => [
     'Contact Information:',
-    '  Email:    hello@example.com',
+    '  Name:     Pratik Poudel',
+    '  Username: pyatrick666',
+    '  Email:    pyatrick666@gmail.com',
     '  GitHub:   github.com/pyatrick666',
-    '  Twitter:  @pyatrick666',
-    '  LinkedIn: linkedin.com/in/pyatrick666',
+    '  LinkedIn: linkedin.com/in/pratik-poudel-b3264a263',
   ],
   themes: () => [
     'Available themes:',
@@ -65,9 +68,13 @@ const commands: Record<string, () => string[]> = {
     'Use "theme <name>" to change theme.',
   ],
   date: () => [new Date().toString()],
-  whoami: () => ['visitor@portfolio ~ exploring awesome projects'],
+  whoami: () => [
+    'pyatrick666',
+    'Pratik Poudel',
+    'Information Technology Student',
+  ],
   ls: () => ['about/', 'projects/', 'skills/', 'contact/', 'README.md'],
-  pwd: () => ['/home/visitor/portfolio'],
+  pwd: () => ['/home/pyatrick666/portfolio'],
 };
 
 const processCommand = (input: string): TerminalLine[] => {
@@ -125,7 +132,8 @@ interface TerminalProps {
 
 const Terminal = ({ onToggle }: TerminalProps) => {
   const [lines, setLines] = useState<TerminalLine[]>([
-    { type: 'output', content: 'Welcome to the interactive terminal!' },
+    { type: 'output', content: "Welcome to Pratik Poudel's interactive terminal!" },
+    { type: 'output', content: 'Username: pyatrick666' },
     { type: 'output', content: 'Type "help" for available commands.' },
     { type: 'output', content: '' },
   ]);
