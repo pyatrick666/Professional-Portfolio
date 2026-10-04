@@ -24,7 +24,7 @@ async function getGithubData() {
   const user: User = await userRes.json();
 
   const repoRes = await fetch(
-    `https://api.github.com/users/${'pyatrick666'}/repos?sort=pushed&per_page=6`
+    `https://api.github.com/users/${'pyatrick666'}/repos?sort=pushed&per_page=100`
   );
   if (!repoRes.ok) {
     throw new Error(`Failed to fetch repos: ${repoRes.status}`);
