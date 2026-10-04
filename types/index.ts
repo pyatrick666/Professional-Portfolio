@@ -24,8 +24,3 @@ export interface User {
   public_repos: number;
   followers: number;
 }
-
-declare module '*.pdf' {
-  const src: string;
-  export default src;
-}
