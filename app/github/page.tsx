@@ -31,22 +31,20 @@ async function getGithubData() {
   }
   const allRepos: Repo[] = await repoRes.json();
 
-  const excludedRepos = new Set(['Professional-Portfolio', 'ePortfolio']);
-  const requestedRepos = ['RaspberryPi-PICO', 'CarRentalApp'];
+  // Keep the Popular Repositories section focused on the user's other work.
+  // Exclude both portfolio repositories and the two repositories previously
+  // promoted as featured work.
+  const excludedRepos = new Set([
+    'Professional-Portfolio',
+    'ePortfolio',
+    'RaspberryPi-PICO',
+    'CarRentalApp',
+  ]);
 
-  const eligibleRepos = allRepos
+  const repos = allRepos
     .filter((repo) => !excludedRepos.has(repo.name))
-    .sort((a, b) => b.stargazers_count - a.stargazers_count);
-
-  const requested = requestedRepos
-    .map((name) => eligibleRepos.find((repo) => repo.name === name))
-    .filter((repo): repo is Repo => Boolean(repo));
-
-  const remaining = eligibleRepos
-    .filter((repo) => !requestedRepos.includes(repo.name))
-    .slice(0, 4);
-
-  const repos = [...requested, ...remaining].slice(0, 6);
+    .sort((a, b) => b.stargazers_count - a.stargazers_count)
+    .slice(0, 6);
 
   return { user, repos };
 }
@@ -74,7 +72,7 @@ export default async function GithubPage() {
             </div>
           </div>
 
-          <a 
+          <a
             href={`https://github.com/${user.login}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -157,7 +155,7 @@ export default async function GithubPage() {
         <section className={styles.section}>
           <div className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>Popular Repositories</h2>
-            <a 
+            <a
               href={`https://github.com/${user.login}?tab=repositories`}
               target="_blank"
               rel="noopener noreferrer"
@@ -167,7 +165,7 @@ export default async function GithubPage() {
               <VscLinkExternal size={14} />
             </a>
           </div>
-          
+
           <div className={styles.reposGrid}>
             {repos.map((repo) => (
               <RepoCard key={repo.id} repo={repo} />
