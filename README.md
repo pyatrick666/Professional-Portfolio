@@ -1,28 +1,21 @@
 # Pratik Poudel — Professional Portfolio
 
-A clean React + TypeScript portfolio for Pratik Poudel.
+A VS Code themed portfolio built with Next.js.
 
-## Focus
-- Software and full-stack development
-- Flutter/Dart mobile development
-- Computer systems and networking
-- UI/UX with Figma
-- Practical project work
+## About
+BSc (Hons) Information Technology — Computer Systems Engineering  
+ISMT College · University of Sunderland  
+Butwal, Nepal
 
 ## Links
 - GitHub: https://github.com/pyatrick666
 - LinkedIn: https://www.linkedin.com/in/pratik-poudel-b3264a263/
-- ChessMate: https://pyatrick666.itch.io/chessmate
+- Email: pyatrick666@gmail.com
 
-## Local development
+## Development
 ```bash
 npm install
 npm run dev
 ```
 
-## Build
-```bash
-npm run build
-```
-
-GitHub Pages deployment is handled by the workflow in `.github/workflows/deploy-pages.yml`.
+This portfolio is based on the open-source VS Code portfolio by itsnitinr and uses the original UI/code structure while replacing the personal content with Pratik Poudel's information.
