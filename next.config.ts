@@ -16,6 +16,16 @@ const nextConfig: NextConfig = {
       { hostname: 'media2.dev.to', protocol: 'https' },
     ],
   },
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.pdf$/i,
+      type: 'asset/resource',
+      generator: {
+        filename: 'static/media/[name][ext]',
+      },
+    });
+    return config;
+  },
 };
 
 export default nextConfig;
