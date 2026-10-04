@@ -15,15 +15,15 @@ export const projects: Project[] = [
     slug: 'chessmate',
   },
   {
-    title: 'RaspberryPi-PICO',
-    description: 'A Raspberry Pi Pico project exploring embedded systems and microcontroller development.',
+    title: 'RaspberryPi-PICO Projects',
+    description: 'Embedded-system projects and experiments using the Raspberry Pi Pico (RP2040), including a temperature and humidity monitoring application with sensor-based data collection.',
     logo: '/logos/vsc.svg',
     link: 'https://github.com/pyatrick666/RaspberryPi-PICO',
     slug: 'raspberrypi-pico',
   },
   {
     title: 'CarRentalApp',
-    description: 'A car rental application project focused on practical application development.',
+    description: 'A Windows desktop car rental application designed to manage vehicles, rentals, and customer information through a dedicated desktop interface.',
     logo: '/logos/vsc.svg',
     link: 'https://github.com/pyatrick666/CarRentalApp',
     slug: 'carrentalapp',
