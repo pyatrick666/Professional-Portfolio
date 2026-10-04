@@ -121,7 +121,7 @@ const commands: Record<string, () => string[]> = {
   ],
   themes: () => [
     'Available themes:',
-    ...THEME_KEYS.map((theme, i) => \`  \${theme}\${i === 0 ? '  (default)' : ''}\`),
+    ...THEME_KEYS.map((theme, i) => `  ${theme}${i === 0 ? '  (default)' : ''}`),
     '',
     'Use "theme <name>" to change theme.',
   ],
@@ -152,7 +152,7 @@ const commands: Record<string, () => string[]> = {
 
 const processCommand = (input: string): TerminalLine[] => {
   const trimmed = input.trim();
-  const lines: TerminalLine[] = [{ type: 'input', content: \`$ \${trimmed}\` }];
+  const lines: TerminalLine[] = [{ type: 'input', content: `$ ${trimmed}` }];
 
   if (!trimmed) return lines;
 
@@ -173,7 +173,7 @@ const processCommand = (input: string): TerminalLine[] => {
 
   if (externalLinks[cmd]) {
     window.open(externalLinks[cmd], '_blank', 'noopener,noreferrer');
-    lines.push({ type: 'output', content: \`Opening \${cmd}...\` });
+    lines.push({ type: 'output', content: `Opening ${cmd}...` });
     return lines;
   }
 
@@ -185,9 +185,9 @@ const processCommand = (input: string): TerminalLine[] => {
     if ((THEME_KEYS as string[]).includes(args[0])) {
       document.documentElement.setAttribute('data-theme', args[0]);
       localStorage.setItem('theme', args[0]);
-      lines.push({ type: 'output', content: \`Theme changed to \${args[0]}\` });
+      lines.push({ type: 'output', content: `Theme changed to ${args[0]}` });
     } else {
-      lines.push({ type: 'error', content: \`Unknown theme: \${args[0]}. Type "themes".\` });
+      lines.push({ type: 'error', content: `Unknown theme: ${args[0]}. Type "themes".` });
     }
     return lines;
   }
@@ -200,7 +200,7 @@ const processCommand = (input: string): TerminalLine[] => {
   if (commands[cmd]) {
     commands[cmd]().forEach(line => lines.push({ type: 'output', content: line }));
   } else {
-    lines.push({ type: 'error', content: \`Command not found: \${cmd}. Type "help".\` });
+    lines.push({ type: 'error', content: `Command not found: ${cmd}. Type "help".` });
   }
 
   return lines;
@@ -284,7 +284,7 @@ const Terminal = ({ onToggle }: TerminalProps) => {
         {lines.map((line, index) => (
           <div
             key={index}
-            className={\`\${styles.line} \${line.type === 'error' ? styles.error : line.type === 'input' ? styles.input : ''}\`}
+            className={`${styles.line} ${line.type === 'error' ? styles.error : line.type === 'input' ? styles.input : ''}`}
           >
             {line.content}
           </div>
