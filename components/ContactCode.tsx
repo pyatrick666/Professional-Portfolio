@@ -28,8 +28,8 @@ const contactItems = [
   },
   {
     social: 'facebook',
-    link: 'em_ev0l',
-    href: 'https://t.me/em_ev0l',
+    link: 'emev0l',
+    href: 'https://www.facebook.com/emev0l',
   },
   {
     social: 'youtube',
