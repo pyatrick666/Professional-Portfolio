@@ -23,15 +23,8 @@ const commands: Record<string, () => string[]> = {
     '  experience - Education and career focus',
     '  education - Education details',
     '  contact   - Contact information',
-    '  social    - Social profiles',
-    '  github    - Open GitHub',
-    '  linkedin  - Open LinkedIn',
-    '  instagram - Open Instagram',
-    '  facebook  - Open Facebook',
-    '  youtube   - Open YouTube',
     '  repo      - Open this repository',
     '  themes    - List available themes',
-    '  theme <name> - Change theme',
     '  status    - Portfolio status',
     '  tree      - Show portfolio structure',
     '  ls        - List directory contents',
@@ -54,7 +47,7 @@ const commands: Record<string, () => string[]> = {
   ],
   skills: () => [
     'Technical Skills:',
-    '  Programming: JavaScript, TypeScript, Java, Dart, SQL',
+    '  Programming: JavaScript, TypeScript, Java, Dart, SQL, C#, Python, PHP',
     '  Web:         HTML, CSS, React, Next.js',
     '  Mobile:      Flutter / Dart',
     '  Database:    SQL, Database Systems',
@@ -111,19 +104,11 @@ const commands: Record<string, () => string[]> = {
     '  GitHub:   github.com/pyatrick666',
     '  LinkedIn: linkedin.com/in/pratik-poudel-b3264a263',
   ],
-  social: () => [
-    'Social Profiles:',
-    '  GitHub:    github.com/pyatrick666',
-    '  LinkedIn:  linkedin.com/in/pratik-poudel-b3264a263',
-    '  Instagram: instagram.com/em_ev0l',
-    '  Facebook:  facebook.com/emev0l',
-    '  YouTube:   youtube.com/@emevol666',
-  ],
   themes: () => [
     'Available themes:',
     ...THEME_KEYS.map((theme, i) => `  ${theme}${i === 0 ? '  (default)' : ''}`),
     '',
-    'Use "theme <name>" to change theme.',
+    'Select a theme from the Themes panel to change it.',
   ],
   status: () => [
     'Portfolio status: active',
@@ -163,34 +148,8 @@ const processCommand = (input: string): TerminalLine[] => {
   if (cmd === 'clear') return [];
 
   const externalLinks: Record<string, string> = {
-    github: 'https://github.com/pyatrick666',
-    linkedin: 'https://www.linkedin.com/in/pratik-poudel-b3264a263/',
-    instagram: 'https://www.instagram.com/em_ev0l/',
-    facebook: 'https://www.facebook.com/emev0l',
-    youtube: 'https://www.youtube.com/@emevol666',
     repo: 'https://github.com/pyatrick666/Professional-Portfolio',
   };
-
-  if (externalLinks[cmd]) {
-    window.open(externalLinks[cmd], '_blank', 'noopener,noreferrer');
-    lines.push({ type: 'output', content: `Opening ${cmd}...` });
-    return lines;
-  }
-
-  if (cmd === 'theme') {
-    if (!args[0]) {
-      lines.push({ type: 'error', content: 'Usage: theme <name>. Type "themes" to list them.' });
-      return lines;
-    }
-    if ((THEME_KEYS as string[]).includes(args[0])) {
-      document.documentElement.setAttribute('data-theme', args[0]);
-      localStorage.setItem('theme', args[0]);
-      lines.push({ type: 'output', content: `Theme changed to ${args[0]}` });
-    } else {
-      lines.push({ type: 'error', content: `Unknown theme: ${args[0]}. Type "themes".` });
-    }
-    return lines;
-  }
 
   if (cmd === 'echo') {
     lines.push({ type: 'output', content: args.join(' ') });
