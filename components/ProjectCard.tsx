@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { VscLinkExternal } from 'react-icons/vsc';
 
 import { Project } from '@/types';
+import { assetPath } from '@/lib/assets';
 
 import styles from '@/styles/ProjectCard.module.css';
 
@@ -27,7 +28,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
           <div className={styles.header}>
             <div className={styles.logoWrapper}>
               <Image
-                src={project.logo}
+                src={assetPath(project.logo)}
                 alt={`${project.title} logo`}
                 width={18}
                 height={18}
