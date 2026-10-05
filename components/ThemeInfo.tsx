@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { VscCheck } from 'react-icons/vsc';
 
+import { assetPath } from '@/lib/assets';
 import styles from '@/styles/ThemeInfo.module.css';
 
 interface ThemeInfoProps {
@@ -22,7 +23,7 @@ const ThemeInfo = ({ icon, name, publisher, theme, isActive, onSelect }: ThemeIn
     >
       <div className={styles.preview}>
         <Image
-          src={icon}
+          src={assetPath(icon)}
           alt={name}
           height={40}
           width={40}
