@@ -24,10 +24,10 @@ export const metadata: Metadata = {
   ],
   icons: {
     icon: [
-      { url: '/Professional-Portfolio/favicon.svg', type: 'image/svg+xml' },
-      { url: '/Professional-Portfolio/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
     ],
-    shortcut: '/Professional-Portfolio/favicon.svg',
+    shortcut: '/favicon.svg',
   },
   openGraph: {
     title: "Pratik Poudel's Portfolio",
