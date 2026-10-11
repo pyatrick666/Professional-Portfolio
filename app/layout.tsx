@@ -21,8 +21,14 @@ export const metadata: Metadata = {
     'pratik developer',
     'mern stack',
     'pratik poudel portfolio',
-    'pratik poudel portfolio',
   ],
+  icons: {
+    icon: [
+      { url: '/Professional-Portfolio/favicon.svg', type: 'image/svg+xml' },
+      { url: '/Professional-Portfolio/icon.svg', type: 'image/svg+xml' },
+    ],
+    shortcut: '/Professional-Portfolio/favicon.svg',
+  },
   openGraph: {
     title: "Pratik Poudel's Portfolio",
     description:
