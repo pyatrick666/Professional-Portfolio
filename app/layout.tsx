@@ -24,10 +24,10 @@ export const metadata: Metadata = {
   ],
   icons: {
     icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.svg?v=2', type: 'image/svg+xml' },
+      { url: '/icon.svg?v=2', type: 'image/svg+xml' },
     ],
-    shortcut: '/favicon.svg',
+    shortcut: '/favicon.svg?v=2',
   },
   openGraph: {
     title: "Pratik Poudel's Portfolio",
@@ -58,6 +58,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="apple-touch-icon" sizes="180x180" href="/Professional-Portfolio/apple-touch-icon.png?v=2" />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>
