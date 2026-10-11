@@ -34,6 +34,9 @@ jobs:
       - name: Prepare local resume asset
         run: cp components/resume.pdf public/resume.pdf
 
+      - name: Generate iOS bookmark icon
+        run: npx --yes sharp-cli -i public/favicon.svg -o public/apple-touch-icon.png resize 180 180
+
       - name: Build static Next.js site
         run: npm run build
 
