@@ -97,7 +97,7 @@ const commands: Record<string, () => string[]> = {
   contact: () => [
     'Contact Information:',
     '  Name:     Pratik Poudel',
-    '  Email:    See the Contact page',
+    ['  Email:    pyatrick', 'gmail.com'].join('@'),
   ],
   repo: () => [
     'Repository: pyatrick666/Professional-Portfolio',
