@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { VscLinkExternal } from 'react-icons/vsc';
+import Link from 'next/link';
+import { VscArrowRight, VscLinkExternal } from 'react-icons/vsc';
 
 import { Project } from '@/types';
 import { assetPath } from '@/lib/assets';
@@ -13,16 +14,11 @@ interface ProjectCardProps {
 
 const ProjectCard = ({ project, index }: ProjectCardProps) => {
   return (
-    <a
-      href={project.link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={styles.card}
-    >
+    <article className={styles.card}>
       <div className={styles.number}>
         <span>{String(index).padStart(2, '0')}</span>
       </div>
-      
+
       <div className={styles.content}>
         <div className={styles.main}>
           <div className={styles.header}>
@@ -37,18 +33,20 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
             </div>
             <h3 className={styles.title}>{project.title}</h3>
           </div>
-          
+
           <p className={styles.description}>{project.description}</p>
         </div>
 
         <div className={styles.action}>
-          <span className={styles.link}>
-            View Project
-            <VscLinkExternal size={12} />
-          </span>
+          <Link href={`/projects/${project.slug}`} className={styles.link}>
+            Read case study <VscArrowRight size={13} />
+          </Link>
+          <a href={project.link} target="_blank" rel="noopener noreferrer" className={styles.link}>
+            View project <VscLinkExternal size={12} />
+          </a>
         </div>
       </div>
-    </a>
+    </article>
   );
 };
 
