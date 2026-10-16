@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { VscArrowRight, VscLinkExternal } from 'react-icons/vsc';
+import { VscArrowRight } from 'react-icons/vsc';
 
 import { Project } from '@/types';
 import { assetPath } from '@/lib/assets';
