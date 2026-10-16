@@ -13,7 +13,7 @@ interface TerminalLine {
 
 const commands: Record<string, () => string[]> = {
   help: () => [
-    'Pratik Poudel (pyatrick666) — Interactive Terminal',
+    'Pratik Poudel — Interactive Terminal',
     '',
     'Available commands:',
     '  help      - Show all commands',
@@ -99,7 +99,6 @@ const commands: Record<string, () => string[]> = {
   contact: () => [
     'Contact Information:',
     '  Name:     Pratik Poudel',
-    '  Username: pyatrick666',
     '  Email:    pyatrick666@gmail.com',
   ],
   themes: () => [
@@ -110,7 +109,7 @@ const commands: Record<string, () => string[]> = {
   ],
   status: () => [
     'Portfolio status: active',
-    'Owner: Pratik Poudel (pyatrick666)',
+    'Owner: Pratik Poudel',
     'Focus: Information Technology / Software Development',
     'Repository: Professional-Portfolio',
   ],
@@ -125,12 +124,11 @@ const commands: Record<string, () => string[]> = {
   ],
   date: () => [new Date().toString()],
   whoami: () => [
-    'pyatrick666',
     'Pratik Poudel',
     'Software Engineering • Full-Stack Development • Networking • Mobile Development',
   ],
   ls: () => ['about/', 'education/', 'projects/', 'skills/', 'contact/', 'README.md'],
-  pwd: () => ['/home/pyatrick666/portfolio'],
+  pwd: () => ['/home/pratik/portfolio'],
 };
 
 const processCommand = (input: string): TerminalLine[] => {
@@ -170,7 +168,6 @@ interface TerminalProps {
 const Terminal = ({ onToggle }: TerminalProps) => {
   const [lines, setLines] = useState<TerminalLine[]>([
     { type: 'output', content: "Welcome to Pratik Poudel's interactive terminal!" },
-    { type: 'output', content: 'Username: pyatrick666' },
     { type: 'output', content: 'Type "help" for available commands.' },
     { type: 'output', content: '' },
   ]);
