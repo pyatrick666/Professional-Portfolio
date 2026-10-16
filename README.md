@@ -93,7 +93,6 @@ Every update pushed to the `main` branch can trigger the deployment workflow, wh
 
 ## 📬 Contact
 
-- **GitHub:** https://github.com/pyatrick666
 - **LinkedIn:** https://www.linkedin.com/in/pratik-poudel-b3264a263/
 - **Email:** pyatrick666@gmail.com
 
