@@ -99,7 +99,7 @@ const commands: Record<string, () => string[]> = {
   contact: () => [
     'Contact Information:',
     '  Name:     Pratik Poudel',
-    '  Email:    pyatrick666@gmail.com',
+    '  Email:    See the Contact page',
   ],
   themes: () => [
     'Available themes:',
