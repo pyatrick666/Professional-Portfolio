@@ -17,7 +17,6 @@ export default function GithubPage() {
   const [user, setUser] = useState<User | null>(null);
   const [repos, setRepos] = useState<Repo[]>([]);
   const [loading, setLoading] = useState(true);
-  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const refreshGithubData = useCallback(async (isInitial = false) => {
@@ -57,7 +56,6 @@ export default function GithubPage() {
 
       setUser(nextUser);
       setRepos(nextRepos);
-      setLastUpdated(new Date());
       setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unable to refresh GitHub data right now.');
@@ -208,12 +206,6 @@ export default function GithubPage() {
             {!repos.length && loading && <p>Loading your GitHub repositories…</p>}
             {!repos.length && !loading && !error && <p>No repositories to display yet.</p>}
           </div>
-          {lastUpdated && (
-            <p className={styles.sectionTitle} aria-live="polite">
-              Last synced: {lastUpdated.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-              {' · '}refreshes automatically every 10 minutes
-            </p>
-          )}
         </section>
       </div>
     </div>
