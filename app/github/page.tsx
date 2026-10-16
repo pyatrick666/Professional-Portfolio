@@ -17,6 +17,7 @@ export default function GithubPage() {
   const [user, setUser] = useState<User | null>(null);
   const [repos, setRepos] = useState<Repo[]>([]);
   const [loading, setLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const refreshGithubData = useCallback(async (isInitial = false) => {
@@ -56,6 +57,7 @@ export default function GithubPage() {
 
       setUser(nextUser);
       setRepos(nextRepos);
+      setLastUpdated(new Date());
       setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unable to refresh GitHub data right now.');
