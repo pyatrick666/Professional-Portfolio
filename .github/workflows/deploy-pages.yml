@@ -5,6 +5,9 @@ on:
     branches:
       - main
   workflow_dispatch:
+  schedule:
+    # Refresh the profile/repository snapshot once an hour.
+    - cron: '17 * * * *'
 
 permissions:
   contents: read
@@ -30,6 +33,68 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Fetch GitHub profile and repository data
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          curl --fail --silent --show-error --retry 3 --retry-all-errors --retry-delay 2 \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/users/pyatrick666" \
+            --output /tmp/github-user.json
+
+          curl --fail --silent --show-error --retry 3 --retry-all-errors --retry-delay 2 \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/users/pyatrick666/repos?sort=pushed&per_page=100" \
+            --output /tmp/github-repos.json
+
+          mkdir -p public
+
+          jq -n \
+            --slurpfile user /tmp/github-user.json \
+            --slurpfile repos /tmp/github-repos.json \
+            '{
+              user: ($user[0] | {
+                login,
+                avatar_url,
+                public_repos,
+                followers
+              }),
+              repos: (
+                $repos[0]
+                | map(select(
+                    .name != "Professional-Portfolio"
+                    and .name != "ePortfolio"
+                    and .name != "RaspberryPi-PICO"
+                    and .name != "CarRentalApp"
+                  ))
+                | sort_by(-(.stargazers_count // 0))
+                | .[:6]
+                | map({
+                    id,
+                    name,
+                    description: (.description // ""),
+                    language: (.language // ""),
+                    watchers: (.watchers_count // 0),
+                    forks: (.forks_count // .forks // 0),
+                    stargazers_count: (.stargazers_count // 0),
+                    html_url,
+                    homepage: (.homepage // "")
+                  })
+              )
+            }
+            | if .user.login == "pyatrick666" and (.repos | type == "array")
+              then .
+              else error("GitHub profile data did not match the expected schema")
+              end' > public/github-data.json
+
+          jq -e '.user.login == "pyatrick666" and (.repos | length <= 6)' public/github-data.json
 
       - name: Prepare local resume asset
         run: cp components/resume.pdf public/resume.pdf
