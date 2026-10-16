@@ -123,9 +123,24 @@ export default function GithubPage() {
         </header>
 
         {error && (
-          <p role="status" aria-live="polite">
-            {error}
-          </p>
+          <div role="status" aria-live="polite" className={styles.section}>
+            <p>{error}</p>
+            <button
+              type="button"
+              onClick={() => void refreshGithubData(true)}
+              style={{
+                marginTop: 8,
+                padding: '8px 12px',
+                borderRadius: 6,
+                border: '1px solid var(--explorer-border)',
+                background: 'transparent',
+                color: 'var(--text-color)',
+                cursor: 'pointer',
+              }}
+            >
+              Try again
+            </button>
+          </div>
         )}
 
         {/* Stats */}
@@ -152,7 +167,7 @@ export default function GithubPage() {
               <span className={styles.statValue}>
                 {user ? repos.reduce((acc, repo) => acc + repo.stargazers_count, 0) : '—'}
               </span>
-              <span className={styles.statLabel}>Total Stars</span>
+              <span className={styles.statLabel}>Featured Repo Stars</span>
             </div>
           </div>
 
@@ -162,7 +177,7 @@ export default function GithubPage() {
               <span className={styles.statValue}>
                 {user ? repos.reduce((acc, repo) => acc + repo.forks, 0) : '—'}
               </span>
-              <span className={styles.statLabel}>Total Forks</span>
+              <span className={styles.statLabel}>Featured Repo Forks</span>
             </div>
           </div>
         </div>
