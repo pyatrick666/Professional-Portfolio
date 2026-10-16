@@ -26,7 +26,6 @@ export default function HomePage() {
           </div>
           <div className={styles.actions}>
             <Link href="/projects" className={styles.primaryAction}><span>Explore Projects</span><VscArrowRight size={18} /></Link>
-            <Link href="/projects/chessmate" className={styles.secondaryAction}><span>ChessMate Case Study</span></Link>
             <Link href="/about" className={styles.secondaryAction}><span>About Me</span></Link>
             <a href={assetPath('/resume.pdf')} target="_blank" rel="noopener noreferrer" className={styles.secondaryAction}><span>View Resume</span></a>
           </div>
