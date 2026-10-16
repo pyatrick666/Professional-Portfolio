@@ -13,7 +13,6 @@ export default function HomePage() {
             <div className={styles.icon}><VscCode size={32} /></div>
           </div>
           <div className={styles.intro}>
-            <p className={styles.greeting}>Software developer in progress · Open to internships</p>
             <h1 className={styles.name}>Pratik Poudel</h1>
             <p className={styles.role}>Software Engineering • Full-Stack Development • Networking • Mobile Development</p>
             <div className={styles.divider} />
