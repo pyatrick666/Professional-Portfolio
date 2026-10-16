@@ -75,18 +75,18 @@
   max-width: 480px;
 }
 
- .caseStudyList {
+.caseStudyList {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin: 0;
+  margin: -18px 0 36px 28px;
 }
 .caseStudyLink {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  margin: -18px 0 36px 28px;
+  margin: 0;
   padding: 18px 20px;
   border: 1px solid rgba(var(--accent-color-rgb), .28);
   border-radius: 8px;
@@ -102,7 +102,7 @@
 }
 .caseStudyLink > span { display: flex; flex-direction: column; gap: 7px; }
 .caseStudyLink strong { font-size: 14px; font-weight: 600; display: flex; flex-wrap: wrap; align-items: center; gap: 9px; }
-.caseStudyType { font: 10px var(--font-mono); color: var(--accent-color); padding: 3px 6px; border: 1px solid rgba(var(--accent-color-rgb), .25); border-radius: 4px; }
+.caseStudyLink .caseStudyType { font: 10px var(--font-mono); color: var(--accent-color); padding: 3px 6px; border: 1px solid rgba(var(--accent-color-rgb), .25); border-radius: 4px; line-height: 1.4; }
 .caseStudyLink small { color: rgba(255,255,255,.58); font-size: 12px; line-height: 1.6; }
 .caseStudyLink > svg { flex-shrink: 0; color: var(--accent-color); }
 
