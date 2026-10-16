@@ -11,15 +11,16 @@ export const metadata: Metadata = {
     template: 'Pratik Poudel | %s',
   },
   description:
-    "Pratik Poudel is an avid full stack web developer building websites and applications you'd love to use",
+    'Pratik Poudel is an Information Technology student focused on software engineering, full-stack development, networking, mobile apps, and practical projects.',
   keywords: [
     'pratik poudel',
     'pratik',
     'poudel',
-    'web developer portfolio',
-    'pratik web developer',
-    'pratik developer',
-    'mern stack',
+    'software engineering portfolio',
+    'full-stack development',
+    'mobile application development',
+    'networking',
+    'computer systems engineering',
     'pratik poudel portfolio',
   ],
   icons: {
@@ -33,8 +34,7 @@ export const metadata: Metadata = {
     title: "Pratik Poudel's Portfolio",
     description:
       "Software Engineering • Full-Stack Development • Networking • Mobile Development",
-    images: ['https://pyatrick666.github.io/ePortfolio/profile.jpg'],
-    url: 'https://github.com/pyatrick666/Professional-Portfolio',
+    url: 'https://pyatrick666.github.io/Professional-Portfolio/',
   },
   twitter: {
     card: 'summary_large_image',
