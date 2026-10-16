@@ -13,10 +13,6 @@ import styles from '@/styles/GithubPage.module.css';
 const GITHUB_USERNAME = 'pyatrick666';
 const REFRESH_INTERVAL = 10 * 60 * 1000;
 
-export const metadata = {
-  title: 'GitHub',
-};
-
 export default function GithubPage() {
   const [user, setUser] = useState<User | null>(null);
   const [repos, setRepos] = useState<Repo[]>([]);
@@ -71,6 +67,7 @@ export default function GithubPage() {
   }, []);
 
   useEffect(() => {
+    document.title = 'GitHub | Pratik Poudel';
     void refreshGithubData(true);
 
     const interval = window.setInterval(() => {
