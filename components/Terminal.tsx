@@ -40,7 +40,7 @@ const commands: Record<string, () => string[]> = {
     'BSc (Hons) Information Technology student focused on',
     'software development, web development, and computer systems.',
     '',
-    'Currently interested in internships in full-stack development,',
+    'Open for hire or internship opportunities in full-stack development,',
     'networking, and general software development.',
   ],
   skills: () => [
@@ -71,7 +71,7 @@ const commands: Record<string, () => string[]> = {
     '               ISMT College, Nepal',
     '               Expected graduation: 2028',
     '',
-    'Internship interests:',
+    'Career focus:',
     '  • Full-stack development',
     '  • Networking',
     '  • Software development',
