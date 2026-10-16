@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { VscTerminal, VscClose } from 'react-icons/vsc';
 
-import { THEME_KEYS } from '@/lib/themes';
 import styles from '@/styles/Terminal.module.css';
 
 interface TerminalLine {
@@ -23,8 +22,7 @@ const commands: Record<string, () => string[]> = {
     '  experience - Education and career focus',
     '  education - Education details',
     '  contact   - Contact information',
-    '  repo      - Open this repository',
-    '  themes    - List available themes',
+    '  repo      - Show repository details',
     '  status    - Portfolio status',
     '  tree      - Show portfolio structure',
     '  ls        - List directory contents',
@@ -101,11 +99,9 @@ const commands: Record<string, () => string[]> = {
     '  Name:     Pratik Poudel',
     '  Email:    See the Contact page',
   ],
-  themes: () => [
-    'Available themes:',
-    ...THEME_KEYS.map((theme, i) => `  ${theme}${i === 0 ? '  (default)' : ''}`),
-    '',
-    'Select a theme from the Themes panel to change it.',
+  repo: () => [
+    'Repository: pyatrick666/Professional-Portfolio',
+    'Source: github.com/pyatrick666/Professional-Portfolio',
   ],
   status: () => [
     'Portfolio status: active',
@@ -114,12 +110,14 @@ const commands: Record<string, () => string[]> = {
     'Repository: Professional-Portfolio',
   ],
   tree: () => [
-    'portfolio/',
-    '├── about/',
-    '├── education/',
-    '├── projects/',
-    '├── skills/',
-    '├── contact/',
+    'Professional-Portfolio/',
+    '├── app/          Pages and routes',
+    '├── components/   Reusable UI components',
+    '├── data/         Project data',
+    '├── lib/          Shared utilities and themes',
+    '├── public/       Icons and static assets',
+    '├── styles/       CSS modules and global styles',
+    '├── types/        TypeScript types',
     '└── README.md',
   ],
   date: () => [new Date().toString()],
@@ -127,8 +125,8 @@ const commands: Record<string, () => string[]> = {
     'Pratik Poudel',
     'Software Engineering • Full-Stack Development • Networking • Mobile Development',
   ],
-  ls: () => ['about/', 'education/', 'projects/', 'skills/', 'contact/', 'README.md'],
-  pwd: () => ['/home/pratik/portfolio'],
+  ls: () => ['app/', 'components/', 'data/', 'lib/', 'public/', 'styles/', 'types/', 'README.md'],
+  pwd: () => ['/Professional-Portfolio'], 
 };
 
 const processCommand = (input: string): TerminalLine[] => {
@@ -142,10 +140,6 @@ const processCommand = (input: string): TerminalLine[] => {
   const args = parts.slice(1);
 
   if (cmd === 'clear') return [];
-
-  const externalLinks: Record<string, string> = {
-    repo: 'https://github.com/pyatrick666/Professional-Portfolio',
-  };
 
   if (cmd === 'echo') {
     lines.push({ type: 'output', content: args.join(' ') });
