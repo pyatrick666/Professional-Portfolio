@@ -1,4 +1,6 @@
-import { Metadata } from 'next';
+'use client';
+
+import { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import GitHubCalendar from 'react-github-calendar';
 import { VscRepo, VscPerson, VscStarEmpty, VscRepoForked, VscLinkExternal, VscGithub } from 'react-icons/vsc';
@@ -8,49 +10,86 @@ import { Repo, User } from '@/types';
 
 import styles from '@/styles/GithubPage.module.css';
 
-export const metadata: Metadata = {
+const GITHUB_USERNAME = 'pyatrick666';
+const REFRESH_INTERVAL = 10 * 60 * 1000;
+
+export const metadata = {
   title: 'GitHub',
 };
 
-export const revalidate = 600;
+export default function GithubPage() {
+  const [user, setUser] = useState<User | null>(null);
+  const [repos, setRepos] = useState<Repo[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-async function getGithubData() {
-  const userRes = await fetch(
-    `https://api.github.com/users/${'pyatrick666'}`
-  );
-  if (!userRes.ok) {
-    throw new Error(`Failed to fetch user: ${userRes.status}`);
-  }
-  const user: User = await userRes.json();
+  const refreshGithubData = useCallback(async (isInitial = false) => {
+    if (isInitial) setLoading(true);
 
-  const repoRes = await fetch(
-    `https://api.github.com/users/${'pyatrick666'}/repos?sort=pushed&per_page=100`
-  );
-  if (!repoRes.ok) {
-    throw new Error(`Failed to fetch repos: ${repoRes.status}`);
-  }
-  const allRepos: Repo[] = await repoRes.json();
+    try {
+      const [userRes, repoRes] = await Promise.all([
+        fetch(`https://api.github.com/users/${GITHUB_USERNAME}`, {
+          cache: 'no-store',
+          headers: { Accept: 'application/vnd.github+json' },
+        }),
+        fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=pushed&per_page=100`, {
+          cache: 'no-store',
+          headers: { Accept: 'application/vnd.github+json' },
+        }),
+      ]);
 
-  // Keep the Popular Repositories section focused on the user's other work.
-  // Exclude both portfolio repositories and the two repositories previously
-  // promoted as featured work.
-  const excludedRepos = new Set([
-    'Professional-Portfolio',
-    'ePortfolio',
-    'RaspberryPi-PICO',
-    'CarRentalApp',
-  ]);
+      if (!userRes.ok || !repoRes.ok) {
+        throw new Error('GitHub is temporarily unavailable. Showing the latest data we could load.');
+      }
 
-  const repos = allRepos
-    .filter((repo) => !excludedRepos.has(repo.name))
-    .sort((a, b) => b.stargazers_count - a.stargazers_count)
-    .slice(0, 6);
+      const nextUser: User = await userRes.json();
+      const allRepos: Repo[] = await repoRes.json();
 
-  return { user, repos };
-}
+      // Keep the existing Popular Repositories exclusions.
+      const excludedRepos = new Set([
+        'Professional-Portfolio',
+        'ePortfolio',
+        'RaspberryPi-PICO',
+        'CarRentalApp',
+      ]);
 
-export default async function GithubPage() {
-  const { user, repos } = await getGithubData();
+      const nextRepos = allRepos
+        .filter((repo) => !excludedRepos.has(repo.name))
+        .sort((a, b) => b.stargazers_count - a.stargazers_count)
+        .slice(0, 6);
+
+      setUser(nextUser);
+      setRepos(nextRepos);
+      setLastUpdated(new Date());
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unable to refresh GitHub data right now.');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void refreshGithubData(true);
+
+    const interval = window.setInterval(() => {
+      void refreshGithubData();
+    }, REFRESH_INTERVAL);
+
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === 'visible') {
+        void refreshGithubData();
+      }
+    };
+
+    document.addEventListener('visibilitychange', refreshWhenVisible);
+
+    return () => {
+      window.clearInterval(interval);
+      document.removeEventListener('visibilitychange', refreshWhenVisible);
+    };
+  }, [refreshGithubData]);
 
   return (
     <div className={styles.page}>
@@ -58,22 +97,27 @@ export default async function GithubPage() {
         {/* Header */}
         <header className={styles.header}>
           <div className={styles.profile}>
-            <Image
-              src={user.avatar_url}
-              className={styles.avatar}
-              alt={user.login}
-              width={80}
-              height={80}
-              priority
-            />
+            {user ? (
+              <Image
+                src={user.avatar_url}
+                className={styles.avatar}
+                alt={user.login}
+                width={80}
+                height={80}
+                priority
+                unoptimized
+              />
+            ) : (
+              <div className={styles.avatar} aria-label="Loading GitHub avatar" />
+            )}
             <div className={styles.profileInfo}>
-              <h1 className={styles.name}>{user.login}</h1>
-              <span className={styles.handle}>@{user.login}</span>
+              <h1 className={styles.name}>{user?.login ?? GITHUB_USERNAME}</h1>
+              <span className={styles.handle}>@{user?.login ?? GITHUB_USERNAME}</span>
             </div>
           </div>
 
           <a
-            href={`https://github.com/${user.login}`}
+            href={`https://github.com/${GITHUB_USERNAME}`}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.profileLink}
@@ -84,47 +128,45 @@ export default async function GithubPage() {
           </a>
         </header>
 
+        {error && (
+          <p role="status" aria-live="polite">
+            {error}
+          </p>
+        )}
+
         {/* Stats */}
-        <div className={styles.statsGrid}>
+        <div className={styles.statsGrid} aria-busy={loading}>
           <div className={styles.statCard}>
-            <div className={styles.statIcon}>
-              <VscRepo size={20} />
-            </div>
+            <div className={styles.statIcon}><VscRepo size={20} /></div>
             <div className={styles.statInfo}>
-              <span className={styles.statValue}>{user.public_repos}</span>
+              <span className={styles.statValue}>{user?.public_repos ?? '—'}</span>
               <span className={styles.statLabel}>Repositories</span>
             </div>
           </div>
 
           <div className={styles.statCard}>
-            <div className={styles.statIcon}>
-              <VscPerson size={20} />
-            </div>
+            <div className={styles.statIcon}><VscPerson size={20} /></div>
             <div className={styles.statInfo}>
-              <span className={styles.statValue}>{user.followers}</span>
+              <span className={styles.statValue}>{user?.followers ?? '—'}</span>
               <span className={styles.statLabel}>Followers</span>
             </div>
           </div>
 
           <div className={styles.statCard}>
-            <div className={styles.statIcon}>
-              <VscStarEmpty size={20} />
-            </div>
+            <div className={styles.statIcon}><VscStarEmpty size={20} /></div>
             <div className={styles.statInfo}>
               <span className={styles.statValue}>
-                {repos.reduce((acc, repo) => acc + repo.stargazers_count, 0)}
+                {user ? repos.reduce((acc, repo) => acc + repo.stargazers_count, 0) : '—'}
               </span>
               <span className={styles.statLabel}>Total Stars</span>
             </div>
           </div>
 
           <div className={styles.statCard}>
-            <div className={styles.statIcon}>
-              <VscRepoForked size={20} />
-            </div>
+            <div className={styles.statIcon}><VscRepoForked size={20} /></div>
             <div className={styles.statInfo}>
               <span className={styles.statValue}>
-                {repos.reduce((acc, repo) => acc + repo.forks, 0)}
+                {user ? repos.reduce((acc, repo) => acc + repo.forks, 0) : '—'}
               </span>
               <span className={styles.statLabel}>Total Forks</span>
             </div>
@@ -136,7 +178,7 @@ export default async function GithubPage() {
           <h2 className={styles.sectionTitle}>Contribution Activity</h2>
           <div className={styles.contributions}>
             <GitHubCalendar
-              username={'pyatrick666'!}
+              username={GITHUB_USERNAME}
               hideColorLegend
               hideMonthLabels
               colorScheme="dark"
@@ -144,9 +186,7 @@ export default async function GithubPage() {
                 dark: ['#161B22', '#0e4429', '#006d32', '#26a641', '#39d353'],
                 light: ['#161B22', '#0e4429', '#006d32', '#26a641', '#39d353'],
               }}
-              style={{
-                width: '100%',
-              }}
+              style={{ width: '100%' }}
             />
           </div>
         </section>
@@ -156,7 +196,7 @@ export default async function GithubPage() {
           <div className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>Popular Repositories</h2>
             <a
-              href={`https://github.com/${user.login}?tab=repositories`}
+              href={`https://github.com/${GITHUB_USERNAME}?tab=repositories`}
               target="_blank"
               rel="noopener noreferrer"
               className={styles.viewAll}
@@ -166,11 +206,17 @@ export default async function GithubPage() {
             </a>
           </div>
 
-          <div className={styles.reposGrid}>
-            {repos.map((repo) => (
-              <RepoCard key={repo.id} repo={repo} />
-            ))}
+          <div className={styles.reposGrid} aria-busy={loading}>
+            {repos.map((repo) => <RepoCard key={repo.id} repo={repo} />)}
+            {!repos.length && loading && <p>Loading your GitHub repositories…</p>}
+            {!repos.length && !loading && !error && <p>No repositories to display yet.</p>}
           </div>
+          {lastUpdated && (
+            <p className={styles.sectionTitle} aria-live="polite">
+              Last synced: {lastUpdated.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              {' · '}refreshes automatically every 10 minutes
+            </p>
+          )}
         </section>
       </div>
     </div>
