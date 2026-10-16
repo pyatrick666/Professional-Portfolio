@@ -31,10 +31,20 @@ const ProjectsPage = () => {
           </div>
         </header>
 
-        <Link href="/projects/chessmate" className={styles.caseStudyLink}>
-          <span><strong>Featured case study: ChessMate</strong><small>Explore the problem, architecture, features, and technologies behind my Flutter chess app.</small></span>
-          <VscArrowRight size={18} />
-        </Link>
+        <div className={styles.caseStudyList} aria-label="Project case studies">
+          <Link href="/projects/chessmate" className={styles.caseStudyLink}>
+            <span><strong>ChessMate <small className={styles.caseStudyType}>Mobile development</small></strong><small>Flutter chess app with AI, local play, and online multiplayer.</small></span>
+            <VscArrowRight size={18} />
+          </Link>
+          <Link href="/projects/carrentalapp" className={styles.caseStudyLink}>
+            <span><strong>CarRentalApp <small className={styles.caseStudyType}>Desktop development</small></strong><small>C# Windows application with a MySQL-backed rental workflow.</small></span>
+            <VscArrowRight size={18} />
+          </Link>
+          <Link href="/projects/raspberrypi-pico" className={styles.caseStudyLink}>
+            <span><strong>RaspberryPi-PICO <small className={styles.caseStudyType}>Embedded systems</small></strong><small>Python and RP2040 project focused on temperature and humidity measurements.</small></span>
+            <VscArrowRight size={18} />
+          </Link>
+        </div>
 
         <div className={styles.timeline}>
           {projects.map((project, index) => (
