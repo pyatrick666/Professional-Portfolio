@@ -41,9 +41,6 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
           <Link href={`/projects/${project.slug}`} className={styles.link}>
             Read case study <VscArrowRight size={13} />
           </Link>
-          <a href={project.link} target="_blank" rel="noopener noreferrer" className={styles.link}>
-            View project <VscLinkExternal size={12} />
-          </a>
         </div>
       </div>
     </article>
