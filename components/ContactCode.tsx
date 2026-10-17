@@ -3,8 +3,8 @@ import styles from '@/styles/ContactCode.module.css';
 const contactItems = [
   {
     social: 'website',
-    link: 'pyatrick666.github.io/Professional-Portfolio',
-    href: 'https://pyatrick666.github.io/Professional-Portfolio',
+    link: 'patrickpoudel.com.np',
+    href: 'https://patrickpoudel.com.np',
   },
   {
     social: 'email',
