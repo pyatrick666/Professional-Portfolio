@@ -14,58 +14,56 @@ import {
 import styles from '@/styles/Sidebar.module.css';
 
 const sidebarTopItems = [
-  { Icon: VscFiles, path: '/' },
-  { Icon: VscGithubAlt, path: '/github' },
-  { Icon: VscCode, path: '/projects' },
-  { Icon: VscMail, path: '/contact' },
+  { Icon: VscFiles, path: '/', label: 'Home' },
+  { Icon: VscGithubAlt, path: '/github', label: 'GitHub' },
+  { Icon: VscCode, path: '/projects', label: 'Projects' },
+  { Icon: VscMail, path: '/contact', label: 'Contact' },
 ];
 
 const sidebarBottomItems = [
-  { Icon: VscAccount, path: '/about' },
-  { Icon: VscSettings, path: '/settings' },
+  { Icon: VscAccount, path: '/about', label: 'About' },
+  { Icon: VscSettings, path: '/settings', label: 'Settings' },
 ];
 
 const Sidebar = () => {
   const pathname = usePathname();
 
   return (
-    <aside className={styles.sidebar}>
+    <aside className={styles.sidebar} aria-label="Activity bar">
       <div className={styles.sidebarTop}>
-        {sidebarTopItems.map(({ Icon, path }) => (
-          <Link href={path} key={path}>
-            <div
-              className={`${styles.iconContainer} ${
-                pathname === path && styles.active
-              }`}
-            >
-              <Icon
-                size={16}
-                fill={
-                  pathname === path
-                    ? 'rgb(225, 228, 232)'
-                    : 'rgb(106, 115, 125)'
-                }
-                className={styles.icon}
-              />
-            </div>
-          </Link>
-        ))}
+        {sidebarTopItems.map(({ Icon, path, label }) => {
+          const isCurrentPage = pathname === path;
+
+          return (
+            <Link href={path} key={path} aria-label={label} aria-current={isCurrentPage ? 'page' : undefined}>
+              <div className={`${styles.iconContainer} ${isCurrentPage ? styles.active : ''}`}>
+                <Icon
+                  size={16}
+                  fill={isCurrentPage ? 'rgb(225, 228, 232)' : 'rgb(106, 115, 125)'}
+                  className={styles.icon}
+                  aria-hidden="true"
+                />
+              </div>
+            </Link>
+          );
+        })}
       </div>
       <div className={styles.sidebarBottom}>
-        {sidebarBottomItems.map(({ Icon, path }) => (
-          <div className={styles.iconContainer} key={path}>
-            <Link href={path}>
-              <Icon
-                fill={
-                  pathname === path
-                    ? 'rgb(225, 228, 232)'
-                    : 'rgb(106, 115, 125)'
-                }
-                className={styles.icon}
-              />
-            </Link>
-          </div>
-        ))}
+        {sidebarBottomItems.map(({ Icon, path, label }) => {
+          const isCurrentPage = pathname === path;
+
+          return (
+            <div className={styles.iconContainer} key={path}>
+              <Link href={path} aria-label={label} aria-current={isCurrentPage ? 'page' : undefined}>
+                <Icon
+                  fill={isCurrentPage ? 'rgb(225, 228, 232)' : 'rgb(106, 115, 125)'}
+                  className={styles.icon}
+                  aria-hidden="true"
+                />
+              </Link>
+            </div>
+          );
+        })}
       </div>
     </aside>
   );
