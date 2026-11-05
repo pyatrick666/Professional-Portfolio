@@ -14,11 +14,12 @@ interface TabProps {
 
 const Tab = ({ icon, filename, path }: TabProps) => {
   const pathname = usePathname();
+  const isCurrentPage = pathname === path;
 
   return (
-    <Link href={path}>
-      <div className={styles.tab + (pathname === path ? ' ' + styles.active : '')}>
-        <img src={assetPath(icon)} alt={filename} width="18" height="18" />
+    <Link href={path} aria-current={isCurrentPage ? 'page' : undefined}>
+      <div className={styles.tab + (isCurrentPage ? ' ' + styles.active : '')}>
+        <img src={assetPath(icon)} alt="" aria-hidden="true" width="18" height="18" />
         <p>{filename}</p>
       </div>
     </Link>
