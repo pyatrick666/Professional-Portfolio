@@ -3,8 +3,8 @@ import styles from '@/styles/ContactCode.module.css';
 const contactItems = [
   {
     social: 'website',
-    link: 'patrickpoudel.com.np',
-    href: 'https://patrickpoudel.com.np',
+    link: 'iampratikpoudel.com.np',
+    href: 'https://iampratikpoudel.com.np',
   },
   {
     social: 'email',
@@ -47,7 +47,7 @@ const ContactCode = () => {
       {contactItems.map((item, index) => (
         <p className={styles.line} key={index}>
           &nbsp;&nbsp;&nbsp;{item.social}:{' '}
-          <a href={item.href} target="_blank" rel="noopener">
+          <a href={item.href} target="_blank" rel="noopener noreferrer">
             {item.link}
           </a>
           ;
