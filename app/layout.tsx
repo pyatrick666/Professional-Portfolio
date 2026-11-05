@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     shortcut: `${siteBasePath}/favicon.svg?v=3`,
   },
   openGraph: {
-    images: [{ url: `${siteBasePath}/social-preview.svg`, width: 1200, height: 630, alt: 'Pratik Poudel — Software Engineering Portfolio' }],
+    images: [{ url: `${siteBasePath}/social-preview.png`, width: 1200, height: 630, alt: 'Pratik Poudel — Software Engineering Portfolio' }],
     type: 'website',
     locale: 'en_US',
     siteName: 'Pratik Poudel Portfolio',
