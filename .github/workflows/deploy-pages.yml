@@ -54,12 +54,31 @@ jobs:
             "https://api.github.com/users/pyatrick666/repos?sort=pushed&per_page=100" \
             --output /tmp/github-repos.json
 
+          FROM_DATE="$(date -u -d '1 year ago' +'%Y-%m-%dT00:00:00Z')"
+          TO_DATE="$(date -u +'%Y-%m-%dT23:59:59Z')"
+          jq -n --arg login "pyatrick666" --arg from "$FROM_DATE" --arg to "$TO_DATE" \
+            '{query: "query($login:String!, $from:DateTime!, $to:DateTime!) { user(login:$login) { contributionsCollection(from:$from, to:$to) { contributionCalendar { totalContributions weeks { contributionDays { date contributionCount contributionLevel } } } } } }", variables:{login:$login,from:$from,to:$to}}' \
+            > /tmp/github-contributions-query.json
+
+          curl --fail --silent --show-error --retry 3 --retry-all-errors --retry-delay 2 \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            -H "Content-Type: application/json" \
+            --data @/tmp/github-contributions-query.json \
+            "https://api.github.com/graphql" \
+            --output /tmp/github-contributions.json
+
+          jq -e '.data.user.contributionsCollection.contributionCalendar.weeks | length > 0' /tmp/github-contributions.json
+
           mkdir -p public
 
           jq -n \
             --slurpfile user /tmp/github-user.json \
             --slurpfile repos /tmp/github-repos.json \
+            --slurpfile contributions /tmp/github-contributions.json \
             '{
+              calendar: ($contributions[0].data.user.contributionsCollection.contributionCalendar),
               user: ($user[0] | {
                 login,
                 avatar_url,

@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import GitHubCalendar from 'react-github-calendar';
 import { VscRepo, VscPerson, VscStarEmpty, VscRepoForked, VscLinkExternal, VscGithub } from 'react-icons/vsc';
 
 import RepoCard from '@/components/RepoCard';
@@ -16,6 +15,7 @@ const REFRESH_INTERVAL = 10 * 60 * 1000;
 export default function GithubPage() {
   const [user, setUser] = useState<User | null>(null);
   const [repos, setRepos] = useState<Repo[]>([]);
+  const [calendar, setCalendar] = useState<{ totalContributions: number; weeks: { contributionDays: { date: string; contributionCount: number; contributionLevel: string }[] }[] } | null>(null);
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -47,13 +47,14 @@ export default function GithubPage() {
         throw new Error('GitHub profile data could not be loaded. Please refresh shortly.');
       }
 
-      const data: { user?: User; repos?: Repo[] } = await response.json();
-      if (!data.user || !Array.isArray(data.repos)) {
+      const data: { user?: User; repos?: Repo[]; calendar?: typeof calendar } = await response.json();
+      if (!data.user || !Array.isArray(data.repos) || !data.calendar?.weeks?.length) {
         throw new Error('GitHub profile data is incomplete. Please refresh shortly.');
       }
 
       setUser(data.user);
       setRepos(data.repos);
+      setCalendar(data.calendar);
       setLastUpdated(new Date());
       setError(null);
     } catch (err) {
@@ -185,18 +186,31 @@ export default function GithubPage() {
         {/* Contribution Graph */}
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>Contribution Activity</h2>
-          <div className={styles.contributions}>
-            <GitHubCalendar
-              username={GITHUB_USERNAME}
-              hideColorLegend
-              hideMonthLabels
-              colorScheme="dark"
-              theme={{
-                dark: ['#161B22', '#0e4429', '#006d32', '#26a641', '#39d353'],
-                light: ['#161B22', '#0e4429', '#006d32', '#26a641', '#39d353'],
-              }}
-              style={{ width: '100%' }}
-            />
+          <div className={styles.contributions} aria-label={calendar ? `${calendar.totalContributions} contributions in the last year` : 'Loading contribution activity'}>
+            {calendar ? (
+              <>
+                <div className={styles.contributionSummary}>{calendar.totalContributions.toLocaleString()} contributions in the last year</div>
+                <div className={styles.calendarScroll}>
+                  <div className={styles.calendarGrid} role="grid" aria-label="Contribution activity by day">
+                    {calendar.weeks.map((week, weekIndex) => (
+                      <div className={styles.calendarWeek} role="row" key={weekIndex}>
+                        {week.contributionDays.map((day) => (
+                          <span
+                            key={day.date}
+                            role="gridcell"
+                            className={styles.calendarDay}
+                            data-level={day.contributionCount === 0 ? 0 : Number(day.contributionLevel.replace('FOURTH','4').replace('THIRD','3').replace('SECOND','2').replace('FIRST','1')) || Math.min(4, day.contributionCount)}
+                            title={`${day.contributionCount} contributions on ${day.date}`}
+                            aria-label={`${day.contributionCount} contributions on ${day.date}`}
+                          />
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className={styles.calendarLegend}><span>Less</span>{[0,1,2,3,4].map(level=><span key={level} className={styles.calendarDay} data-level={level} />)}<span>More</span></div>
+              </>
+            ) : loading ? <p>Loading contribution activity…</p> : <p>Contribution activity is temporarily unavailable.</p>}
           </div>
         </section>
 
