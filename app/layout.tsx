@@ -5,10 +5,7 @@ import Layout from '@/components/Layout';
 import '@/styles/globals.css';
 import '@/styles/themes.css';
 
-const siteUrl = 'https://iampratikpoudel.com.np';
-
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
   title: {
     default: 'Pratik Poudel | Portfolio',
     template: 'Pratik Poudel | %s',
@@ -28,21 +25,16 @@ export const metadata: Metadata = {
   ],
   icons: {
     icon: [
-      { url: '/favicon.svg?v=3', type: 'image/svg+xml' },
-      { url: '/icon.svg?v=3', type: 'image/svg+xml' },
+      { url: '/Professional-Portfolio/favicon.svg?v=3', type: 'image/svg+xml' },
+      { url: '/Professional-Portfolio/icon.svg?v=3', type: 'image/svg+xml' },
     ],
-    shortcut: '/favicon.svg?v=3',
-  },
-  alternates: {
-    canonical: '/',
+    shortcut: '/Professional-Portfolio/favicon.svg?v=3',
   },
   openGraph: {
     title: "Pratik Poudel's Portfolio",
     description:
       "Software Engineering • Full-Stack Development • Networking • Mobile Development",
-    url: siteUrl,
-    siteName: "Pratik Poudel's Portfolio",
-    type: 'website',
+    url: 'https://pyatrick666.github.io/Professional-Portfolio/',
   },
   twitter: {
     card: 'summary_large_image',
@@ -66,7 +58,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/Professional-Portfolio/apple-touch-icon.png?v=3" />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>
