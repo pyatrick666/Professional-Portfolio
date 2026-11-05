@@ -2,9 +2,7 @@
 
 A personal developer portfolio built with **Next.js and TypeScript**, presented through a Visual Studio Code-inspired interface. It showcases my background, technical skills, projects, GitHub activity, and ways to get in touch.
 
-## 🌐 Live Portfolio
 
-**[View the live portfolio](https://pyatrick666.github.io/Professional-Portfolio/)**
 
 ## 👨‍💻 About
 
@@ -51,45 +49,6 @@ Professional-Portfolio/
 ├── package.json         # Project dependencies and scripts
 └── README.md
 ```
-
-## 💻 Run Locally
-
-Clone the repository:
-
-```bash
-git clone https://github.com/pyatrick666/Professional-Portfolio.git
-cd Professional-Portfolio
-```
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Start the development server:
-
-```bash
-npm run dev
-```
-
-Open the local development server shown by Next.js in your browser.
-
-## 🏗️ Build
-
-Create a production build with:
-
-```bash
-npm run build
-```
-
-The project is configured for static export and deployment through GitHub Pages.
-
-## 📦 Deployment
-
-The portfolio is deployed to **GitHub Pages** using **GitHub Actions**.
-
-Every update pushed to the `main` branch can trigger the deployment workflow, which builds the Next.js application and publishes the generated static site.
 
 ## 📬 Contact
 
