@@ -22,7 +22,7 @@ export default function Warehouse360CaseStudy() {
           and teaches practical cyber-awareness through risk hotspots and short scenarios.
         </p>
         <div className={styles.actions}>
-          <a href="https://pyatrick666/360-VR-" target="_blank" rel="noopener noreferrer" className={styles.secondary}>Source repository <VscLinkExternal size={13} /></a>
+          <a href="https://github.com/pyatrick666/360-VR-" target="_blank" rel="noopener noreferrer" className={styles.secondary}>Source repository <VscLinkExternal size={13} /></a>
           <a href="https://pyatrick666.github.io/360-VR-/" target="_blank" rel="noopener noreferrer" className={styles.primary}><VscGlobe size={17} /> Launch experience <VscLinkExternal size={13} /></a>
         </div>
         <section className={styles.panel}>
