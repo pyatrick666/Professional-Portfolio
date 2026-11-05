@@ -199,7 +199,7 @@ export default function GithubPage() {
                             key={day.date}
                             role="gridcell"
                             className={styles.calendarDay}
-                            data-level={day.contributionCount === 0 ? 0 : Number(day.contributionLevel.replace('FOURTH','4').replace('THIRD','3').replace('SECOND','2').replace('FIRST','1')) || Math.min(4, day.contributionCount)}
+                            data-level={day.contributionLevel === 'FOURTH_QUARTILE' ? 4 : day.contributionLevel === 'THIRD_QUARTILE' ? 3 : day.contributionLevel === 'SECOND_QUARTILE' ? 2 : day.contributionLevel === 'FIRST_QUARTILE' ? 1 : 0}
                             title={`${day.contributionCount} contributions on ${day.date}`}
                             aria-label={`${day.contributionCount} contributions on ${day.date}`}
                           />
