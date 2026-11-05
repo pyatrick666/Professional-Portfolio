@@ -1,4 +1,5 @@
 .titlebar {
+  position: relative;
   background: var(--titlebar-bg);
   flex: 0 0 30px;
   height: 30px;
@@ -13,7 +14,7 @@
   border-bottom: 1px solid #191d20;
 }
 .items { flex: 1; display: flex; margin-right: auto; margin-left: 0.5rem; }
-.title { flex: 1; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.title { position: absolute; left: 50%; transform: translateX(-50%); width: max-content; max-width: calc(100% - 220px); margin: 0; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: none; }
 .items > * { padding: 0 0.5rem; cursor: pointer; }
 .menuItem:hover { background-color: rgba(255,255,255,.1); border-radius: 4px; }
 .windowButtons { flex: 0 0 auto; display: flex; align-items: center; margin-left: auto; }
@@ -28,7 +29,7 @@
 }
 @media screen and (max-width: 600px) {
   .titlebar { padding: 0 0.4rem; font-size: 0.75rem; }
-  .title { text-align: left; }
+  .title { left: 50%; transform: translateX(-50%); max-width: calc(100% - 36px); text-align: center; }
   .windowButtons { display: none; }
   .icon { flex-shrink: 0; }
 }
