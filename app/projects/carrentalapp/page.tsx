@@ -96,9 +96,10 @@ export default function CarRentalAppCaseStudy() {
           <h2>Data and validation approach</h2>
           <p>
             Database operations are grouped in BookingRepos instead of being scattered across
-            form event handlers. Parameterized SQL is used for inserts and search filters, reducing
-            the risk of treating user-entered text as SQL. The form also checks required inputs
-            before attempting to save.
+            form event handlers. Booking inserts and the repository's SearchBooking method use
+            parameterized SQL. The current records window, however, filters the rows it has already
+            loaded into a DataTable; it does not call SearchBooking for each search. The form also
+            checks required inputs before attempting to save.
           </p>
         </section>
         <section className={styles.section}>

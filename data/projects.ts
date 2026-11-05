@@ -37,7 +37,7 @@ export const projects: Project[] = [
   },
   {
     title: 'CarRentalApp',
-    description: 'A Windows desktop car rental application designed to manage vehicles, rentals, and customer information through a dedicated desktop interface.',
+    description: 'A C# Windows Forms booking application with customer and rental details, SQL Server LocalDB persistence, and a searchable rental-records view.',
     logo: '/logos/carrental.svg',
     link: 'https://github.com/pyatrick666/CarRentalApp',
     slug: 'carrentalapp',
