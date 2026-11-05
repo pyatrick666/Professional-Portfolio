@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101820"/><stop offset="1" stop-color="#182b35"/></linearGradient><linearGradient id="accent" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#42d392"/><stop offset="1" stop-color="#35a7ff"/></linearGradient></defs>
+<rect width="1200" height="630" fill="url(#bg)"/><rect x="44" y="44" width="1112" height="542" rx="24" fill="none" stroke="#ffffff" stroke-opacity=".12"/>
+<rect x="84" y="92" width="12" height="446" rx="6" fill="url(#accent)"/>
+<text x="132" y="150" fill="#8b9aa6" font-family="monospace" font-size="24">PORTFOLIO / 2026</text>
+<text x="128" y="285" fill="#f4f7fa" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="76">Pratik Poudel</text>
+<text x="132" y="355" fill="#c3d0d9" font-family="Arial, Helvetica, sans-serif" font-size="34">Software Engineering · Full-Stack Development</text>
+<text x="132" y="408" fill="#c3d0d9" font-family="Arial, Helvetica, sans-serif" font-size="34">Networking · Mobile Development</text>
+<rect x="132" y="472" width="350" height="56" rx="8" fill="#233743" stroke="#3b5666"/>
+<text x="158" y="508" fill="#66d9a6" font-family="monospace" font-size="22">pyatrick666.github.io</text>
+<g transform="translate(1000 100)" fill="none" stroke="#4aa9ff" stroke-opacity=".45" stroke-width="3"><rect width="92" height="92" rx="18"/><path d="M26 26h40v40H26zM26 46h40M46 26v40"/></g>
+</svg>
