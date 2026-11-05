@@ -37,6 +37,9 @@
 
 .content {
   min-width: 0;
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
   padding: 2rem;
   color: var(--text-color);
   font-family: 'JetBrains Mono', monospace;
