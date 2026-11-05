@@ -34,3 +34,9 @@
 .footer p { margin: 0; color: rgba(255,255,255,.65); font-size: 14px; }
 .footer a { display: inline-flex; align-items: center; gap: 8px; color: var(--accent-color); text-decoration: none; font-size: 13px; }
 @media (max-width: 600px) { .container { padding: 30px 22px 52px; } .lede { font-size: 15px; } .facts, .featureGrid { grid-template-columns: 1fr; } .architecture { flex-direction: column; } .architecture b { transform: rotate(90deg); } }
+
+.projectArtwork { margin: 28px 0 8px; overflow: hidden; border: 1px solid var(--explorer-border); border-radius: 10px; background: rgba(255,255,255,.025); }
+.projectArtwork img { display: block; width: 100%; height: auto; max-height: 420px; object-fit: contain; }
+.projectArtwork figcaption { padding: 10px 14px; border-top: 1px solid var(--explorer-border); color: rgba(255,255,255,.48); font: 11px var(--font-mono); }
+.facts a { color: var(--accent-color); text-decoration: none; }
+.facts a:hover { text-decoration: underline; }
