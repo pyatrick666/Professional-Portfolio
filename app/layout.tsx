@@ -5,39 +5,68 @@ import Layout from '@/components/Layout';
 import '@/styles/globals.css';
 import '@/styles/themes.css';
 
+const siteUrl = 'https://pyatrick666.github.io';
+const siteBasePath = '/Professional-Portfolio';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
-    default: 'Pratik Poudel | Portfolio',
+    default: 'Pratik Poudel | Software Engineering Portfolio',
     template: 'Pratik Poudel | %s',
   },
   description:
-    'Pratik Poudel is an Information Technology student focused on software engineering, full-stack development, networking, mobile apps, and practical projects.',
+    'Explore the portfolio of Pratik Poudel, an Information Technology student focused on software engineering, full-stack development, networking, and mobile development.',
+  applicationName: 'Pratik Poudel Portfolio',
+  authors: [{ name: 'Pratik Poudel', url: 'https://github.com/pyatrick666' }],
+  creator: 'Pratik Poudel',
+  publisher: 'Pratik Poudel',
+  category: 'technology',
+  alternates: {
+    canonical: `${siteBasePath}/`,
+  },
   keywords: [
-    'pratik poudel',
-    'pratik',
-    'poudel',
+    'Pratik Poudel',
+    'Pratik Poudel portfolio',
     'software engineering portfolio',
     'full-stack development',
     'mobile application development',
     'networking',
     'computer systems engineering',
-    'pratik poudel portfolio',
+    'Flutter developer',
+    'C# developer',
   ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
   icons: {
     icon: [
-      { url: '/Professional-Portfolio/favicon.svg?v=3', type: 'image/svg+xml' },
-      { url: '/Professional-Portfolio/icon.svg?v=3', type: 'image/svg+xml' },
+      { url: `${siteBasePath}/favicon.svg?v=3`, type: 'image/svg+xml' },
+      { url: `${siteBasePath}/icon.svg?v=3`, type: 'image/svg+xml' },
     ],
-    shortcut: '/Professional-Portfolio/favicon.svg?v=3',
+    shortcut: `${siteBasePath}/favicon.svg?v=3`,
   },
   openGraph: {
-    title: "Pratik Poudel's Portfolio",
+    type: 'website',
+    locale: 'en_US',
+    siteName: 'Pratik Poudel Portfolio',
+    title: "Pratik Poudel | Software Engineering Portfolio",
     description:
-      "Software Engineering • Full-Stack Development • Networking • Mobile Development",
-    url: 'https://pyatrick666.github.io/Professional-Portfolio/',
+      'Software Engineering • Full-Stack Development • Networking • Mobile Development',
+    url: `${siteUrl}${siteBasePath}/`,
   },
   twitter: {
-    card: 'summary_large_image',
+    card: 'summary',
+    title: 'Pratik Poudel | Software Engineering Portfolio',
+    description:
+      'Software Engineering • Full-Stack Development • Networking • Mobile Development',
   },
 };
 
