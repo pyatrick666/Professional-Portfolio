@@ -12,7 +12,6 @@ const routes = [
   '/projects/carrentalapp',
   '/github',
   '/contact',
-  '/settings',
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
