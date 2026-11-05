@@ -100,6 +100,33 @@ export default function ChessMateCaseStudy() {
         </section>
 
         <section className={styles.section}>
+          <h2>Player journey and state management</h2>
+          <p>
+            The game supports three entry paths: choose a Stockfish difficulty for a solo match,
+            start a local match for two players on one device, or create/join an online room. During
+            play, the interface coordinates board position, turn, legal actions, clocks, and end-of-game
+            status. Online play adds room membership, server-confirmed moves, reconnect handling, and
+            chat state without treating the client as the authority for chess rules.
+          </p>
+        </section>
+        <section className={styles.section}>
+          <h2>Engineering decisions</h2>
+          <div className={styles.featureGrid}>
+            <div className={styles.feature}><h3>Separate game modes</h3><p>Local play and online play have different synchronization needs, while sharing the chess-focused interface.</p></div>
+            <div className={styles.feature}><h3>Server-side validation</h3><p>The online server validates moves with chess.js so clients cannot independently decide the authoritative board state.</p></div>
+            <div className={styles.feature}><h3>Room-scoped communication</h3><p>WebSocket rooms isolate match updates and chat to the relevant players.</p></div>
+            <div className={styles.feature}><h3>Release automation</h3><p>GitHub Actions checks the project and packages an Android APK for distribution.</p></div>
+          </div>
+        </section>
+        <section className={styles.section}>
+          <h2>Scope and limitations</h2>
+          <p>
+            Online room and chat state is held in server memory, so it is designed as a lightweight
+            multiplayer service rather than a persistent tournament platform. A production expansion
+            could add durable match history, accounts, and broader device testing.
+          </p>
+        </section>
+        <section className={styles.section}>
           <h2>What this project demonstrates</h2>
           <ul className={styles.learningList}>
             <li>Building an Android application with Flutter and Dart.</li>

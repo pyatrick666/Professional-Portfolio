@@ -80,6 +80,32 @@ export default function RaspberryPiPicoCaseStudy() {
         </section>
 
         <section className={styles.section}>
+          <h2>Measurement cycle</h2>
+          <ol className={styles.learningList}>
+            <li>Initialize the I²C bus and LCD, then configure the DHT22 data pin.</li>
+            <li>Request a temperature and relative-humidity sample from the sensor driver.</li>
+            <li>Format the readings for the two-row character display and print them to serial output.</li>
+            <li>Wait briefly and repeat, keeping the display refreshed with the latest sample.</li>
+          </ol>
+        </section>
+        <section className={styles.section}>
+          <h2>Hardware integration notes</h2>
+          <p>
+            The program uses GPIO 15 for the DHT22 data signal and I²C bus 0 on GPIO 0 (SDA)
+            and GPIO 1 (SCL) for the LCD. The LCD address is discovered during initialization,
+            which avoids assuming a single address across compatible modules. The sensor driver
+            is kept as a separate file rather than mixing its low-level protocol with display logic.
+          </p>
+        </section>
+        <section className={styles.section}>
+          <h2>Scope and possible extensions</h2>
+          <p>
+            This is a compact local monitoring demonstration. It does not currently provide
+            network telemetry or long-term data logging. Natural next steps include sensor-error
+            handling, configurable sampling intervals, min/max tracking, and exporting readings.
+          </p>
+        </section>
+        <section className={styles.section}>
           <h2>What this project demonstrates</h2>
           <ul className={styles.learningList}>
             <li>Using MicroPython to program a Raspberry Pi Pico.</li>

@@ -53,6 +53,39 @@ export default function HotelBookingCaseStudy() {
           <div className={styles.tags}>{technologies.map((technology) => <span key={technology}>{technology}</span>)}</div>
         </section>
         <section className={styles.section}>
+          <h2>Guest reservation journey</h2>
+          <ol className={styles.learningList}>
+            <li>Explore the venue, rooms or dining information, and menu content.</li>
+            <li>Choose a date and available reservation time from the booking interface.</li>
+            <li>Provide guest name, contact number, party size, and an optional note.</li>
+            <li>Submit the request and receive a booking acknowledgement.</li>
+          </ol>
+          <p>
+            The flow is intended to reduce friction for guests while collecting the details an
+            operator needs to review a table request. Availability and business details must be
+            confirmed against the venue's actual operating schedule before production use.
+          </p>
+        </section>
+        <section className={styles.section}>
+          <h2>Owner-side workflow</h2>
+          <p>
+            The project also explores an owner dashboard for maintaining public-facing hotel and
+            menu content and reviewing booking records. These operational features are part of the
+            project scope; this portfolio summary does not claim that every workflow is production
+            complete or independently verified.
+          </p>
+        </section>
+        <section className={styles.section}>
+          <h2>Architecture and delivery considerations</h2>
+          <p>
+            TanStack Start, React, and TypeScript provide the application structure, with Tailwind
+            CSS used for responsive styling. The repository is private, so its source and deployment
+            are not linked publicly. Before live operation, the system needs verified menu and hours,
+            tested database migrations, secure owner authentication, reservation validation, and
+            production deployment checks.
+          </p>
+        </section>
+        <section className={styles.section}>
           <h2>What this project demonstrates</h2>
           <ul className={styles.learningList}>
             <li>Structuring a modern TypeScript and React web application.</li>

@@ -83,6 +83,34 @@ export default function CarRentalAppCaseStudy() {
         </section>
 
         <section className={styles.section}>
+          <h2>Booking workflow details</h2>
+          <p>
+            The user moves from the welcome/login screen to the booking form, enters customer and
+            licence details, selects a vehicle and rental duration, and chooses optional cover.
+            The application presents an estimate and saves the booking through the repository layer.
+            The records view then loads stored rows into a grid and supports lookup by booking ID
+            or customer name.
+          </p>
+        </section>
+        <section className={styles.section}>
+          <h2>Data and validation approach</h2>
+          <p>
+            Database operations are grouped in BookingRepos instead of being scattered across
+            form event handlers. Parameterized SQL is used for inserts and search filters, reducing
+            the risk of treating user-entered text as SQL. The form also checks required inputs
+            before attempting to save.
+          </p>
+        </section>
+        <section className={styles.section}>
+          <h2>Known gaps</h2>
+          <p>
+            This is a desktop learning project using LocalDB on the machine where it is configured.
+            It does not yet establish production-grade authentication, shared multi-user hosting,
+            or a complete vehicle-availability and payment workflow. The demo credentials should
+            not be reused in a deployed business system.
+          </p>
+        </section>
+        <section className={styles.section}>
           <h2>What this project demonstrates</h2>
           <ul className={styles.learningList}>
             <li>Building a multi-window Windows Forms application in C#.</li>

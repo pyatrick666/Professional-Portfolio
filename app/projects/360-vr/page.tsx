@@ -53,6 +53,34 @@ export default function Warehouse360CaseStudy() {
           <div className={styles.tags}>{technologies.map((technology) => <span key={technology}>{technology}</span>)}</div>
         </section>
         <section className={styles.section}>
+          <h2>Learner journey</h2>
+          <ol className={styles.learningList}>
+            <li>Enter the single-page training experience and orient within the warehouse panorama.</li>
+            <li>Explore the scene and open six risk hotspots to learn about workplace cyber risks.</li>
+            <li>Answer scenario-based multiple-choice questions and receive immediate feedback.</li>
+            <li>Review the final score and answers to reinforce the learning points.</li>
+          </ol>
+        </section>
+        <section className={styles.section}>
+          <h2>Implementation choices</h2>
+          <p>
+            The prototype keeps the experience in one HTML file, with styles and JavaScript alongside
+            the scene markup. A-Frame provides the 360° scene and interaction primitives, while
+            application logic coordinates hotspot selection, quiz progress, sound controls, and
+            results. The six audio cues are retained across the training flow.
+          </p>
+        </section>
+        <section className={styles.section}>
+          <h2>Scope and constraints</h2>
+          <p>
+            This is a browser-based prototype, not a deployed learning-management system: it does
+            not provide learner accounts, server-side score storage, or an administrator reporting
+            dashboard. The panorama and A-Frame are loaded externally, so the experience requires
+            network access. The single-file structure keeps the prototype easy to run and hand over,
+            though a larger version could split content, scene logic, and assessment data into modules.
+          </p>
+        </section>
+        <section className={styles.section}>
           <h2>What this project demonstrates</h2>
           <ul className={styles.learningList}>
             <li>Building an interactive single-page learning experience.</li>
