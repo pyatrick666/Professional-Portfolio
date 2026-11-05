@@ -13,7 +13,6 @@ const routes = [
   '/projects/raspberrypi-pico',
   '/projects/carrentalapp',
   '/projects/360-vr',
-  '/projects/demo-hotelsinfowithtablebookingsystem',
   '/github',
   '/contact',
 ];

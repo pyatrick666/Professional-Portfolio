@@ -24,7 +24,7 @@ const ProjectsPage = () => {
           <div className={styles.headerContent}>
             <h1 className={styles.title}>Featured Work</h1>
             <p className={styles.subtitle}>
-              A focused collection of projects across mobile development, desktop software, and embedded systems.
+              A focused collection of projects across mobile, desktop, web, embedded systems, and interactive learning.
               Each project appears once, with links to its case study and source or live project.
             </p>
           </div>

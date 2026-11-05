@@ -65,7 +65,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    images: [`${siteBasePath}/social-preview.svg`],
+    images: [`${siteBasePath}/social-preview.png`],
     title: 'Pratik Poudel | Software Engineering Portfolio',
     description:
       'Software Engineering • Full-Stack Development • Networking • Mobile Development',

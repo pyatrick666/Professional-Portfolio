@@ -1,5 +1,7 @@
 import type { MetadataRoute } from 'next';
 
+export const dynamic = 'force-static';
+
 const siteUrl = 'https://pyatrick666.github.io';
 const basePath = '/Professional-Portfolio';
 
