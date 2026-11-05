@@ -1,6 +1,8 @@
 .bottomBar {
   background: var(--bottombar-bg);
+  flex: 0 0 25px;
   height: 25px;
+  min-width: 0;
   border-top: 1px solid var(--bottombar-border);
   color: rgb(225, 228, 232);
   padding: 0 0.5rem;
@@ -9,48 +11,16 @@
   justify-content: space-between;
   font-size: 0.8rem;
 }
-
-.bottomBar a {
-  color: white;
-  text-decoration: none;
-}
-
-.icon {
-  margin-right: 4px;
-}
-
-.container {
-  display: flex;
-  align-items: center;
-}
-
-.section {
-  display: flex;
-  margin-right: 0.5rem;
-  height: 24px;
-  align-items: center;
-  padding: 0 0.2rem;
-  cursor: pointer;
-  font-family: 'Source Sans Pro', sans-serif;
-}
-
-.section:hover {
-  background: var(--bottombar-hover-bg);
-}
-
-.section.active {
-  background: var(--bottombar-hover-bg);
-}
-
-.section.active .icon {
-  color: var(--accent-color);
-}
+.bottomBar a { color: white; text-decoration: none; }
+.icon { margin-right: 4px; }
+.container { display: flex; align-items: center; min-width: 0; }
+.section { display: flex; margin-right: 0.5rem; height: 24px; align-items: center; padding: 0 0.2rem; cursor: pointer; font-family: 'Source Sans Pro', sans-serif; white-space: nowrap; }
+.section:hover { background: var(--bottombar-hover-bg); }
+.section.active { background: var(--bottombar-hover-bg); }
+.section.active .icon { color: var(--accent-color); }
 
 @media screen and (max-width: 600px) {
-  .bottomBar {
-    font-size: 0.6rem;
-  }
-  .section {
-    margin-right: 0.5rem;
-  }
+  .bottomBar { font-size: 0.65rem; }
+  .section { margin-right: 0.25rem; }
+  .container:last-child .section:not(:first-child) { display: none; }
 }
