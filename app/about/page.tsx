@@ -59,7 +59,7 @@ const AboutPage = () => (
         </section>
 
         <section className={styles.section}>
-          <div className={styles.sectionHeader}><span className={styles.sectionNumber}>05</span><h2 className={styles.sectionTitle}>Current Focus</h2></div>
+          <div className={styles.sectionHeader}><span className={styles.sectionNumber}>04</span><h2 className={styles.sectionTitle}>Current Focus</h2></div>
           <div className={styles.sectionBody}>
             <p className={styles.paragraph}>I’m open to internship and entry-level opportunities in networking, full-stack development and general software development. I’m looking to contribute to real projects, collaborate with a team and keep improving through practical experience.</p>
           </div>
