@@ -22,6 +22,20 @@ export const projects: Project[] = [
     slug: 'raspberrypi-pico',
   },
   {
+    title: '360-VR-',
+    description: 'A single-page 360° warehouse cybersecurity awareness training experience with interactive risk hotspots, scenario questions, progress tracking, and audio feedback.',
+    logo: '/logos/360vr.svg',
+    link: 'https://pyatrick666.github.io/360-VR-/',
+    slug: '360-vr',
+  },
+  {
+    title: 'Hotel Information & Table Booking System',
+    description: 'A hotel website project built with TanStack Start, TypeScript, React, and Tailwind CSS, focused on presenting hotel information and a table-booking experience.',
+    logo: '/logos/hotel.svg',
+    link: '',
+    slug: 'demo-hotelsinfowithtablebookingsystem',
+  },
+  {
     title: 'CarRentalApp',
     description: 'A Windows desktop car rental application designed to manage vehicles, rentals, and customer information through a dedicated desktop interface.',
     logo: '/logos/carrental.svg',
