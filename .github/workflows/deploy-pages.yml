@@ -102,6 +102,9 @@ jobs:
       - name: Generate iOS bookmark icon
         run: npx --yes sharp-cli -i public/favicon.svg -o public/apple-touch-icon.png resize 180 180
 
+      - name: Generate social sharing preview image
+        run: npx --yes sharp-cli -i public/social-preview.svg -o public/social-preview.png
+
       - name: Build static Next.js site
         run: npm run build
 
