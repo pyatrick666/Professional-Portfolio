@@ -4,11 +4,11 @@ import { VscArrowLeft, VscGithub, VscLinkExternal, VscCode, VscCircuitBoard, Vsc
 import styles from '@/styles/ChessMateCaseStudy.module.css';
 
 export const metadata: Metadata = {
-  title: 'RaspberryPi-PICO Case Study',
-  description: 'A Raspberry Pi Pico RP2040 project exploring temperature and humidity measurement with Python.',
+  title: 'Raspberry Pi Pico Case Study',
+  description: 'A MicroPython Raspberry Pi Pico project reading DHT22 temperature and humidity and displaying results on an I2C LCD.',
 };
 
-const technologies = ['Raspberry Pi Pico', 'RP2040', 'Python', 'GPIO', 'Embedded systems', 'Sensor data'];
+const technologies = ['Raspberry Pi Pico', 'RP2040', 'MicroPython', 'DHT22', 'I²C', '16×2 LCD', 'GPIO'];
 
 export default function RaspberryPiPicoCaseStudy() {
   return (
@@ -18,9 +18,8 @@ export default function RaspberryPiPicoCaseStudy() {
         <p className={styles.eyebrow}>PROJECT CASE STUDY · EMBEDDED SYSTEMS</p>
         <h1 className={styles.title}>RaspberryPi-PICO</h1>
         <p className={styles.lede}>
-          A hands-on Raspberry Pi Pico (RP2040) project focused on temperature and humidity
-          measurement, exploring how a small microcontroller can interact with sensor data and
-          translate readings into useful information.
+          A MicroPython project using a Raspberry Pi Pico to read temperature and humidity from a
+          DHT22 sensor and display the measurements on a 16×2 I²C LCD.
         </p>
 
         <div className={styles.actions}>
@@ -32,58 +31,66 @@ export default function RaspberryPiPicoCaseStudy() {
         <section className={styles.panel}>
           <h2>At a glance</h2>
           <dl className={styles.facts}>
-            <div><dt>Type</dt><dd>Microcontroller project</dd></div>
-            <div><dt>Hardware</dt><dd>Raspberry Pi Pico · RP2040</dd></div>
-            <div><dt>Language</dt><dd>Python</dd></div>
-            <div><dt>Focus</dt><dd>Temperature and humidity</dd></div>
+            <div><dt>Type</dt><dd>Microcontroller / sensor project</dd></div>
+            <div><dt>Board</dt><dd>Raspberry Pi Pico · RP2040</dd></div>
+            <div><dt>Language</dt><dd>MicroPython</dd></div>
+            <div><dt>Sensor</dt><dd>DHT22 temperature and humidity</dd></div>
+            <div><dt>Display</dt><dd>16×2 I²C LCD</dd></div>
+            <div><dt>Repository</dt><dd><a href="https://github.com/pyatrick666/RaspberryPi-PICO" target="_blank" rel="noopener noreferrer">View source files</a></dd></div>
           </dl>
         </section>
 
         <section className={styles.section}>
           <h2><VscCode size={19} /> The challenge</h2>
           <p>
-            Embedded projects connect software to the physical world. This project explores the
-            practical steps involved in working with a microcontroller, obtaining environmental
-            readings, and presenting sensor information in a form that is useful to a person.
+            This project connects a physical sensor to a microcontroller and makes its readings
+            understandable without needing a computer display. It combines sensor communication,
+            GPIO pin configuration, I²C display output, and a repeating measurement loop.
           </p>
         </section>
 
         <section className={styles.section}>
-          <h2><VscCheck size={19} /> Project focus</h2>
+          <h2><VscCheck size={19} /> What the code does</h2>
           <div className={styles.featureGrid}>
-            <div className={styles.feature}><h3>Microcontroller programming</h3><p>Using Python in a project built for the Raspberry Pi Pico RP2040 platform.</p></div>
-            <div className={styles.feature}><h3>Environmental readings</h3><p>Focusing on temperature and humidity as the core measurements of the project.</p></div>
-            <div className={styles.feature}><h3>Hardware interaction</h3><p>Exploring the relationship between microcontroller code, connected components, and GPIO-based operations where applicable.</p></div>
-            <div className={styles.feature}><h3>Practical output</h3><p>Turning sensor measurements into information that can be interpreted by the user.</p></div>
+            <div className={styles.feature}><h3>Reads the DHT22</h3><p>Uses a DHT22 driver to obtain temperature and relative-humidity readings.</p></div>
+            <div className={styles.feature}><h3>Initializes the LCD</h3><p>Sets up I²C bus 0 with GPIO 0 for SDA and GPIO 1 for SCL, then detects the LCD address.</p></div>
+            <div className={styles.feature}><h3>Connects the sensor</h3><p>Configures the DHT22 data line on GPIO 15 of the Raspberry Pi Pico.</p></div>
+            <div className={styles.feature}><h3>Displays live values</h3><p>Refreshes the LCD with temperature and humidity values and also prints readings to the serial console.</p></div>
           </div>
         </section>
 
         <section className={styles.section}>
-          <h2><VscCircuitBoard size={19} /> Technical approach</h2>
+          <h2><VscCircuitBoard size={19} /> Hardware and data flow</h2>
           <p>
-            The Raspberry Pi Pico provides the microcontroller platform, while Python is used for
-            the program logic. The project’s focus on temperature and humidity creates a practical
-            starting point for exploring sensor interfaces, reading values, and handling data from
-            embedded hardware.
+            The main program initializes the I²C LCD, reads the DHT22 sensor, writes the two
+            measurements to separate LCD rows, prints the values, and repeats after a short delay.
           </p>
-          <div className={styles.architecture} aria-label="Raspberry Pi Pico project flow">
-            <span>Sensor readings</span><b>→</b><span>Raspberry Pi Pico · RP2040</span><b>→</b><span>Python output</span>
+          <div className={styles.architecture} aria-label="Raspberry Pi Pico sensor data flow">
+            <span>DHT22 · GPIO 15</span><b>→</b><span>Raspberry Pi Pico</span><b>→</b><span>16×2 LCD · I²C 0</span>
           </div>
           <div className={styles.tags}>{technologies.map((technology) => <span key={technology}>{technology}</span>)}</div>
         </section>
 
         <section className={styles.section}>
+          <h2>Implementation note</h2>
+          <p>
+            The repository includes a DHT22 driver file that retains its upstream MIT copyright
+            notice. The main program integrates that driver with the Pico pins and LCD output.
+          </p>
+        </section>
+
+        <section className={styles.section}>
           <h2>What this project demonstrates</h2>
           <ul className={styles.learningList}>
-            <li>Applying Python in a microcontroller project.</li>
-            <li>Exploring how embedded software works with hardware and sensor data.</li>
-            <li>Thinking about measurement, output, and practical use cases.</li>
-            <li>Building experience beyond conventional web and mobile applications.</li>
+            <li>Using MicroPython to program a Raspberry Pi Pico.</li>
+            <li>Reading a digital environmental sensor.</li>
+            <li>Configuring GPIO and an I²C peripheral.</li>
+            <li>Presenting hardware readings on a character LCD and serial output.</li>
           </ul>
         </section>
 
         <footer className={styles.footer}>
-          <p>Want to inspect the implementation?</p>
+          <p>Inspect the MicroPython implementation.</p>
           <a href="https://github.com/pyatrick666/RaspberryPi-PICO" target="_blank" rel="noopener noreferrer">Explore RaspberryPi-PICO on GitHub <VscLinkExternal size={14} /></a>
           <Link href="/contact">Contact me about my work →</Link>
         </footer>
