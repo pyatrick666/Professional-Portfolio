@@ -6,6 +6,7 @@ import styles from '@/styles/ChessMateCaseStudy.module.css';
 export const metadata: Metadata = {
   title: 'Hotel Information & Table Booking Case Study',
   description: 'A hotel information and table booking web project built with TanStack Start, TypeScript, React, and Tailwind CSS.',
+  robots: { index: false, follow: true },
 };
 
 const technologies = ['TanStack Start', 'TypeScript', 'React', 'Tailwind CSS'];
