@@ -19,16 +19,14 @@ const AboutPage = () => (
           <Link href="/contact" className={styles.iconButton} aria-label="Contact me"><VscMail size={20} /></Link>
         </div>
       </header>
-
       <div className={styles.content}>
         <section className={styles.section}>
           <div className={styles.sectionHeader}><span className={styles.sectionNumber}>01</span><h2 className={styles.sectionTitle}>About</h2></div>
           <div className={styles.sectionBody}>
             <p className={styles.paragraph}>I’m Pratik Poudel, an undergraduate Information Technology student focused on Computer Systems Engineering. I enjoy turning what I learn into practical software and technology projects.</p>
-            <p className={styles.paragraph}>I build and explore projects across mobile, desktop, web and embedded development, while strengthening my foundations in networking and computer systems. I’m interested in internship and entry-level opportunities where I can contribute to a team, learn from real projects and deliver useful work.</p>
+            <p className={styles.paragraph}>I build and explore projects across mobile, desktop, web and embedded development, while strengthening my foundations in networking and computer systems. My technical interests also include AI and machine learning with Python. I’m interested in internship and entry-level opportunities where I can contribute to a team, learn from real projects and deliver useful work.</p>
           </div>
         </section>
-
         <section className={styles.section}>
           <div className={styles.sectionHeader}><span className={styles.sectionNumber}>02</span><h2 className={styles.sectionTitle}>Education</h2></div>
           <div className={styles.sectionBody}>
@@ -45,21 +43,18 @@ const AboutPage = () => (
             </div>
           </div>
         </section>
-
         <section className={styles.section}>
           <div className={styles.sectionHeader}><span className={styles.sectionNumber}>03</span><h2 className={styles.sectionTitle}>Skills</h2></div>
           <div className={styles.sectionBody}>
             <div className={styles.skillsGrid}>
               <div className={styles.skillCategory}><h4 className={styles.skillTitle}>Languages</h4><div className={styles.skillTags}>{['JavaScript', 'TypeScript', 'Java', 'Dart', 'SQL', 'C#', 'Python', 'PHP', 'Ruby (Learning)'].map(x => <span className={styles.skillTag} key={x}>{x}</span>)}</div></div>
-              <div className={styles.skillCategory}><h4 className={styles.skillTitle}>Development</h4><div className={styles.skillTags}>{['React', 'Next.js', 'Flutter', 'Web Development', 'Mobile App Development'].map(x => <span className={styles.skillTag} key={x}>{x}</span>)}</div></div>
-              <div className={styles.skillCategory}><h4 className={styles.skillTitle}>AI &amp; Machine Learning</h4><div className={styles.skillTags}>{['AI & Machine Learning with Python'].map(x => <span className={styles.skillTag} key={x}>{x}</span>)}</div></div>
+              <div className={styles.skillCategory}><h4 className={styles.skillTitle}>Development &amp; AI</h4><div className={styles.skillTags}>{['React', 'Next.js', 'Flutter', 'Web Development', 'Mobile App Development', 'AI & Machine Learning with Python'].map(x => <span className={styles.skillTag} key={x}>{x}</span>)}</div></div>
               <div className={styles.skillCategory}><h4 className={styles.skillTitle}>Networking &amp; Security</h4><div className={styles.skillTags}>{['Networking Fundamentals', 'Burp Suite'].map(x => <span className={styles.skillTag} key={x}>{x}</span>)}</div></div>
               <div className={styles.skillCategory}><h4 className={styles.skillTitle}>Design</h4><div className={styles.skillTags}>{['Figma', 'Canva', 'UI/UX Design'].map(x => <span className={styles.skillTag} key={x}>{x}</span>)}</div></div>
               <div className={styles.skillCategory}><h4 className={styles.skillTitle}>Tools</h4><div className={styles.skillTags}>{['Git', 'GitHub', 'Linux'].map(x => <span className={styles.skillTag} key={x}>{x}</span>)}</div></div>
             </div>
           </div>
         </section>
-
         <section className={styles.section}>
           <div className={styles.sectionHeader}><span className={styles.sectionNumber}>04</span><h2 className={styles.sectionTitle}>Current Focus</h2></div>
           <div className={styles.sectionBody}>
@@ -67,7 +62,6 @@ const AboutPage = () => (
           </div>
         </section>
       </div>
-
       <footer className={styles.footer}><Link href="/projects" className={styles.footerLink}>View my projects →</Link></footer>
     </div>
   </div>
