@@ -50,8 +50,9 @@ const AboutPage = () => (
           <div className={styles.sectionHeader}><span className={styles.sectionNumber}>03</span><h2 className={styles.sectionTitle}>Skills</h2></div>
           <div className={styles.sectionBody}>
             <div className={styles.skillsGrid}>
-              <div className={styles.skillCategory}><h4 className={styles.skillTitle}>Languages</h4><div className={styles.skillTags}>{['JavaScript', 'TypeScript', 'Java', 'Dart', 'SQL', 'C#', 'Python', 'PHP'].map(x => <span className={styles.skillTag} key={x}>{x}</span>)}</div></div>
-              <div className={styles.skillCategory}><h4 className={styles.skillTitle}>Development</h4><div className={styles.skillTags}>{['React', 'Next.js', 'Flutter', 'Web Development', 'Mobile App Development'].map(x => <span className={styles.skillTag} key={x}>{x}</span>)}</div></div>
+              <div className={styles.skillCategory}><h4 className={styles.skillTitle}>Languages</h4><div className={styles.skillTags}>{['JavaScript', 'TypeScript', 'Java', 'Dart', 'SQL', 'C#', 'Python', 'PHP', 'Ruby (Learning)'].map(x => <span className={styles.skillTag} key={x}>{x}</span>)}</div></div>
+              <div className={styles.skillCategory}><h4 className={styles.skillTitle}>Development</h4><div className={styles.skillTags}>{['React', 'Next.js', 'Flutter', 'Web Development', 'Mobile App Development', 'Python for Machine Learning'].map(x => <span className={styles.skillTag} key={x}>{x}</span>)}</div></div>
+              <div className={styles.skillCategory}><h4 className={styles.skillTitle}>Networking &amp; Security</h4><div className={styles.skillTags}>{['Networking Fundamentals', 'Burp Suite'].map(x => <span className={styles.skillTag} key={x}>{x}</span>)}</div></div>
               <div className={styles.skillCategory}><h4 className={styles.skillTitle}>Design</h4><div className={styles.skillTags}>{['Figma', 'Canva', 'UI/UX Design'].map(x => <span className={styles.skillTag} key={x}>{x}</span>)}</div></div>
               <div className={styles.skillCategory}><h4 className={styles.skillTitle}>Tools</h4><div className={styles.skillTags}>{['Git', 'GitHub', 'Linux'].map(x => <span className={styles.skillTag} key={x}>{x}</span>)}</div></div>
             </div>
