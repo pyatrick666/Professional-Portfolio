@@ -38,7 +38,7 @@ export default function HotelBookingCaseStudy() {
         <p className={styles.eyebrow}>PROJECT CASE STUDY · FULL-STACK WEB APPLICATION</p>
         <h1 className={styles.title}>Hotel Information &amp; Table Booking System</h1>
         <p className={styles.lede}>
-          A hospitality website concept for Hotel Paradise Inn in Tribeni, Nepal. It brings the
+          A hospitality website concept for the hotel in Tribeni, Nepal. It brings the
           guest-facing hotel story, photo gallery, menu, Google reviews, visit information and
           table-request journey into one responsive experience, with a separate owner area for
           managing reservations and key site content.
@@ -52,14 +52,14 @@ export default function HotelBookingCaseStudy() {
         </div>
 
         <figure className={styles.projectArtwork}>
-          <img src={assetPath('/logos/hotel.svg')} alt="Hotel Paradise Inn project artwork" />
+          <img src={assetPath('/logos/hotel.svg')} alt="the hotel project artwork" />
           <figcaption>Project identity artwork · open the live demo to explore the current interface</figcaption>
         </figure>
 
         <section className={styles.panel}>
           <h2>Project at a glance</h2>
           <dl className={styles.facts}>
-            <div><dt>Project</dt><dd>Hotel Paradise Inn website and table-booking experience</dd></div>
+            <div><dt>Project</dt><dd>the hotel website and table-booking experience</dd></div>
             <div><dt>Location represented</dt><dd>Triveni Road, Tribeni, Nepal</dd></div>
             <div><dt>Application type</dt><dd>Responsive, full-stack hospitality web application</dd></div>
             <div><dt>Frontend</dt><dd>React 19, TypeScript and TanStack Start</dd></div>
@@ -96,7 +96,7 @@ export default function HotelBookingCaseStudy() {
             <div className={styles.feature}>
               <h3>Hospitality-led landing page</h3>
               <p>
-                A full-screen photographic hero introduces Hotel Paradise Inn, its restaurant and
+                A full-screen photographic hero introduces the hotel, its restaurant and
                 stay offering, location context and primary actions to book a table or explore
                 guest reviews.
               </p>
@@ -476,7 +476,7 @@ export default function HotelBookingCaseStudy() {
             private implementation repository is intentionally not linked from this case study.
           </p>
           <a href={DEMO_URL} target="_blank" rel="noopener noreferrer">
-            <VscLinkExternal size={15} /> Open Hotel Paradise Inn live demo
+            <VscLinkExternal size={15} /> Open the hotel live demo
           </a>
           <Link href="/projects"><VscArrowLeft size={15} /> Back to all projects</Link>
         </footer>
