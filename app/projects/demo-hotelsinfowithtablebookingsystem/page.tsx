@@ -64,7 +64,9 @@ export default function HotelBookingCaseStudy() {
             <div><dt>Application type</dt><dd>Responsive, full-stack hospitality web application</dd></div>
             <div><dt>Frontend</dt><dd>React 19, TypeScript and TanStack Start</dd></div>
             <div><dt>Routing and data loading</dt><dd>TanStack Router and TanStack Query</dd></div>
-            <div><dt>Backend services</dt><dd>Supabase Auth, PostgreSQL and Row Level Security</dd></div>
+            <div><dt>Database</dt><dd>Supabase-managed PostgreSQL, using UUID records, JSONB settings, constraints, triggers and Row Level Security</dd></div>
+            <div><dt>Authentication</dt><dd>Supabase Auth with email/password sign-in and an admin/user role model</dd></div>
+            <div><dt>Database change history</dt><dd>Three checked-in SQL migrations under Drizzle migrations</dd></div>
             <div><dt>Styling and UI</dt><dd>Tailwind CSS 4, Radix UI components and custom styling</dd></div>
             <div><dt>Public demonstration</dt><dd><a href={DEMO_URL} target="_blank" rel="noopener noreferrer">patrickdev.lovable.app</a></dd></div>
             <div><dt>Source availability</dt><dd>Private repository; source code intentionally not linked</dd></div>
@@ -233,6 +235,7 @@ export default function HotelBookingCaseStudy() {
             <li><strong>bookings:</strong> guest name, phone, booking date, requested time, guest count, note, status and creation timestamp.</li>
             <li><strong>user_roles:</strong> owner/admin role assignments used to authorize dashboard operations.</li>
             <li><strong>profiles:</strong> the signed-in account's editable username and profile timestamp.</li>
+            <li><strong>guest_reviews:</strong> a separate local review table with reviewer name, 1–5 rating, review body and timestamp. The current public reviews presentation is driven by Google Places; this local table is present in the database schema but is not the primary displayed review source.</li>
           </ul>
           <p style={{ marginTop: 14 }}>
             PostgreSQL migrations define the tables, constraints, role helper and access policies.
@@ -242,6 +245,143 @@ export default function HotelBookingCaseStudy() {
             user's role record; a public username alias is not a substitute for password
             authentication.
           </p>
+        </section>
+
+
+        <section className={styles.section}>
+          <h2>Database technology and schema — PostgreSQL via Supabase</h2>
+          <p>
+            The persistence layer is <strong>PostgreSQL</strong>, provided as part of <strong>Supabase</strong>.
+            Supabase is used for the hosted database, authentication and the generated, typed
+            JavaScript client. The application does not use MySQL or SQL Server for this project.
+            The checked-in database change history is stored as SQL migration files in
+            <strong> drizzle/migrations</strong>; Drizzle Kit is included as migration tooling.
+            The application accesses the data through Supabase's PostgREST client rather than
+            using Drizzle ORM as its day-to-day query layer.
+          </p>
+          <p style={{ marginTop: 14 }}>
+            The schema uses PostgreSQL-native features where they are useful: UUID primary keys,
+            foreign keys to Supabase Auth users, <strong>JSONB</strong> for weekly opening hours,
+            <strong> timestamptz</strong> for audit timestamps, a PostgreSQL role enum, check
+            constraints, database triggers and Row Level Security (RLS).
+          </p>
+          <div className={styles.featureGrid}>
+            <div className={styles.feature}>
+              <h3>bookings</h3>
+              <p>
+                UUID id; guest name (1–80 characters); phone (5–30 characters); booking_date
+                (PostgreSQL date); booking_time (HH:MM text); guests (database constraint 1–30);
+                optional note (maximum 300 characters); status (pending, confirmed or cancelled);
+                and created_at (timestamptz). New rows default to pending.
+              </p>
+            </div>
+            <div className={styles.feature}>
+              <h3>menu_items</h3>
+              <p>
+                UUID id; category; dish name; description; displayed price stored as text;
+                integer sort order; and created_at. Public pages read these records, while
+                administrators can add, edit, reorder and delete them.
+              </p>
+            </div>
+            <div className={styles.feature}>
+              <h3>site_settings</h3>
+              <p>
+                A single settings row (id is constrained to 1) stores the contact phone, venue
+                story, weekly hours as JSONB and updated_at. This keeps public information
+                editable without changing the application code.
+              </p>
+            </div>
+            <div className={styles.feature}>
+              <h3>user_roles</h3>
+              <p>
+                UUID id, user_id linked to auth.users with cascade deletion, and an app_role
+                enum containing admin and user. A uniqueness rule prevents the same user from
+                receiving the same role twice.
+              </p>
+            </div>
+            <div className={styles.feature}>
+              <h3>profiles</h3>
+              <p>
+                The profile id is also a foreign key to auth.users. It stores the username and
+                updated_at timestamp. A database trigger creates a profile row when an Auth
+                account is created, and users can read or update only their own profile.
+              </p>
+            </div>
+            <div className={styles.feature}>
+              <h3>guest_reviews</h3>
+              <p>
+                UUID id, reviewer name (1–60 characters), integer rating (1–5), review body
+                (1–500 characters) and created_at. This table exists in the SQL schema; the
+                current visible review section instead uses Google Places review data.
+              </p>
+            </div>
+          </div>
+          <p style={{ marginTop: 14 }}>
+            <strong>Database-side booking validation:</strong> a trigger rejects newly inserted
+            bookings whose date is earlier than the current date in the Asia/Kathmandu time zone.
+            Check constraints also validate the booking time format, guest count, name, phone,
+            note length and allowed status values. These checks protect the database even if a
+            client bypasses the form's normal validation.
+          </p>
+        </section>
+
+        <section className={styles.section}>
+          <h2>Authentication, authorization and data protection</h2>
+          <p>
+            Sign-in is handled by Supabase Auth using username-to-login-email mapping in the
+            owner form and Supabase email/password authentication underneath. The dashboard
+            checks the signed-in user's role through the PostgreSQL <strong>has_role</strong>
+            function before rendering owner controls. The role model is an enum with admin and
+            user values, and role records are associated with the authenticated Supabase user ID.
+          </p>
+          <ul className={styles.learningList}>
+            <li><strong>Public reads:</strong> anonymous and authenticated visitors can read the public site settings, menu items and guest-review rows.</li>
+            <li><strong>Public booking requests:</strong> anonymous and authenticated visitors may insert a booking only when its initial status is pending. Public clients are not granted booking read, update or delete permissions.</li>
+            <li><strong>Owner booking access:</strong> authenticated administrators can read bookings, update their status and delete records. These operations are additionally guarded by RLS policies.</li>
+            <li><strong>Owner content access:</strong> menu changes and site-settings updates require the admin role; public visitors receive read-only access to these records.</li>
+            <li><strong>Profile isolation:</strong> profile read, insert and update policies compare the row id with auth.uid(), keeping each account's profile scoped to itself.</li>
+            <li><strong>Server credentials:</strong> a separate server-only Supabase admin client reads the service-role key from the server environment. Its code comments explicitly warn that this key bypasses RLS and must never be exposed to browser code.</li>
+          </ul>
+          <p style={{ marginTop: 14 }}>
+            The SQL also creates helper and account triggers: a role-check function, an initial
+            owner-assignment trigger and a profile-creation trigger. Initial owner provisioning
+            must therefore be handled carefully: verify the intended owner account and role
+            assignment before opening the dashboard to real business use. Secrets and service-role
+            keys are environment configuration, not values that belong in the public portfolio.
+          </p>
+          <p style={{ marginTop: 14 }}>
+            The guest_reviews table currently grants public insert access with field-length and
+            rating constraints, and allows the administrator to delete entries. If a public
+            customer-review submission UI is enabled later, it should also receive moderation,
+            abuse prevention and rate limiting before being used in production.
+          </p>
+        </section>
+
+        <section className={styles.section}>
+          <h2>Database migrations and data lifecycle</h2>
+          <ol className={styles.learningList}>
+            <li><strong>Initial migration:</strong> creates guest_reviews, the app_role enum, user_roles, the has_role function and the initial owner-assignment trigger.</li>
+            <li><strong>Owner dashboard and booking migration:</strong> creates site_settings, menu_items and bookings; adds public-read and owner-management policies; inserts editable starter venue settings and menu rows; and adds the booking-date validation trigger.</li>
+            <li><strong>Owner profiles migration:</strong> creates profiles, adds per-user RLS policies, installs the profile-creation trigger and backfills profiles for existing Auth users.</li>
+          </ol>
+          <p style={{ marginTop: 14 }}>
+            These migration files document the intended schema and setup sequence in the source
+            project. Their presence in Git does not, by itself, prove that every migration has
+            been applied to the currently connected hosted database. A production handover should
+            compare the live Supabase schema with the migration history and verify backups before
+            making changes.
+          </p>
+        </section>
+
+        <section className={styles.section}>
+          <h2>Application data flow and server boundaries</h2>
+          <ul className={styles.learningList}>
+            <li><strong>Public site data:</strong> a TanStack Start server function reads the single site_settings row and ordered menu_items from Supabase, then returns a typed data object to the React page.</li>
+            <li><strong>Google data:</strong> a separate server function calls the Google Places integration. Connector credentials remain server-side; the returned place information is cached for up to one hour.</li>
+            <li><strong>Booking creation:</strong> the browser submits a booking row through the Supabase client. The database supplies the UUID, pending status and creation timestamp, then applies RLS and database constraints.</li>
+            <li><strong>Owner operations:</strong> the authenticated dashboard reads and changes bookings, menu items and site settings through Supabase. RLS is the database-level authorization boundary, not just a hidden frontend tab.</li>
+            <li><strong>Typed data contract:</strong> the generated Supabase TypeScript Database type describes the public tables, insert/update shapes, role enum and has_role function to reduce mismatched field usage in the application.</li>
+          </ul>
         </section>
 
         <section className={styles.section}>
@@ -307,7 +447,9 @@ export default function HotelBookingCaseStudy() {
           <ul className={styles.learningList}>
             <li>Have the venue owner confirm the real opening hours, menu names, descriptions, prices and story text. Initial database entries are editable starter content, not a substitute for owner approval.</li>
             <li>Complete owner account creation and verify sign-in, role assignment, account updates and all dashboard actions using the authorized owner account.</li>
-            <li>Test booking submission, owner review, confirmation, cancellation and deletion against the intended production database.</li>
+            <li>Test booking submission, owner review, confirmation, cancellation and deletion against the intended production database. The form currently offers 1–20 guests, while the database constraint accepts 1–30; keep these limits aligned if the UI is changed.</li>
+            <li>Verify the first-owner assignment process and ensure the intended owner is the only account with the admin role before public operation.</li>
+            <li>Add moderation and abuse protection before exposing the guest_reviews insert policy through a public review form.</li>
             <li>Add a true availability check if the business needs to prevent two requests from being accepted for the same table or time. The current time list is generated from opening hours only.</li>
             <li>Confirm Google Places and Maps credentials, photo attribution, review availability and fallback behavior in the deployed environment.</li>
             <li>Verify database migrations, backups, access policies, environment variables, monitoring and deployment recovery before a production handover.</li>
