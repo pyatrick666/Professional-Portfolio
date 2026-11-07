@@ -30,9 +30,9 @@ export const projects: Project[] = [
   },
   {
     title: 'Hotel Information & Table Booking System',
-    description: 'A hotel website project built with TanStack Start, TypeScript, React, and Tailwind CSS, focused on presenting hotel information and a table-booking experience.',
+    description: 'A full-stack Hotel Paradise Inn website concept featuring a guest photo gallery, Google reviews, editable menu and opening hours, table-booking requests, and an owner dashboard.',
     logo: '/logos/hotel.svg',
-    link: '',
+    link: 'https://patrickdev.lovable.app/#top',
     slug: 'demo-hotelsinfowithtablebookingsystem',
   },
   {
