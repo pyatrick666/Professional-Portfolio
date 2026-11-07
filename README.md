@@ -19,12 +19,25 @@ I'm **Pratik Poudel**, an undergraduate student pursuing **BSc (Hons) Informatio
 My interests include:
 - Full-stack web development
 - Mobile application development
+- AI and machine learning with Python
 - Software engineering
 - Networking and computer systems
 - Embedded systems and practical hardware projects
 - UI/UX design
 
 I'm open to internship and entry-level opportunities where I can contribute to a team and continue developing through practical work.
+
+## Skills
+
+| Area | Skills and technologies |
+| --- | --- |
+| Programming languages | Python, JavaScript, TypeScript, Java, Dart, C#, PHP |
+| AI & machine learning | AI and machine learning with Python |
+| Web and mobile development | React, Next.js, Flutter, web development, mobile app development |
+| Networking and security | Networking fundamentals, introductory Burp Suite use |
+| Databases and systems | PostgreSQL, MySQL, Linux |
+| Design and tools | Figma, Canva, Git, GitHub |
+| Currently learning | Ruby programming |
 
 ## Highlights
 
@@ -40,9 +53,9 @@ I'm open to internship and entry-level opportunities where I can contribute to a
 
 | Project | Description | Links |
 | --- | --- | --- |
-| **ChessMate** | Flutter chess application with AI opponents, local play, online multiplayer, chat, and Stockfish integration. | [Case study](https://pyatrick666.github.io/Professional-Portfolio/projects/chessmate/) · [Source](https://github.com/pyatrick666/ChessMate) |
-| **RaspberryPi-PICO Projects** | RP2040 experiments and embedded programs, including temperature and humidity work. | [Case study](https://pyatrick666.github.io/Professional-Portfolio/projects/raspberrypi-pico/) · [Source](https://github.com/pyatrick666/RaspberryPi-PICO) |
-| **CarRentalApp** | A Windows desktop car-rental application. | [Case study](https://pyatrick666.github.io/Professional-Portfolio/projects/carrentalapp/) · [Source](https://github.com/pyatrick666/CarRentalApp) |
+| **ChessMate** | Flutter chess application with AI opponents, local play, online multiplayer, chat, and Stockfish integration. | [Source](https://github.com/pyatrick666/ChessMate) |
+| **RaspberryPi-PICO Projects** | RP2040 experiments and embedded programs, including GPIO and sensor-based work. | [Source](https://github.com/pyatrick666/RaspberryPi-PICO) |
+| **CarRentalApp** | A C# Windows desktop application for vehicle-rental workflows with MySQL database integration. | [Source](https://github.com/pyatrick666/CarRentalApp) |
 | **Cyber Awareness 360°** | Interactive warehouse cybersecurity awareness experience. | [Live demo](https://pyatrick666.github.io/360-VR-/) · [Source](https://github.com/pyatrick666/360-VR-) |
 
 ## Technology
