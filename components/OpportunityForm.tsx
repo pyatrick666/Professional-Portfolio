@@ -1,14 +1,12 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { FormEvent } from 'react';
 import { VscArrowRight, VscMail } from 'react-icons/vsc';
 import styles from '@/styles/OpportunityForm.module.css';
 
 const RECIPIENT = 'pyatrick666@gmail.com';
 
 export default function OpportunityForm() {
-  const [status, setStatus] = useState('');
-
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -41,13 +39,7 @@ export default function OpportunityForm() {
     ].join('\n');
 
     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(RECIPIENT)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    const opened = window.open(gmailUrl, '_blank', 'noopener,noreferrer');
-
-    if (!opened) {
-      window.location.assign(gmailUrl);
-    }
-    setStatus('Your message is prepared in Gmail. Please review it and press Send to contact Pratik.');
-    form.reset();
+    window.location.assign(gmailUrl);
   };
 
   return (
@@ -104,7 +96,6 @@ export default function OpportunityForm() {
           <VscArrowRight size={18} />
         </button>
         <p className={styles.note}>This opens a pre-filled Gmail draft addressed to {RECIPIENT}. Your message is not sent until you press Send in Gmail.</p>
-        {status && <p className={styles.status} role="status">{status}</p>}
       </form>
     </section>
   );
