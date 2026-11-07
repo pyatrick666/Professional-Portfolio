@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { VscArrowLeft, VscLinkExternal, VscCheck, VscCode, VscCalendar, VscShield, VscDatabase } from 'react-icons/vsc';
+import { VscArrowLeft, VscLinkExternal, VscCheck, VscCode, VscCalendar, VscDatabase } from 'react-icons/vsc';
+import { assetPath } from '@/lib/assets';
 import styles from '@/styles/ChessMateCaseStudy.module.css';
 
 const DEMO_URL = 'https://patrickdev.lovable.app/#top';
@@ -51,7 +52,7 @@ export default function HotelBookingCaseStudy() {
         </div>
 
         <figure className={styles.projectArtwork}>
-          <img src="/project-artwork/hotel.svg" alt="Hotel Paradise Inn project artwork" />
+          <img src={assetPath('/logos/hotel.svg')} alt="Hotel Paradise Inn project artwork" />
           <figcaption>Project identity artwork · open the live demo to explore the current interface</figcaption>
         </figure>
 
