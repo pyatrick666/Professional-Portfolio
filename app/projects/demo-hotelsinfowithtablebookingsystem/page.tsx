@@ -7,7 +7,7 @@ import styles from '@/styles/ChessMateCaseStudy.module.css';
 const DEMO_URL = 'https://patrickdev.lovable.app/#top';
 
 export const metadata: Metadata = {
-  title: 'Hotel Paradise Inn — Hotel Information & Table Booking Case Study',
+  title: 'Hotel Information & Table Booking System Case Study',
   description: 'A detailed case study of a Nepali hotel and restaurant website with live hotel information, Google reviews and photos, menu management, table booking requests and an owner dashboard.',
   // The implementation repository is private. Keep this case study directly shareable
   // without adding it to search results or the public sitemap.
@@ -36,7 +36,7 @@ export default function HotelBookingCaseStudy() {
       <article className={styles.container}>
         <Link href="/projects" className={styles.back}><VscArrowLeft size={16} /> All projects</Link>
         <p className={styles.eyebrow}>PROJECT CASE STUDY · FULL-STACK WEB APPLICATION</p>
-        <h1 className={styles.title}>Hotel Paradise Inn — Hotel Information &amp; Table Booking</h1>
+        <h1 className={styles.title}>Hotel Information &amp; Table Booking System</h1>
         <p className={styles.lede}>
           A hospitality website concept for Hotel Paradise Inn in Tribeni, Nepal. It brings the
           guest-facing hotel story, photo gallery, menu, Google reviews, visit information and
