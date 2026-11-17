@@ -41,15 +41,6 @@ I'm open to internship and entry-level opportunities where I can contribute to a
 - Interactive terminal-style navigation
 - GitHub Pages deployment through GitHub Actions
 
-## Featured projects
-
-| Project | Description | Links |
-| --- | --- | --- |
-| **ChessMate** | Flutter chess application with AI opponents, local play, online multiplayer, chat, and Stockfish integration. | [Source](https://github.com/pyatrick666/ChessMate) |
-| **RaspberryPi-PICO** | RP2040 / MicroPython experiments, including DHT22 temperature and humidity sensing. | [Source](https://github.com/pyatrick666/RaspberryPi-PICO) |
-| **CarRentalApp** | C# Windows Forms desktop application for rental bookings using SQL Server. | [Source](https://github.com/pyatrick666/CarRentalApp) |
-| **Cyber Awareness 360°** | Interactive cybersecurity awareness experience. | [Live demo](https://pyatrick666.github.io/360-VR-/) · [Source](https://github.com/pyatrick666/360-VR-) |
-
 ## Run locally
 
 Requirements: Node.js 22 or later, npm, and Git.
