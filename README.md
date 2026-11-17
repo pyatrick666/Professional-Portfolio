@@ -70,12 +70,6 @@ Professional-Portfolio/
 └── package.json
 ```
 
-## Deployment
-
-Published through **GitHub Pages** using GitHub Actions.
-
-- **Live site:** [Professional Portfolio](https://pyatrick666.github.io/Professional-Portfolio/)
-- **Source:** [GitHub repository](https://github.com/pyatrick666/Professional-Portfolio)
 
 ## Contact
 
