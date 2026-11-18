@@ -2,8 +2,7 @@ import type { MetadataRoute } from 'next';
 
 export const dynamic = 'force-static';
 
-const siteUrl = 'https://pyatrick666.github.io';
-const basePath = '/Professional-Portfolio';
+const siteUrl = 'https://pratikpoudel.info.np';
 
 const routes = [
   '',
@@ -19,6 +18,6 @@ const routes = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return routes.map((route) => ({
-    url: `${siteUrl}${basePath}${route}/`,
+    url: `${siteUrl}${route}/`,
   }));
 }

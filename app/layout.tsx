@@ -5,8 +5,7 @@ import Layout from '@/components/Layout';
 import '@/styles/globals.css';
 import '@/styles/themes.css';
 
-const siteUrl = 'https://pyatrick666.github.io';
-const siteBasePath = '/Professional-Portfolio';
+const siteUrl = 'https://pratikpoudel.info.np';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -22,7 +21,7 @@ export const metadata: Metadata = {
   publisher: 'Pratik Poudel',
   category: 'technology',
   alternates: {
-    canonical: `${siteBasePath}/`,
+    canonical: '/',
   },
   keywords: [
     'Pratik Poudel',
@@ -48,24 +47,24 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: `${siteBasePath}/favicon.svg?v=3`, type: 'image/svg+xml' },
-      { url: `${siteBasePath}/icon.svg?v=3`, type: 'image/svg+xml' },
+      { url: '/favicon.svg?v=4', type: 'image/svg+xml' },
+      { url: '/icon.svg?v=4', type: 'image/svg+xml' },
     ],
-    shortcut: `${siteBasePath}/favicon.svg?v=3`,
+    shortcut: '/favicon.svg?v=4',
   },
   openGraph: {
-    images: [{ url: `${siteBasePath}/social-preview.png`, width: 1200, height: 630, alt: 'Pratik Poudel — Software Engineering Portfolio' }],
+    images: [{ url: '/social-preview.png', width: 1200, height: 630, alt: 'Pratik Poudel — Software Engineering Portfolio' }],
     type: 'website',
     locale: 'en_US',
     siteName: 'Pratik Poudel Portfolio',
-    title: "Pratik Poudel | Software Engineering Portfolio",
+    title: 'Pratik Poudel | Software Engineering Portfolio',
     description:
       'Software Engineering • Full-Stack Development • Networking • Mobile Development',
-    url: `${siteUrl}${siteBasePath}/`,
+    url: siteUrl,
   },
   twitter: {
     card: 'summary_large_image',
-    images: [`${siteBasePath}/social-preview.png`],
+    images: ['/social-preview.png'],
     title: 'Pratik Poudel | Software Engineering Portfolio',
     description:
       'Software Engineering • Full-Stack Development • Networking • Mobile Development',
@@ -89,7 +88,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="apple-touch-icon" sizes="180x180" href="/Professional-Portfolio/apple-touch-icon.png?v=3" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=4" />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>

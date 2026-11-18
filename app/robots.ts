@@ -2,16 +2,15 @@ import type { MetadataRoute } from 'next';
 
 export const dynamic = 'force-static';
 
-const siteUrl = 'https://pyatrick666.github.io';
-const basePath = '/Professional-Portfolio';
+const siteUrl = 'https://pratikpoudel.info.np';
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: '*',
-      allow: `${basePath}/`,
+      allow: '/',
     },
-    sitemap: `${siteUrl}${basePath}/sitemap.xml`,
-    host: `${siteUrl}${basePath}/`,
+    sitemap: `${siteUrl}/sitemap.xml`,
+    host: siteUrl,
   };
 }
