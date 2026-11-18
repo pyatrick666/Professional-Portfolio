@@ -3,8 +3,8 @@ import styles from '@/styles/ContactCode.module.css';
 const contactItems = [
   {
     social: 'website',
-    link: 'iampratikpoudel.com.np',
-    href: 'https://iampratikpoudel.com.np',
+    link: 'pratikpoudel.info.np',
+    href: 'https://pratikpoudel.info.np',
   },
   {
     social: 'email',
