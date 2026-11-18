@@ -115,8 +115,8 @@ jobs:
 
           jq -e '.user.login == "pyatrick666" and (.repos | length <= 6)' public/github-data.json
 
-      - name: Prepare local resume asset
-        run: cp components/resume.pdf public/resume.pdf
+      - name: Verify public resume asset
+        run: test -s public/resume.pdf
 
       - name: Generate iOS bookmark icon
         run: npx --yes sharp-cli -i public/favicon.svg -o public/apple-touch-icon.png resize 180 180
