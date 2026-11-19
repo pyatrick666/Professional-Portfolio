@@ -16,8 +16,8 @@ const personJsonLd = {
   image: siteUrl + '/social-preview.png',
   email: 'pyatrick666@gmail.com',
   jobTitle: 'Information Technology Student and Software Developer',
-  description: 'Pratik Poudel is an Information Technology student and software developer based in Butwal, Nepal, focused on software engineering, full-stack development, networking, and mobile applications.',
-  address: { '@type': 'PostalAddress', addressLocality: 'Butwal', addressRegion: 'Lumbini Province', addressCountry: 'NP' },
+  description: 'Pratik Poudel is an Information Technology student and software developer based in Siddharthanagar, Bhairahawa, Nepal, focused on software engineering, full-stack development, networking, and mobile applications.',
+  address: { '@type': 'PostalAddress', addressLocality: 'Siddharthanagar (Bhairahawa)', addressRegion: 'Lumbini Province', addressCountry: 'NP' },
   alumniOf: { '@type': 'EducationalOrganization', name: 'ISMT College, Butwal' },
   sameAs: [
     'https://github.com/pyatrick666',
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   keywords: [
     'Pratik Poudel',
     'Pratik Poudel Nepal',
-    'Pratik Poudel Butwal',
+    'Pratik Poudel Siddharthanagar Bhairahawa',
     'Pratik Poudel software developer',
     'Pratik Poudel official website',
     'Pratik Poudel developer portfolio Nepal',
@@ -100,7 +100,7 @@ export const metadata: Metadata = {
   },
   other: {
     'geo.region': 'NP-P5',
-    'geo.placename': 'Butwal, Lumbini Province, Nepal',
+    'geo.placename': 'Siddharthanagar, Bhairahawa, Lumbini Province, Nepal',
   },
   twitter: {
     card: 'summary_large_image',
