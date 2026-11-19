@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     template: '%s | Pratik Poudel – Nepal',
   },
   description:
-    'Official portfolio of Pratik Poudel, an Information Technology student and software developer based in Butwal, Nepal. Explore software, web, mobile app, and networking projects.',
+    'Official portfolio of Pratik Poudel, an Information Technology student and software developer based in Siddharthanagar, Bhairahawa, Nepal. Explore software, web, mobile app, and networking projects.',
   applicationName: 'Pratik Poudel Portfolio',
   authors: [{ name: 'Pratik Poudel', url: 'https://github.com/pyatrick666' }],
   creator: 'Pratik Poudel',
@@ -95,7 +95,7 @@ export const metadata: Metadata = {
     siteName: 'Pratik Poudel Portfolio',
     title: 'Pratik Poudel – Official Portfolio | Software Developer in Nepal',
     description:
-      'Official portfolio of Pratik Poudel, a software developer based in Butwal, Nepal. Explore projects and professional experience.',
+      'Official portfolio of Pratik Poudel, a software developer based in Siddharthanagar, Bhairahawa, Nepal. Explore projects and professional experience.',
     url: siteUrl,
   },
   other: {
