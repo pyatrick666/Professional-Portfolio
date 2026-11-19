@@ -17,9 +17,7 @@ export default function HomePage() {
             <p className={styles.role}>Software Engineering • Full-Stack Development • Networking • Mobile Development</p>
             <div className={styles.divider} />
             <p className={styles.description}>
-              I’m a BSc (Hons) Information Technology student focused on Computer Systems Engineering.
-              I build practical software—from Flutter mobile apps and desktop tools to web projects
-              and embedded systems—and I’m ready to contribute, learn from a team, and ship useful work.
+              I’m Pratik Poudel, a BSc (Hons) Information Technology student focused on Computer Systems Engineering, based in Butwal, Nepal. I build practical software—from Flutter mobile apps and desktop tools to web projects and embedded systems—and I’m ready to contribute, learn from a team, and ship useful work.
             </p>
           </div>
           <div className={styles.availability}>
