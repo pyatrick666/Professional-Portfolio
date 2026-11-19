@@ -34,7 +34,7 @@ const commands: Record<string, () => string[]> = {
   about: () => [
     'Pratik Poudel',
     'Software Engineering • Full-Stack Development • Networking • Mobile Development',
-    'Based in Nepal',
+    'Based in Siddharthanagar, Bhairahawa, Nepal',
     '',
     'BSc (Hons) Information Technology student focused on',
     'software development, web development, and computer systems.',
