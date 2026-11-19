@@ -11,7 +11,7 @@ const AboutPage = () => (
           <div className={styles.headerText}>
             <h1 className={styles.name}>Pratik Poudel</h1>
             <p className={styles.role}>BSc (Hons) Information Technology — Computer Systems Engineering</p>
-            <div className={styles.location}><span className={styles.dot} />Butwal, Nepal</div>
+            <div className={styles.location}><span className={styles.dot} />Siddharthanagar, Bhairahawa, Nepal</div>
           </div>
         </div>
         <div className={styles.headerActions}>
