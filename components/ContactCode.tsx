@@ -19,7 +19,7 @@ const contactItems = [
   {
     social: 'linkedin',
     link: 'pratik-poudel-b3264a263',
-    href: 'https://www.linkedin.com/in/pratik-poudel-b3264a263/',
+    href: 'https://www.linkedin.com/in/pratik-poudel-dev',
   },
   {
     social: 'instagram',
