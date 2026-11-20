@@ -6,7 +6,7 @@
 <text x="128" y="285" fill="#f4f7fa" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="76">Pratik Poudel</text>
 <text x="132" y="355" fill="#c3d0d9" font-family="Arial, Helvetica, sans-serif" font-size="34">Software Engineering · Full-Stack Development</text>
 <text x="132" y="408" fill="#c3d0d9" font-family="Arial, Helvetica, sans-serif" font-size="34">Networking · Mobile Development</text>
-<rect x="132" y="472" width="350" height="56" rx="8" fill="#233743" stroke="#3b5666"/>
-<text x="158" y="508" fill="#66d9a6" font-family="monospace" font-size="22">pyatrick666.github.io</text>
+<rect x="132" y="472" width="430" height="56" rx="8" fill="#233743" stroke="#3b5666"/>
+<text x="158" y="508" fill="#66d9a6" font-family="monospace" font-size="22">pratikpoudel.info.np</text>
 <g transform="translate(1000 100)" fill="none" stroke="#4aa9ff" stroke-opacity=".45" stroke-width="3"><rect width="92" height="92" rx="18"/><path d="M26 26h40v40H26zM26 46h40M46 26v40"/></g>
 </svg>
