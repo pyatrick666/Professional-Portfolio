@@ -6,6 +6,7 @@ import '@/styles/globals.css';
 import '@/styles/themes.css';
 
 const siteUrl = 'https://pratikpoudel.info.np';
+const socialImage = `${siteUrl}/social-preview.png`;
 
 const personJsonLd = {
   '@context': 'https://schema.org',
@@ -13,7 +14,7 @@ const personJsonLd = {
   '@id': siteUrl + '/#person',
   name: 'Pratik Poudel',
   url: siteUrl,
-  image: siteUrl + '/social-preview.png',
+  image: socialImage,
   email: 'pyatrick666@gmail.com',
   jobTitle: 'Information Technology Student and Software Developer',
   description: 'Pratik Poudel is an Information Technology student and software developer based in Siddharthanagar, Bhairahawa, Nepal, focused on software engineering, full-stack development, networking, and mobile applications.',
@@ -89,14 +90,21 @@ export const metadata: Metadata = {
     shortcut: '/favicon.svg?v=4',
   },
   openGraph: {
-    images: [{ url: '/social-preview.png', width: 1200, height: 630, alt: 'Pratik Poudel — Software Engineering Portfolio' }],
     type: 'website',
     locale: 'en_NP',
     siteName: 'Pratik Poudel Portfolio',
     title: 'Pratik Poudel – Official Portfolio | Software Developer in Nepal',
     description:
-      'Official portfolio of Pratik Poudel, a software developer based in Siddharthanagar, Bhairahawa, Nepal. Explore projects and professional experience.',
+      'Official portfolio of Pratik Poudel, an Information Technology student and software developer based in Siddharthanagar, Bhairahawa, Nepal. Explore projects and professional experience.',
     url: siteUrl,
+    images: [
+      {
+        url: socialImage,
+        width: 1200,
+        height: 630,
+        alt: 'Pratik Poudel — Software Engineering, Full-Stack Development, Networking and Mobile Development',
+      },
+    ],
   },
   other: {
     'geo.region': 'NP-P5',
@@ -104,7 +112,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    images: ['/social-preview.png'],
+    images: [socialImage],
     title: 'Pratik Poudel | Software Engineering Portfolio',
     description:
       'Software Engineering • Full-Stack Development • Networking • Mobile Development',
