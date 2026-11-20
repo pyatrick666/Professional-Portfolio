@@ -22,7 +22,7 @@ const personJsonLd = {
   alumniOf: { '@type': 'EducationalOrganization', name: 'ISMT College, Butwal' },
   sameAs: [
     'https://github.com/pyatrick666',
-    'https://www.linkedin.com/in/pratik-poudel-b3264a263/',
+    'https://www.linkedin.com/in/pratik-poudel-dev',
     'https://www.youtube.com/@emevol666',
     'https://www.facebook.com/emev0l'
   ],
