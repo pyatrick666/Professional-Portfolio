@@ -75,4 +75,4 @@ Professional-Portfolio/
 
 - **Email:** [pyatrick666@gmail.com](mailto:pyatrick666@gmail.com)
 - **GitHub:** [github.com/pyatrick666](https://github.com/pyatrick666)
-- **LinkedIn:** [Pratik Poudel](https://www.linkedin.com/in/pratik-poudel-b3264a263/)
+- **LinkedIn:** [Pratik Poudel](https://www.linkedin.com/in/pratik-poudel-dev)
