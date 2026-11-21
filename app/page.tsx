@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { VscArrowRight, VscGithub, VscMail, VscCode, VscCircleFilled } from 'react-icons/vsc';
+import { VscArrowRight, VscGithub, VscMail, VscCircleFilled } from 'react-icons/vsc';
 import styles from '@/styles/HomePage.module.css';
 import { assetPath } from '@/lib/assets';
 
@@ -10,7 +10,16 @@ export default function HomePage() {
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.header}>
-            <div className={styles.icon}><VscCode size={32} /></div>
+            <div className={styles.profilePhotoFrame}>
+              <img
+                src="https://pyatrick666.github.io/ePortfolio/profile.jpg"
+                alt="Pratik Poudel, software developer and Information Technology student"
+                className={styles.profilePhoto}
+                width={160}
+                height={160}
+                fetchPriority="high"
+              />
+            </div>
           </div>
           <div className={styles.intro}>
             <h1 className={styles.name}>Pratik Poudel</h1>
