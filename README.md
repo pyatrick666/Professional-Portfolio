@@ -2,7 +2,7 @@
 
 A personal developer portfolio built with **Next.js and TypeScript**, presented through a Visual Studio Code-inspired interface.
 
-<p align="center"><a href="https://pyatrick666.github.io/Professional-Portfolio/"><strong>Visit the live portfolio →</strong></a></p>
+<p align="center"><a href="https://pratikpoudel.info.np/"><strong>Visit the live portfolio →</strong></a></p>
 
 > Portfolio and project screenshots will be added in a later update.
 
