@@ -7,6 +7,7 @@ import '@/styles/themes.css';
 
 const siteUrl = 'https://pratikpoudel.info.np';
 const socialImage = `${siteUrl}/social-preview.png`;
+const portraitImage = 'https://pyatrick666.github.io/ePortfolio/profile.jpg';
 
 const personJsonLd = {
   '@context': 'https://schema.org',
@@ -14,7 +15,7 @@ const personJsonLd = {
   '@id': siteUrl + '/#person',
   name: 'Pratik Poudel',
   url: siteUrl,
-  image: socialImage,
+  image: portraitImage,
   email: 'pyatrick666@gmail.com',
   jobTitle: 'Information Technology Student and Software Developer',
   description: 'Pratik Poudel is an Information Technology student and software developer based in Siddharthanagar, Bhairahawa, Nepal, focused on software engineering, full-stack development, networking, and mobile applications.',
@@ -84,10 +85,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.svg?v=4', type: 'image/svg+xml' },
-      { url: '/icon.svg?v=4', type: 'image/svg+xml' },
+      { url: '/favicon.svg?v=5', type: 'image/svg+xml' },
+      { url: '/icon.svg?v=5', type: 'image/svg+xml' },
     ],
-    shortcut: '/favicon.svg?v=4',
+    shortcut: '/favicon.svg?v=5',
   },
   openGraph: {
     type: 'website',
