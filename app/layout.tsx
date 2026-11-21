@@ -30,6 +30,20 @@ const personJsonLd = {
   knowsAbout: ['Software Engineering', 'Full-Stack Development', 'Web Development', 'Mobile Application Development', 'Flutter', 'Networking', 'Computer Systems Engineering', 'Python', 'Artificial Intelligence and Machine Learning']
 };
 
+const profilePageJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  '@id': siteUrl + '/#profile',
+  url: siteUrl,
+  name: 'Pratik Poudel — Professional Profile',
+  mainEntity: { '@id': siteUrl + '/#person' },
+  primaryImageOfPage: {
+    '@type': 'ImageObject',
+    contentUrl: portraitImage,
+    caption: 'Pratik Poudel — professional profile photo',
+  },
+};
+
 const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
@@ -141,7 +155,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([personJsonLd, websiteJsonLd]) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([personJsonLd, websiteJsonLd, profilePageJsonLd]) }} />
         <Layout>{children}</Layout>
       </body>
     </html>
