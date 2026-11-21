@@ -41,6 +41,8 @@ export default function HomePage() {
           <div className={styles.links}>
             <a href="https://github.com/pyatrick666" target="_blank" rel="noopener noreferrer" className={styles.link}><VscGithub size={16} /><span>GitHub</span></a>
             <span className={styles.linkSeparator}>/</span>
+            <a href="https://dev.to/pyatrick666/hello-im-pratik-poudel-a-software-engineering-journey-through-real-projects-2obg" target="_blank" rel="noopener noreferrer" className={styles.link}><span>Dev.to Article</span></a>
+            <span className={styles.linkSeparator}>/</span>
             <a href="https://www.linkedin.com/in/pratik-poudel-b3264a263/" target="_blank" rel="noopener noreferrer" className={styles.link}><span>LinkedIn</span></a>
             <span className={styles.linkSeparator}>/</span>
             <a href="mailto:pyatrick666@gmail.com?subject=Portfolio%20Enquiry" className={styles.link}><VscMail size={16} /><span>Email Me</span></a>
