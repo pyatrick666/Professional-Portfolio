@@ -25,7 +25,8 @@ const personJsonLd = {
     'https://github.com/pyatrick666',
     'https://www.linkedin.com/in/pratik-poudel-dev',
     'https://www.youtube.com/@emevol666',
-    'https://www.facebook.com/emev0l'
+    'https://www.facebook.com/emev0l',
+    'https://dev.to/pyatrick666'
   ],
   knowsAbout: ['Software Engineering', 'Full-Stack Development', 'Web Development', 'Mobile Application Development', 'Flutter', 'Networking', 'Computer Systems Engineering', 'Python', 'Artificial Intelligence and Machine Learning']
 };
