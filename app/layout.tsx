@@ -38,6 +38,7 @@ const profilePageJsonLd = {
   url: siteUrl,
   name: 'Pratik Poudel — Professional Profile',
   mainEntity: { '@id': siteUrl + '/#person' },
+  image: portraitImage,
   primaryImageOfPage: {
     '@type': 'ImageObject',
     contentUrl: portraitImage,
