@@ -18,6 +18,13 @@ export default function HomePage() {
                 width={160}
                 height={160}
                 fetchPriority="high"
+                onError={(event) => {
+                  const image = event.currentTarget;
+                  if (image.dataset.fallback !== 'used') {
+                    image.dataset.fallback = 'used';
+                    image.src = 'https://github.com/pyatrick666.png';
+                  }
+                }}
               />
             </div>
           </div>
