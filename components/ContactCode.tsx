@@ -32,11 +32,6 @@ const contactItems = [
     href: 'https://www.facebook.com/emev0l',
   },
   {
-    social: 'dev.to',
-    link: 'pyatrick666',
-    href: 'https://dev.to/pyatrick666',
-  },
-  {
     social: 'youtube',
     link: '@emevol666',
     href: 'https://www.youtube.com/@emevol666',
