@@ -7,7 +7,7 @@ import '@/styles/themes.css';
 
 const siteUrl = 'https://pratikpoudel.info.np';
 const socialImage = `${siteUrl}/social-preview.png`;
-const portraitImage = 'https://pyatrick666.github.io/ePortfolio/profile.jpg';
+const portraitImage = `${siteUrl}/pratik-poudel-portrait.jpg`;
 
 const personJsonLd = {
   '@context': 'https://schema.org',
