@@ -12,7 +12,7 @@ export default function HomePage() {
           <div className={styles.header}>
             <div className={styles.profilePhotoFrame}>
               <img
-                src="/pratik-poudel-portrait.jpg"
+                src="https://raw.githubusercontent.com/pyatrick666/ePortfolio/main/profile.jpg"
                 alt="Pratik Poudel, software developer and Information Technology student"
                 className={styles.profilePhoto}
                 width={160}
