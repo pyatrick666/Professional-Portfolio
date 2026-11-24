@@ -100,11 +100,8 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [
-      { url: '/favicon.svg?v=6', type: 'image/svg+xml' },
-      { url: '/icon.svg?v=6', type: 'image/svg+xml' },
-    ],
-    shortcut: '/favicon.svg?v=6',
+    icon: [{ url: '/favicon.png', type: 'image/png' }],
+    shortcut: '/favicon.png',
   },
   openGraph: {
     type: 'website',
