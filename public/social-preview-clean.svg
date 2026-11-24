@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f8fafc"/>
+  <path d="M0 0h310C220 120 125 180 0 205z" fill="#e8f0fb"/>
+  <path d="M1200 630H900c95-115 190-165 300-190z" fill="#e8f0fb"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="92" y="235" font-size="76" font-weight="700" fill="#101c2d">Pratik <tspan fill="#1764c0">Poudel</tspan></text>
+    <rect x="94" y="270" width="650" height="5" rx="2.5" fill="#d8e0ea"/>
+    <rect x="94" y="270" width="118" height="5" rx="2.5" fill="#1764c0"/>
+    <text x="94" y="345" font-size="29" fill="#243246">Software Engineering  <tspan fill="#1764c0">•</tspan>  Full-Stack Development</text>
+    <text x="94" y="393" font-size="29" fill="#243246">Networking  <tspan fill="#1764c0">•</tspan>  Mobile Development</text>
+    <circle cx="132" cy="490" r="20" fill="none" stroke="#1764c0" stroke-width="3"/>
+    <path d="M112 490h40M132 470c-12 12-12 28 0 40M132 470c12 12 12 28 0 40M114 480h36M114 500h36" fill="none" stroke="#1764c0" stroke-width="2"/>
+    <text x="170" y="500" font-size="26" fill="#243246">pratikpoudel.info.np</text>
+  </g>
+  <circle cx="930" cy="315" r="155" fill="#edf4fd" stroke="#c7d8ee" stroke-width="5"/>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="168" font-weight="800" text-anchor="middle">
+    <text x="900" y="370" fill="#102b50">P</text><text x="985" y="410" fill="#1764c0">P</text>
+  </g>
+</svg>
