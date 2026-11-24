@@ -7,7 +7,7 @@ import '@/styles/themes.css';
 
 const siteUrl = 'https://pratikpoudel.info.np';
 const socialImage = `${siteUrl}/social-preview-clean.svg`;
-const portraitImage = 'https://raw.githubusercontent.com/pyatrick666/ePortfolio/main/profile.jpg';
+const portraitImage = `${siteUrl}/pratik-poudel-portrait.jpg`;
 
 const personJsonLd = {
   '@context': 'https://schema.org',
@@ -102,6 +102,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [{ url: '/favicon.png', type: 'image/png' }],
     shortcut: '/favicon.png',
+    apple: '/apple-touch-icon.png',
   },
   openGraph: {
     type: 'website',
