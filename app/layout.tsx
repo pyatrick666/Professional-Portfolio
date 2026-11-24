@@ -6,7 +6,7 @@ import '@/styles/globals.css';
 import '@/styles/themes.css';
 
 const siteUrl = 'https://pratikpoudel.info.np';
-const socialImage = `${siteUrl}/social-preview-clean.svg`;
+const socialImage = `${siteUrl}/social-preview.png`;
 const portraitImage = `${siteUrl}/pratik-poudel-portrait.jpg`;
 
 const personJsonLd = {
@@ -50,7 +50,8 @@ const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   '@id': siteUrl + '/#website',
-  name: 'Pratik Poudel | Official Portfolio',
+  name: 'Pratik Poudel',
+  alternateName: 'Pratik Poudel Portfolio',
   url: siteUrl,
   inLanguage: 'en',
   about: { '@id': siteUrl + '/#person' }
