@@ -6,7 +6,7 @@ import '@/styles/globals.css';
 import '@/styles/themes.css';
 
 const siteUrl = 'https://pratikpoudel.info.np';
-const socialImage = `${siteUrl}/social-preview.png`;
+const socialImage = `${siteUrl}/social-preview-clean.svg`;
 const portraitImage = 'https://raw.githubusercontent.com/pyatrick666/ePortfolio/main/profile.jpg';
 
 const personJsonLd = {
