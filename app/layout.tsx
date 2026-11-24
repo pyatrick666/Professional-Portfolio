@@ -101,10 +101,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.svg?v=5', type: 'image/svg+xml' },
-      { url: '/icon.svg?v=5', type: 'image/svg+xml' },
+      { url: '/favicon.svg?v=6', type: 'image/svg+xml' },
+      { url: '/icon.svg?v=6', type: 'image/svg+xml' },
     ],
-    shortcut: '/favicon.svg?v=5',
+    shortcut: '/favicon.svg?v=6',
   },
   openGraph: {
     type: 'website',
@@ -153,7 +153,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=4" />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>
