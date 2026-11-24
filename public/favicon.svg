@@ -1,6 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-  <rect width="256" height="256" rx="58" fill="#101827"/>
-  <path d="M43 207V49h70c43 0 67 23 67 61s-24 62-67 62H78v35H43Zm35-68h33c22 0 34-10 34-29s-12-28-34-28H78v57Z" fill="#F8FAFC"/>
-  <path d="M126 207V119h35c35 0 54 18 54 45s-19 43-54 43h-35Zm30-26h4c14 0 23-6 23-17s-9-18-23-18h-4v35Z" fill="#3B82F6"/>
-  <path d="M202 45h10v27h-10z" fill="#60A5FA" opacity=".9"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="PP">
+  <rect width="256" height="256" rx="40" fill="#FFFFFF"/>
+  <g fill="#172B4D">
+    <path d="M28 202V54h62c42 0 66 22 66 59s-24 59-66 59H65v30H28Zm37-62h25c19 0 29-9 29-27s-10-26-29-26H65v53Z"/>
+  </g>
+  <g fill="#2563EB">
+    <path d="M126 202V54h62c42 0 66 22 66 59s-24 59-66 59h-25v30h-37Zm37-62h25c19 0 29-9 29-27s-10-26-29-26h-25v53Z"/>
+  </g>
 </svg>
