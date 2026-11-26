@@ -101,8 +101,8 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [{ url: '/favicon.png', type: 'image/png' }],
-    shortcut: '/favicon.png',
+    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+    shortcut: '/favicon.svg',
     apple: '/apple-touch-icon.png',
   },
   openGraph: {
