@@ -120,7 +120,7 @@ jobs:
 
       - name: Generate PNG favicon and iOS bookmark icon
         run: |
-          npx --yes sharp-cli -i public/favicon.svg -o public/favicon.png resize 512 512
+          npx --yes sharp-cli -i public/logo.svg -o public/favicon.png resize 512 512
           npx --yes sharp-cli -i public/favicon.png -o public/apple-touch-icon.png resize 180 180
 
       - name: Generate social sharing preview image
